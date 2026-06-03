@@ -14,7 +14,7 @@ const services = [
     subtitle: "Informed Property Decisions",
     description: "Inspire’s Buyer Inspection Services support confident purchasing decisions for residential, multi-family, commercial, and public housing properties across the USA. Our inspections include multi-unit buyer inspection, single-family home buyer inspection, condominium and townhome buyer inspection, and commercial property pre-purchase evaluation. We conduct comprehensive property condition assessments for buyers, covering structural, mechanical, and electrical review while identifying hazards and compliance risks. Each buyer inspection includes Inspire buyer safety compliance checks, repair and maintenance cost estimation, and buyer decision support reports.",
     moreText: "Buyer Risk Analysis, Compliance, and Negotiation Support: Our buyer-focused inspections emphasize hazard and risk identification, safety compliance, and financial clarity. Inspire delivers buyer decision support reports that highlight structural deficiencies, system failures, and safety concerns affecting value and insurability.",
-    image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image: "/candid_house_people.png",
     color: "bg-blue-50",
     href: "/inspection-services/buyers"
   },
@@ -23,7 +23,7 @@ const services = [
     subtitle: "Asset Protection and Longevity",
     description: "Inspire’s Owner Inspection Services help property owners maintain asset value, ensure compliance, and plan preventive maintenance. Our annual owner property inspection, multi-unit owner inspection, and building health and maintenance evaluation identify issues before they escalate. We perform property condition assessments (PCA), insurance risk checks for owners, and tenant safety and habitability reviews.",
     moreText: "Preventive Maintenance and Owner Compliance Reporting: Our owner inspections focus on actionable intelligence, including pre-renovation inspections and owner repair priority reports. Inspire evaluates structural integrity, MEP systems, and safety features to identify early-stage deterioration.",
-    image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image: "/candid_inspection.png",
     color: "bg-red-50",
     href: "/inspection-services/owners"
   },
@@ -32,7 +32,7 @@ const services = [
     subtitle: "Maximize Marketability",
     description: "Inspire’s Seller Inspection Services prepare properties for listing with transparency and confidence. Our pre-listing inspection, multi-unit seller inspection, and property readiness evaluation identify major and minor defects before marketing. We provide HUD/REAC pre-sale support, repair and upgrade recommendations, and pricing advantage inspection reports. Marketability enhancement reviews focus on safety, compliance, and presentation factors that influence buyer perception.",
     moreText: "Seller Transparency and Pricing Advantage Reports: Seller inspections include detailed seller transparency reports designed to minimize post-offer disputes. Inspire documents defects, compliance gaps, and improvement opportunities with clear prioritization.",
-    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image: "/candid_street.png",
     color: "bg-orange-50",
     href: "/inspection-services/sellers"
   },
@@ -41,7 +41,7 @@ const services = [
     subtitle: "Compliance and Safety",
     description: "Inspire delivers comprehensive rental property inspection services, including move-in inspection, move-out inspection, annual rental safety inspection, and habitability standards review. We assess tenant damage, occupancy health and safety, and multi-unit rental inspection requirements. Inspire rental compliance and HUD/REAC pre-audit support ensure landlords meet federal and local housing standards.",
     moreText: "Rental Risk Management and Documentation Support: Our rental inspections focus on risk mitigation and regulatory readiness. Inspire evaluates life-safety systems, habitability conditions, and compliance gaps that impact leasing and audits.",
-    image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image: "/plaza_shops.png",
     color: "bg-green-50",
     href: "/inspection-services/rental"
   },

@@ -36,7 +36,7 @@ export default function AboutClient() {
             <div className="relative group">
               <div className="relative rounded-[40px] overflow-hidden aspect-[4/5] shadow-2xl transition-transform duration-500 group-hover:scale-[1.02]">
                 <Image
-                  src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"
+                  src="/candid_house_people.png"
                   alt="Professional Home Inspection"
                   fill
                   className="object-cover"
