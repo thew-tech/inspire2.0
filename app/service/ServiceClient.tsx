@@ -50,7 +50,7 @@ const services = [
     subtitle: "Nationwide Services",
     description: "Inspire provides commercial building inspection services for multi-unit commercial facilities, industrial properties, office buildings, retail spaces, warehouses, and shopping centers. Our inspections include construction quality assessment, safety and code compliance, fire and life safety checks, and roof, HVAC, electrical, and plumbing analysis.",
     moreText: "Commercial Compliance, Systems, and Structural Evaluation: Commercial inspections emphasize operational continuity and regulatory alignment. Inspire identifies deficiencies affecting safety, insurability, and asset performance. Our reporting supports capital planning, compliance remediation, and insurance coordination.",
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image: "/candid_commercial_building.png",
     color: "bg-yellow-50",
     href: "/inspection-services/commercial"
   },
@@ -59,7 +59,7 @@ const services = [
     subtitle: "HUD/REAC Support",
     description: "Inspire specializes in public housing inspection services aligned with Inspire standards. We provide HUD/REAC inspection preparation, multi-family housing inspection, apartment community compliance, and federal housing standards review. Our habitability and safety evaluations, energy and environmental standards checks, and occupancy health inspections support REAC scoring improvement and regulatory readiness for public housing authorities (PHAs).",
     moreText: "Public Housing Risk, Compliance, and Documentation: Our public housing inspections deliver risk and deficiency reporting with clear remediation guidance. Inspire supports PHAs with documentation, compliance verification, and audit preparation.",
-    image: "https://images.unsplash.com/photo-1460317442991-0ec209397118?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image: "/candid_public_housing.png",
     color: "bg-purple-50",
     href: "/inspection-services/public-housing"
   },
@@ -68,7 +68,7 @@ const services = [
     subtitle: "Property Risk Assessment",
     description: "Inspire’s insurance risk management inspections address property risk assessment, hazard and liability review, and multi-unit insurance inspection requirements. We conduct commercial insurance inspections, fire and safety risk reporting, and environmental risk analysis. Our foundation, electrical, and structural risk reviews support insurance claim prevention and pre-coverage inspection needs.",
     moreText: "Insurance Compliance and Claim Prevention Reporting: Insurance-focused inspections emphasize loss prevention and underwriting readiness. Inspire provides annual insurance compliance checks and actionable recommendations to reduce exposure.",
-    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image: "/blog-roof.png",
     color: "bg-teal-50",
     href: "/inspection-services/insurance-risk"
   },
@@ -77,7 +77,7 @@ const services = [
     subtitle: "Environmental, Air Quality & More",
     description: "Inspire offers specialized inspection services, including sewer scope video inspections, pool and spa inspections, mold sampling, roof inspection, and foundation and crawlspace inspection. We also provide luxury home inspections, historic homes inspections, Malibu and beach home inspections, and general home inspections. Commercial add-on inspections and multi-unit specialized evaluations extend our capabilities across property types.",
     moreText: "Environmental, Air Quality, and Advanced Evaluations: Our environmental and air quality sampling services address health, safety, and regulatory concerns. Inspire evaluates indoor air quality, moisture intrusion, and environmental risks affecting occupancy and compliance.",
-    image: "https://img.freepik.com/free-photo/building-contractor-doing-home-inspection_53876-137128.jpg?size=626&ext=jpg",
+    image: "/blog-sewer-scope.png",
     color: "bg-indigo-50",
     href: "/inspection-services/specialized"
   }

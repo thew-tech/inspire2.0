@@ -54,7 +54,7 @@ export default function PublicHousingClient() {
     <MainLayout>
       <div className="w-full min-h-screen bg-white overflow-x-hidden">
         <section className="relative bg-gradient-to-br from-[#8B5CF6] to-[#6D28D9] py-24 md:py-36 overflow-hidden">
-          <div className="absolute inset-0 opacity-15"><Image src="/why.jpg" alt="" fill className="object-cover" /></div>
+          <div className="absolute inset-0 opacity-15"><Image src="/candid_public_housing.png" alt="" fill className="object-cover" /></div>
           <div className="absolute inset-0 bg-gradient-to-t from-[#6D28D9] via-[#6D28D9]/60 to-transparent"></div>
           <div className="relative z-10 max-w-[1400px] mx-auto px-4 md:px-6 text-center">
             <p className="text-[#8B5CF6] font-bold uppercase tracking-[0.2em] mb-6">Government Housing Compliance</p>

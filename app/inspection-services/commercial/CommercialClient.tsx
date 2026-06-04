@@ -54,7 +54,7 @@ export default function CommercialClient() {
     <MainLayout>
       <div className="w-full min-h-screen bg-white overflow-x-hidden">
         <section className="relative bg-gradient-to-br from-[#F59E0B] to-[#D97706] py-24 md:py-36 overflow-hidden">
-          <div className="absolute inset-0 opacity-20"><Image src="/why3.jpg" alt="" fill className="object-cover" /></div>
+          <div className="absolute inset-0 opacity-20"><Image src="/candid_commercial_building.png" alt="" fill className="object-cover" /></div>
           <div className="absolute inset-0 bg-gradient-to-t from-[#D97706] via-[#D97706]/60 to-transparent"></div>
           <div className="relative z-10 max-w-[1400px] mx-auto px-4 md:px-6 text-center">
             <p className="text-white/90 font-bold uppercase tracking-[0.2em] mb-6">Business Properties Nationwide</p>

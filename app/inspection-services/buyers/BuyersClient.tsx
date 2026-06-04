@@ -56,7 +56,7 @@ export default function BuyersClient() {
         {/* Hero with Image */}
         <section className="relative bg-[#006795] py-24 md:py-36 overflow-hidden">
           <div className="absolute inset-0 opacity-25">
-            <Image src="/why.jpg" alt="" fill className="object-cover" />
+            <Image src="/candid_house_people.png" alt="" fill className="object-cover" />
           </div>
           <div className="absolute inset-0 bg-gradient-to-t from-[#006795] via-[#006795]/70 to-transparent"></div>
           <div className="relative z-10 max-w-[1400px] mx-auto px-4 md:px-6 text-center">

@@ -52,7 +52,7 @@ export default function OwnersClient() {
         {/* Hero with Image */}
         <section className="relative bg-[#F84B5F] py-24 md:py-36 overflow-hidden">
           <div className="absolute inset-0 opacity-20">
-            <Image src="/why3.jpg" alt="" fill className="object-cover" />
+            <Image src="/candid_inspection.png" alt="" fill className="object-cover" />
           </div>
           <div className="absolute inset-0 bg-gradient-to-t from-[#F84B5F] via-[#F84B5F]/70 to-transparent"></div>
           <div className="relative z-10 max-w-[1400px] mx-auto px-4 md:px-6 text-center">
@@ -78,7 +78,7 @@ export default function OwnersClient() {
                 </p>
               </div>
               <div className="flex-shrink-0 w-full md:w-[400px] h-[280px] rounded-[32px] overflow-hidden relative">
-                <Image src="/why.jpg" alt="Owner inspection" fill className="object-cover" />
+                <Image src="/candid_house_people.png" alt="Owner inspection" fill className="object-cover" />
               </div>
             </div>
           </div>
