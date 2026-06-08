@@ -36,7 +36,7 @@ export default function Footer() {
               </li>
               <li>
                 <NextLink href="/faq" className="hover:text-white">
-                  FAQ
+                  Education &amp; Training
                 </NextLink>
               </li>
             </ul>

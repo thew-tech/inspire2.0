@@ -25,7 +25,7 @@ export default function AboutClient() {
               About <span className="text-[#F84B5F] italic font-medium">Inspire</span>
             </h1>
             <p className="max-w-4xl mx-auto text-lg md:text-xl text-white/90 leading-relaxed font-light">
-              Inspire delivers specialized home inspection services across the Nation designed to protect buyers, sellers, investors, and homeowners with precise reporting and insurance-ready documentation.
+              Our Qualified NSPIRE inspectors focus on identifying risks, structural issues, and safety hazards to ensure that every inspection provides clear insights that help you make informed decisions about your property.
             </p>
           </div>
         </section>
@@ -82,7 +82,7 @@ export default function AboutClient() {
           <div className="max-w-[1400px] mx-auto text-center">
             <h2 className="text-3xl md:text-5xl font-bold text-black mb-6">Setting the <span className="text-[#006795]">Benchmark</span></h2>
             <p className="max-w-3xl mx-auto text-lg text-gray-600 leading-relaxed mb-16">
-              With advanced tools, experienced inspectors, and reliable reporting, Inspire sets the benchmark for home inspection services, home inspection companies, and certified home inspections throughout the nation.
+              Our Qualified NSPIRE inspectors focus on identifying risks, structural issues, and safety hazards to ensure that every inspection provides clear insights that help you make informed decisions about your property.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

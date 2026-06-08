@@ -67,7 +67,7 @@ export default function Navbar() {
               </div>
               <Link href="/about" className="text-gray-800 font-medium pb-2 border-b border-gray-50" onClick={() => setMobileMenuOpen(false)}>ABOUT</Link>
               <Link href="/contact" className="text-gray-800 font-medium pb-2 border-b border-gray-50" onClick={() => setMobileMenuOpen(false)}>CONTACT</Link>
-              <Link href="/faq" className="text-gray-800 font-medium pb-2 border-b border-gray-50" onClick={() => setMobileMenuOpen(false)}>FAQ</Link>
+              <Link href="/faq" className="text-gray-800 font-medium pb-2 border-b border-gray-50" onClick={() => setMobileMenuOpen(false)}>EDUCATION &amp; TRAINING</Link>
               <Link href="/blog" className="text-gray-800 font-medium" onClick={() => setMobileMenuOpen(false)}>BLOG</Link>
             </div>
           </div>
@@ -142,8 +142,8 @@ export default function Navbar() {
             <span className="text-[10px] text-gray-500 italic tracking-wider">Get in Touch</span>
           </Link>
           <Link href="/faq" className="flex flex-col group items-center">
-            <span className="text-sm font-medium text-gray-800 group-hover:text-[#006795] transition-colors leading-tight">FAQ</span>
-            <span className="text-[10px] text-gray-500 italic tracking-wider">Answers to Questions</span>
+            <span className="text-sm font-medium text-gray-800 group-hover:text-[#006795] transition-colors leading-tight">EDUCATION &amp; TRAINING</span>
+            <span className="text-[10px] text-gray-500 italic tracking-wider">NSPIRE Videos</span>
           </Link>
           <Link href="/blog" className="flex flex-col group items-center">
             <span className="text-sm font-medium text-gray-800 group-hover:text-[#006795] transition-colors leading-tight">BLOG</span>

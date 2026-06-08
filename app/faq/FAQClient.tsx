@@ -117,7 +117,11 @@ export default function FAQClient() {
         <section className="bg-[#F8F9FA] px-4 md:px-6 py-20 md:py-28">
           <div className="max-w-[1400px] mx-auto">
             <div className="text-center mb-14">
-              <p className="text-xs font-bold text-[#006795] uppercase tracking-widest mb-4">How to Inspect</p>
+              <div className="inline-block mb-6">
+                <span className="text-2xl md:text-3xl font-black text-[#006795] uppercase tracking-[0.25em] border-2 border-[#006795] px-8 py-3 rounded-lg block">
+                  HOW TO INSPECT
+                </span>
+              </div>
               <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
                 NSPIRE Inspection <span className="text-[#F84B5F] italic font-medium">Video Library</span>
               </h2>
