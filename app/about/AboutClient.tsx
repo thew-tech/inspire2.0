@@ -36,8 +36,8 @@ export default function AboutClient() {
             <div className="relative group">
               <div className="relative rounded-[40px] overflow-hidden aspect-[4/5] shadow-2xl transition-transform duration-500 group-hover:scale-[1.02]">
                 <Image
-                  src="/candid_house_people.png"
-                  alt="Professional Home Inspection"
+                  src="/multi_unit_housing.png"
+                  alt="Professional Housing Inspection"
                   fill
                   className="object-cover"
                   unoptimized
@@ -58,13 +58,7 @@ export default function AboutClient() {
                 
                 <div className="text-gray-600 space-y-6 text-lg leading-relaxed">
                   <p>
-                    Our certified home inspections focus on identifying risks, structural issues, and safety hazards to ensure that every home inspection provides clear insights that help you make informed decisions about your property.
-                  </p>
-                  <p>
-                    Whether you search for home inspection near me, want to understand the home inspection cost, or need guidance on what is looked for in a home inspection, Inspire builds trust with detailed evaluation methods and industry-standard home inspection certification.
-                  </p>
-                  <p>
-                    From assessing roofing, electrical, plumbing, HVAC, and foundation conditions to identifying things that fail a home inspection, our goal is to secure your investment with a thorough and compliant inspection process.
+                    Our Qualified NSPIRE inspectors focus on identifying risks, structural issues, and safety hazards to ensure that every inspection provides clear insights that help you make informed decisions about your property.
                   </p>
                 </div>
               </div>

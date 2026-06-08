@@ -104,7 +104,7 @@ export default function Home() {
     <div className="max-w-[1400px] mx-auto px-6 text-center">
     <h2 className="text-4xl md:text-5xl font-bold mb-8">Government Housing Compliance</h2>
     <p className="text-lg text-gray-300 max-w-4xl mx-auto">
-    {`NSPIREinspection.AI provides professional Public and affordable Housing Inspection nationwide, helping housing authorities, property managers, and multifamily communities maintain federal compliance and safe living conditions. Our team specializes in Real Estate Assessment inspection, ensuring every property meets federal housing standards, requirements, and energy and safety regulations. From apartment communities to large public or affordable housing developments, Inspire ensures compliance inspections are thorough, timely, and precise. We focus on identifying deficiencies, supporting risk management, and improving HUD REAC scores, providing a comprehensive solution for all public housing inspection needs while streamlining documentation and reporting for PHAs.`}
+    {`NSPIREinspection.AI provides professional, Public, and affordable Housing Inspections nationwide, helping housing authorities, property managers, and multifamily communities maintain federal compliance and safe living conditions. Qualified NSPIRE inspectors specialize in Real Estate Assessment inspection, ensuring every property meets federal housing standards.`}
     </p>
     </div>
     </section>

@@ -12,25 +12,25 @@ const services = [
   {
     title: "Buyer Inspection Services",
     subtitle: "Informed Property Decisions",
-    description: "Inspire’s Buyer Inspection Services support confident purchasing decisions for residential, multi-family, commercial, and public housing properties across the USA. Our inspections include multi-unit buyer inspection, single-family home buyer inspection, condominium and townhome buyer inspection, and commercial property pre-purchase evaluation. We conduct comprehensive property condition assessments for buyers, covering structural, mechanical, and electrical review while identifying hazards and compliance risks. Each buyer inspection includes Inspire buyer safety compliance checks, repair and maintenance cost estimation, and buyer decision support reports.",
+    description: "Inspire's Buyer Inspection Services support confident purchasing decisions for residential, multi-family, commercial, and public housing properties across the USA. Our inspections include multi-unit buyer inspection, single-family home buyer inspection, condominium and townhome buyer inspection, and commercial property pre-purchase evaluation. We conduct comprehensive property condition assessments for buyers, covering structural, mechanical, and electrical review while identifying hazards and compliance risks. Each buyer inspection includes Inspire buyer safety compliance checks, repair and maintenance cost estimation, and buyer decision support reports.",
     moreText: "Buyer Risk Analysis, Compliance, and Negotiation Support: Our buyer-focused inspections emphasize hazard and risk identification, safety compliance, and financial clarity. Inspire delivers buyer decision support reports that highlight structural deficiencies, system failures, and safety concerns affecting value and insurability.",
-    image: "/candid_house_people.png",
+    image: "/family_housing_complex.png",
     color: "bg-blue-50",
     href: "/inspection-services/buyers"
   },
   {
     title: "Owner Inspection Services",
     subtitle: "Asset Protection and Longevity",
-    description: "Inspire’s Owner Inspection Services help property owners maintain asset value, ensure compliance, and plan preventive maintenance. Our annual owner property inspection, multi-unit owner inspection, and building health and maintenance evaluation identify issues before they escalate. We perform property condition assessments (PCA), insurance risk checks for owners, and tenant safety and habitability reviews.",
+    description: "Inspire's Owner Inspection Services help property owners maintain asset value, ensure compliance, and plan preventive maintenance. Our annual owner property inspection, multi-unit owner inspection, and building health and maintenance evaluation identify issues before they escalate. We perform property condition assessments (PCA), insurance risk checks for owners, and tenant safety and habitability reviews.",
     moreText: "Preventive Maintenance and Owner Compliance Reporting: Our owner inspections focus on actionable intelligence, including pre-renovation inspections and owner repair priority reports. Inspire evaluates structural integrity, MEP systems, and safety features to identify early-stage deterioration.",
-    image: "/candid_inspection.png",
+    image: "/multiunit_residence.png",
     color: "bg-red-50",
     href: "/inspection-services/owners"
   },
   {
     title: "Seller Inspection Services",
     subtitle: "Maximize Marketability",
-    description: "Inspire’s Seller Inspection Services prepare properties for listing with transparency and confidence. Our pre-listing inspection, multi-unit seller inspection, and property readiness evaluation identify major and minor defects before marketing. We provide HUD/REAC pre-sale support, repair and upgrade recommendations, and pricing advantage inspection reports. Marketability enhancement reviews focus on safety, compliance, and presentation factors that influence buyer perception.",
+    description: "Inspire's Seller Inspection Services prepare properties for listing with transparency and confidence. Our pre-listing inspection, multi-unit seller inspection, and property readiness evaluation identify major and minor defects before marketing. We provide HUD/REAC pre-sale support, repair and upgrade recommendations, and pricing advantage inspection reports. Marketability enhancement reviews focus on safety, compliance, and presentation factors that influence buyer perception.",
     moreText: "Seller Transparency and Pricing Advantage Reports: Seller inspections include detailed seller transparency reports designed to minimize post-offer disputes. Inspire documents defects, compliance gaps, and improvement opportunities with clear prioritization.",
     image: "/candid_street.png",
     color: "bg-orange-50",
@@ -66,20 +66,11 @@ const services = [
   {
     title: "Insurance Risk Management",
     subtitle: "Property Risk Assessment",
-    description: "Inspire’s insurance risk management inspections address property risk assessment, hazard and liability review, and multi-unit insurance inspection requirements. We conduct commercial insurance inspections, fire and safety risk reporting, and environmental risk analysis. Our foundation, electrical, and structural risk reviews support insurance claim prevention and pre-coverage inspection needs.",
+    description: "Inspire's insurance risk management inspections address property risk assessment, hazard and liability review, and multi-unit insurance inspection requirements. We conduct commercial insurance inspections, fire and safety risk reporting, and environmental risk analysis. Our foundation, electrical, and structural risk reviews support insurance claim prevention and pre-coverage inspection needs.",
     moreText: "Insurance Compliance and Claim Prevention Reporting: Insurance-focused inspections emphasize loss prevention and underwriting readiness. Inspire provides annual insurance compliance checks and actionable recommendations to reduce exposure.",
-    image: "/blog-roof.png",
+    image: "/insurance_risk_mgmt.png",
     color: "bg-teal-50",
     href: "/inspection-services/insurance-risk"
-  },
-  {
-    title: "Specialized & Add-On",
-    subtitle: "Environmental, Air Quality & More",
-    description: "Inspire offers specialized inspection services, including sewer scope video inspections, pool and spa inspections, mold sampling, roof inspection, and foundation and crawlspace inspection. We also provide luxury home inspections, historic homes inspections, Malibu and beach home inspections, and general home inspections. Commercial add-on inspections and multi-unit specialized evaluations extend our capabilities across property types.",
-    moreText: "Environmental, Air Quality, and Advanced Evaluations: Our environmental and air quality sampling services address health, safety, and regulatory concerns. Inspire evaluates indoor air quality, moisture intrusion, and environmental risks affecting occupancy and compliance.",
-    image: "/blog-sewer-scope.png",
-    color: "bg-indigo-50",
-    href: "/inspection-services/specialized"
   }
 ];
 
@@ -184,45 +175,7 @@ export default function ServiceClient() {
           </div>
         </section>
 
-        {/* Compliance and Reporting Section */}
-        <section className="py-20 px-4 md:px-8 bg-gray-900 text-white">
-          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
-            <div>
-              <h2 className="text-3xl font-bold mb-6">Compliance, Standards & Certifications</h2>
-              <p className="text-gray-300 mb-6 leading-relaxed">
-                Inspire prioritizes regulatory compliance, quality, and safety, ensuring every inspection meets federal, state, and local standards. Our certified inspectors follow Inspire, HUD, REAC, and industry-specific guidelines, delivering trustworthy results. Adherence to these standards mitigates liability, supports insurance requirements, and protects asset value.
-              </p>
-              <p className="text-gray-300 mb-8 leading-relaxed">
-                Clients benefit from inspections that are not only comprehensive but also recognized by public housing authorities, lenders, and commercial stakeholders across the USA. This emphasis on compliance strengthens client confidence, enhances report credibility, and improves long-term property management and decision-making outcomes.
-              </p>
-              <div className="bg-white/10 p-6 rounded-2xl border border-white/20">
-                <h4 className="font-bold text-lg text-[#F84B5F] mb-2">Why it matters</h4>
-                <p className="text-sm text-gray-200 leading-relaxed">
-                  Compliance ensures properties meet legal, safety, and regulatory requirements, reducing risk, avoiding penalties, and enhancing trust for buyers, owners, and public housing authorities.
-                </p>
-              </div>
-            </div>
-            
-            <div>
-              <h2 className="text-3xl font-bold mb-6">Reporting & Deliverables</h2>
-              <p className="text-gray-300 mb-6 leading-relaxed">
-                Inspire delivers comprehensive, actionable reports for all inspections. Reports include detailed property condition summaries, hazard identification, repair cost estimates, and Inspire compliance status. Clients receive photos, annotated diagrams, and executive summaries to support negotiations, insurance claims, and long-term maintenance planning.
-              </p>
-              <div className="relative h-64 md:h-80 w-full rounded-3xl overflow-hidden shadow-2xl">
-                <Image 
-                  src="/inspectionWorkflow.png" 
-                  fill 
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  alt="Reports and deliverables"
-                />
-              </div>
-              <p className="text-sm text-gray-400 mt-6 leading-relaxed">
-                These deliverables are formatted for clarity, accessibility, and regulatory alignment, ensuring property stakeholders can act confidently. Reports are provided digitally for easy sharing and storage, enhancing transparency and decision-making efficiency for buyers, owners, landlords, sellers, and commercial property managers across the USA.
-              </p>
-            </div>
-          </div>
-        </section>
+
       </main>
     </div>
   </MainLayout>

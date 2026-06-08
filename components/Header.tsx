@@ -214,18 +214,18 @@ export default function Header() {
             </Link>
             <Link href="/faq" className="flex flex-col group items-center">
               <span className="text-sm font-bold text-gray-800 group-hover:text-primary transition-colors leading-tight">
-                FAQ
+                EDUCATION & TRAINING
               </span>
               <span className="text-[10px] text-gray-500 italic tracking-wider">
-                Answers to Questions
+                NSPIRE Videos
               </span>
             </Link>
             <Link href="/blog" className="flex flex-col group items-center">
-              <span className="text-sm font-bold text-gray-800 group-hover:text-primary transition-colors leading-tight">
-                BLOG
+              <span className="text-sm font-bold text-gray-800 group-hover:text-primary transition-colors leading-tight text-center">
+                BLOGS
               </span>
               <span className="text-[10px] text-gray-500 italic tracking-wider">
-                Articles & Insights
+                AI-Driven Property Inspection
               </span>
             </Link>
           </div>
@@ -403,10 +403,10 @@ export default function Header() {
               onClick={() => setMobileMenuOpen(false)}
             >
               <span className="text-lg font-bold text-gray-800 group-hover:text-primary transition-colors leading-tight">
-                FAQ
+                EDUCATION & TRAINING
               </span>
               <span className="text-[11px] text-gray-500 italic tracking-wider">
-                Answers to Questions
+                NSPIRE Videos
               </span>
             </Link>
             <Link
@@ -415,10 +415,10 @@ export default function Header() {
               onClick={() => setMobileMenuOpen(false)}
             >
               <span className="text-lg font-bold text-gray-800 group-hover:text-primary transition-colors leading-tight">
-                BLOG
+                BLOGS
               </span>
               <span className="text-[11px] text-gray-500 italic tracking-wider">
-                Articles & Insights
+                AI-Driven Property Inspection
               </span>
             </Link>
 

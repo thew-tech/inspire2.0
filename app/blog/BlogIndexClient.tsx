@@ -78,7 +78,8 @@ export default function BlogIndex() {
         {/* Hero Section */}
         <section className="bg-white py-12 md:py-16 border-b border-gray-100">
           <div className="max-w-[1400px] mx-auto px-4 md:px-6">
-            <h1 className="text-4xl md:text-5xl font-bold text-[#333333] mb-4">Blog</h1>
+            <h1 className="text-4xl md:text-5xl font-bold text-[#333333] mb-2">AI-Driven Property Inspection</h1>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#006795] mb-4">Blogs</h2>
             <div className="w-20 h-1 bg-[#F84B5F] rounded-full"></div>
           </div>
         </section>

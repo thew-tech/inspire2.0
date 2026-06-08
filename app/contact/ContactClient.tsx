@@ -46,28 +46,7 @@ export default function ContactClient() {
                 <a href="mailto:support@inspire.com" className="text-[#006795] font-bold hover:underline text-lg">support@inspire.com</a>
               </div>
 
-              <div className="bg-white p-8 rounded-[40px] shadow-xl border border-gray-100 flex flex-col items-center text-center">
-                <div className="w-16 h-16 bg-[#FFEAEA] rounded-2xl flex items-center justify-center mb-6">
-                  <svg className="w-8 h-8 text-[#F84B5F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 1.01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-black mb-2">Call Us</h3>
-                <p className="text-gray-500 text-sm mb-4">Mon-Fri from 8am to 6pm.</p>
-                <a href="tel:9202202220" className="text-[#F84B5F] font-bold hover:underline text-lg">920-220-2220</a>
-              </div>
 
-              <div className="bg-black p-8 rounded-[40px] shadow-xl text-white flex flex-col items-center text-center">
-                <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mb-6">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold mb-2">Office</h3>
-                <p className="text-gray-400 text-sm">Come say hello at our HQ.</p>
-                <p className="mt-4 font-medium">100 Wall Street<br />New York, NY 10005</p>
-              </div>
             </div>
 
             {/* Contact Form */}
@@ -119,19 +98,7 @@ export default function ContactClient() {
           </div>
         </section>
 
-        {/* Map Section Mockup */}
-        <section className="pb-20 px-4 md:px-6">
-           <div className="max-w-[1200px] mx-auto overflow-hidden rounded-[50px] bg-gray-100 h-[400px] relative">
-              <div className="absolute inset-0 bg-[#006795]/5 flex items-center justify-center">
-                   <div className="text-center">
-                      <div className="w-12 h-12 bg-[#F84B5F] rounded-full mx-auto mb-4 animate-bounce flex items-center justify-center">
-                           <div className="w-4 h-4 bg-white rounded-full"></div>
-                      </div>
-                      <p className="font-bold text-gray-400 uppercase tracking-widest text-xs">Interactive Map Data</p>
-                   </div>
-              </div>
-           </div>
-        </section>
+
       </div>
     </MainLayout>
   );
