@@ -145,7 +145,6 @@ export default function FAQClient() {
                     <p className="font-bold text-gray-900 group-hover:text-[#006795] transition-colors text-sm leading-snug truncate">
                       {video.title}
                     </p>
-                    <p className="text-xs text-gray-400 mt-0.5">NSPIRE Standards · How to Inspect</p>
                   </div>
                   <svg className="w-4 h-4 text-gray-300 group-hover:text-[#F84B5F] flex-shrink-0 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
