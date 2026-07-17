@@ -805,8 +805,8 @@ export default function PropertyDetailsPage() {
     if (loading) {
         return (
             <DashboardLayout>
-                <div className="flex items-center justify-center min-h-[60vh]">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#006795]"></div>
+                <div className="flex items-center justify-center min-h-[60vh] font-lexend">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600"></div>
                 </div>
             </DashboardLayout>
         )
@@ -815,264 +815,277 @@ export default function PropertyDetailsPage() {
     if (!property) {
         return (
             <DashboardLayout>
-                <div className="p-8 text-center text-gray-500 font-bold">Property not found.</div>
+                <div className="p-8 text-center text-slate-500 font-bold font-lexend">Property not found.</div>
             </DashboardLayout>
         )
     }
 
     return (
         <DashboardLayout>
-            <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
-                <div className="flex items-center justify-between mb-8">
-                    <button
-                        onClick={() => router.back()}
-                        className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                    >
-                        <ChevronLeft className="w-6 h-6 text-gray-600" />
-                    </button>
-                    <div className="flex items-center gap-2 pr-4">
-                        <span className="text-sm font-bold text-gray-900">{user?.fullName || "Guest User"}</span>
-                        <div className="w-2.5 h-2.5 border-2 border-gray-400 rotate-45 border-t-0 border-l-0 -mt-1 ml-1" />
+            <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 lg:space-y-8 font-lexend">
+                {/* Header Section */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm">
+                    <div className="flex items-center gap-3">
+                        <button
+                            onClick={() => router.back()}
+                            className="p-2 hover:bg-slate-50 text-slate-500 hover:text-slate-900 rounded-xl border border-slate-200 transition-colors"
+                        >
+                            <ChevronLeft className="w-5 h-5" />
+                        </button>
+                        <div>
+                            <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">Property Details</h1>
+                            <p className="text-slate-500 text-xs sm:text-sm font-medium mt-0.5">View and customize inspection sampling for this property</p>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-2 self-end sm:self-center bg-slate-50 border border-slate-100 rounded-xl px-4 py-2">
+                        <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Inspector:</span>
+                        <span className="text-xs font-extrabold text-slate-800">{user?.fullName || "Guest User"}</span>
                     </div>
                 </div>
 
-                <h1 className="text-xl font-black text-gray-900 mb-6 px-1 tracking-tight">Property Details</h1>
-
-                <Card className="bg-[#F1F7FE] border-none shadow-none p-8 mb-12 rounded-xl">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-12">
+                {/* Property Meta Card */}
+                <Card className="bg-gradient-to-br from-slate-50 to-slate-100/50 border border-slate-200/60 shadow-sm p-6 sm:p-8 rounded-2xl">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-6 gap-x-8">
                         <div className="space-y-1">
-                            <span className="text-sm font-black text-gray-900">Property ID: </span>
-                            <span className="text-sm text-[#006795] font-black">{property.propertyId || property._id?.slice(-8)?.toUpperCase()}</span>
-                            <div className="mt-1">
-                                <span className="text-sm font-black text-gray-900">State: </span>
-                                <span className="text-sm text-gray-600 font-bold">{property.state}</span>
+                            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Property ID</span>
+                            <p className="text-sm font-extrabold text-teal-600">{property.propertyId || property._id?.slice(-8)?.toUpperCase()}</p>
+                            <div className="pt-2">
+                                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">State</span>
+                                <p className="text-sm font-bold text-slate-700">{property.state || "-"}</p>
                             </div>
                         </div>
 
                         <div className="space-y-1">
-                            <span className="text-sm font-black text-gray-900">Zip: </span>
-                            <span className="text-sm text-gray-600 font-bold pl-4">{property.zipCode}</span>
-                            <div className="mt-1">
-                                <span className="text-sm font-black text-gray-900">Address: </span>
-                                <span className="text-sm text-gray-600 font-bold">{property.address}</span>
+                            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Zip Code</span>
+                            <p className="text-sm font-bold text-slate-700">{property.zipCode || "-"}</p>
+                            <div className="pt-2">
+                                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Address</span>
+                                <p className="text-sm font-bold text-slate-700 truncate" title={property.address}>{property.address || "-"}</p>
                             </div>
                         </div>
 
                         <div className="space-y-1">
-                            <span className="text-sm font-black text-gray-900 block">No. of Building: </span>
-                            <span className="text-sm text-gray-900 font-black">{property.buildings || 1}</span>
-                            <div className="mt-1">
-                                <span className="text-sm font-black text-gray-900">Selection: </span>
-                                <span className="text-sm text-gray-600 font-bold">{getCoverageLabel()}</span>
+                            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Buildings</span>
+                            <p className="text-sm font-extrabold text-slate-900">{property.buildings || 1}</p>
+                            <div className="pt-2">
+                                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Coverage Mode</span>
+                                <p className="text-sm font-bold text-slate-700">{getCoverageLabel()}</p>
                             </div>
                         </div>
 
                         <div className="space-y-1">
-                            <span className="text-sm font-black text-gray-900">Property Name: </span>
-                            <span className="text-sm text-gray-600 font-bold">{property.name}</span>
-                            <div className="mt-1">
-                                <span className="text-sm font-black text-gray-900">City: </span>
-                                <span className="text-sm text-gray-600 font-bold pl-4">{property.city}</span>
+                            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Property Name</span>
+                            <p className="text-sm font-extrabold text-slate-900 truncate" title={property.name}>{property.name || "-"}</p>
+                            <div className="pt-2">
+                                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">City</span>
+                                <p className="text-sm font-bold text-slate-700">{property.city || "-"}</p>
                             </div>
                         </div>
                     </div>
                 </Card>
 
-                <div className="mb-12">
-                    <h2 className="text-xl font-black text-gray-900 mb-6 px-1 tracking-tight">Unit Status Summary</h2>
-                    <Card className="bg-white border border-gray-100 shadow-sm p-8 rounded-2xl">
+                {/* Progress Summary Section */}
+                <div className="space-y-4">
+                    <h2 className="text-lg font-bold text-slate-900 px-1">Unit Status Summary</h2>
+                    <Card className="bg-white border border-slate-200/80 shadow-sm p-6 sm:p-8 rounded-2xl">
                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
-                            <div className="flex-1">
-                                <div className="flex items-center justify-between mb-4">
-                                    <span className="text-sm font-black text-gray-500 uppercase tracking-widest">Overall Inspection Progress</span>
-                                    <span className="text-2xl font-black text-[#006795]">{overallProgress}%</span>
+                            <div className="flex-1 space-y-3">
+                                <div className="flex items-center justify-between">
+                                    <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Overall Inspection Progress</span>
+                                    <span className="text-xl font-extrabold text-teal-600">{overallProgress}%</span>
                                 </div>
-                                <div className="w-full bg-gray-100 rounded-full h-4 overflow-hidden border border-gray-50">
+                                <div className="w-full bg-slate-100 rounded-full h-3.5 overflow-hidden border border-slate-200/50">
                                     <div 
-                                        className="h-full bg-gradient-to-r from-[#006795] to-[#0891B2] rounded-full transition-all duration-1000 ease-out shadow-inner"
+                                        className="h-full bg-gradient-to-r from-teal-600 to-emerald-500 rounded-full transition-all duration-1000 ease-out shadow-inner"
                                         style={{ width: `${overallProgress}%` }}
                                     />
                                 </div>
-                                <div className="flex justify-between mt-3">
-                                    <span className="text-[11px] font-bold text-gray-400 uppercase tracking-tighter">Not Started</span>
-                                    <span className="text-[11px] font-bold text-gray-400 uppercase tracking-tighter">Completed</span>
+                                <div className="flex justify-between">
+                                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Not Started</span>
+                                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Completed</span>
                                 </div>
                             </div>
                             
-                            <div className="flex gap-4 md:border-l md:pl-8 border-gray-100">
-                                <div className="text-center px-4">
-                                    <p className="text-2xl font-black text-gray-900">
+                            <div className="flex gap-6 md:border-l md:pl-8 border-slate-150">
+                                <div className="text-center px-2">
+                                    <p className="text-2xl font-extrabold text-slate-950">
                                         {Object.values(completedUnitsMap).flat().length}
                                     </p>
-                                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Tasks Done</p>
+                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Tasks Done</p>
                                 </div>
-                                <div className="text-center px-4">
-                                    <p className="text-2xl font-black text-gray-900">
+                                <div className="text-center px-2">
+                                    <p className="text-2xl font-extrabold text-slate-950">
                                         {buildings.reduce((sum, b) => sum + (2 + b.unitsForInspection), 0)}
                                     </p>
-                                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Total Tasks</p>
+                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Total Tasks</p>
                                 </div>
                             </div>
                         </div>
                     </Card>
                 </div>
 
-                <h2 className="text-xl font-black text-gray-900 mb-6 px-1 tracking-tight">Building</h2>
+                {/* Building Table Section */}
+                <div className="space-y-4">
+                    <div className="flex items-center justify-between px-1">
+                        <h2 className="text-lg font-bold text-slate-900">Building Breakdown</h2>
+                        <span className="text-xs font-bold text-slate-400">Total units required: {totalInspectionUnits}</span>
+                    </div>
 
-                {/* Edit Column Header Modal */}
-                {editColumnHeaderOpen && (
-                    <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
-                        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden">
-                            <div className="flex items-center justify-between p-5 border-b">
-                                <h3 className="text-base font-bold text-gray-900">Edit Column Name</h3>
-                                <button onClick={() => setEditColumnHeaderOpen(false)} className="p-1 hover:bg-gray-100 rounded-full">
-                                    <X className="w-5 h-5 text-gray-500" />
-                                </button>
-                            </div>
-                            <div className="p-5">
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">Column Name</label>
-                                <input
-                                    ref={columnHeaderInputRef}
-                                    type="text"
-                                    value={tempColumnHeaderName}
-                                    onChange={(e) => setTempColumnHeaderName(e.target.value)}
-                                    onKeyDown={(e) => e.key === 'Enter' && handleSaveColumnHeader()}
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#006795] focus:border-transparent text-sm"
-                                    placeholder="Building Unique ID"
-                                />
-                            </div>
-                            <div className="flex gap-3 p-5 border-t bg-gray-50">
-                                <button
-                                    onClick={() => setEditColumnHeaderOpen(false)}
-                                    className="flex-1 px-4 py-3 border border-gray-300 rounded-xl text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors"
-                                >
-                                    Cancel
-                                </button>
-                                <button
-                                    onClick={handleSaveColumnHeader}
-                                    className="flex-1 px-4 py-3 bg-[#006795] text-white rounded-xl text-sm font-semibold hover:bg-blue-700 transition-colors"
-                                >
-                                    Save
-                                </button>
+                    {/* Edit Column Header Modal */}
+                    {editColumnHeaderOpen && (
+                        <div className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                            <div className="bg-white rounded-2xl shadow-xl w-full max-w-sm overflow-hidden border border-slate-200/80 animate-in fade-in zoom-in-95 duration-200">
+                                <div className="flex items-center justify-between p-5 border-b border-slate-100">
+                                    <h3 className="text-sm font-bold text-slate-950">Edit Column Name</h3>
+                                    <button onClick={() => setEditColumnHeaderOpen(false)} className="p-1 hover:bg-slate-50 text-slate-400 hover:text-slate-700 rounded-lg">
+                                        <X className="w-5 h-5" />
+                                    </button>
+                                </div>
+                                <div className="p-5">
+                                    <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Column Name</label>
+                                    <input
+                                        ref={columnHeaderInputRef}
+                                        type="text"
+                                        value={tempColumnHeaderName}
+                                        onChange={(e) => setTempColumnHeaderName(e.target.value)}
+                                        onKeyDown={(e) => e.key === 'Enter' && handleSaveColumnHeader()}
+                                        className="w-full px-3.5 py-2.5 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all"
+                                        placeholder="Building Unique ID"
+                                    />
+                                </div>
+                                <div className="flex gap-3 p-5 border-t border-slate-100 bg-slate-50/50">
+                                    <button
+                                        onClick={() => setEditColumnHeaderOpen(false)}
+                                        className="flex-1 px-4 py-2.5 border border-slate-200 bg-white rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50 transition-colors"
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        onClick={handleSaveColumnHeader}
+                                        className="flex-1 px-4 py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-bold transition-colors border-0 shadow-sm shadow-teal-600/10"
+                                    >
+                                        Save
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                )}
-                
-                {/* Desktop Table View */}
-                <div className="hidden md:block bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm">
-                    <table className="w-full">
-                        <thead className="bg-[#F8FAFC] border-b border-gray-100">
-                            <tr>
-                                <th className="text-left py-4 px-8 text-xs font-black text-gray-900 uppercase tracking-widest">
-                                    <span className="inline-flex items-center gap-2">
-                                        {columnHeaderName}
-                                        <button
-                                            onClick={() => { setTempColumnHeaderName(columnHeaderName); setEditColumnHeaderOpen(true) }}
-                                            className="p-1 rounded hover:bg-blue-50 text-[#006795] transition-colors"
-                                            title="Edit column name"
-                                        >
-                                            <Pencil className="w-3.5 h-3.5" />
-                                        </button>
-                                    </span>
-                                </th>
-                                <th className="text-center py-4 px-8 text-xs font-black text-gray-900 uppercase tracking-widest">Total Units</th>
-                                <th className="text-center py-4 px-8 text-xs font-black text-gray-900 uppercase tracking-widest">Unit for Inspection</th>
-                                <th className="text-center py-4 px-8 text-xs font-black text-gray-900 uppercase tracking-widest">Progress</th>
-                                <th className="py-4 px-8 w-64"></th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-50">
-                            {buildings.map((building) => {
-                                const completed = getCompletedCount(building.buildingId)
-                                const allDone = isAllCompleted(building)
-                                return (
-                                    <tr key={building.buildingId} className="hover:bg-gray-50/50 transition-colors">
-                                        <td className="py-6 px-8">
-                                            {editingBuildingId === building.buildingId ? (
-                                                <div className="flex items-center gap-1">
-                                                    <input
-                                                        ref={buildingNameInputRef}
-                                                        value={tempBuildingName}
-                                                        onChange={e => setTempBuildingName(e.target.value)}
-                                                        onKeyDown={e => { if (e.key === 'Enter') handleSaveBuildingName(building.buildingId); if (e.key === 'Escape') setEditingBuildingId(null) }}
-                                                        className="w-20 text-sm font-black text-gray-900 border-2 border-[#006795] rounded-lg py-1 px-2 focus:outline-none"
-                                                    />
-                                                    <button onClick={() => handleSaveBuildingName(building.buildingId)} className="p-1 rounded-lg bg-[#006795] text-white hover:bg-[#00567a]">
-                                                        <Check className="w-3.5 h-3.5" />
-                                                    </button>
-                                                    <button onClick={() => setEditingBuildingId(null)} className="p-1 rounded-lg bg-gray-100 text-gray-500 hover:bg-gray-200">
-                                                        <X className="w-3.5 h-3.5" />
-                                                    </button>
-                                                </div>
-                                            ) : (
-                                                <div className="flex items-center gap-1.5 group">
-                                                    <span className="text-sm text-gray-900 font-black">{getBuildingDisplayName(building.buildingId)}</span>
-                                                    <button onClick={() => handleStartBuildingEdit(building.buildingId)} className="opacity-0 group-hover:opacity-100 p-0.5 rounded hover:bg-blue-50 text-[#006795] transition-opacity">
-                                                        <Pencil className="w-3.5 h-3.5" />
-                                                    </button>
-                                                </div>
-                                            )}
-                                        </td>
-                                        <td className="py-6 px-8 text-sm text-gray-900 text-center font-black">{building.totalUnits}</td>
-                                        <td className="py-6 px-8 text-center">
-                                            <input
-                                                type="number"
-                                                min={0}
-                                                max={totalInspectionUnits}
-                                                value={building.unitsForInspection}
-                                                onChange={(e) => handleInspectionUnitChange(building.buildingId, parseInt(e.target.value) || 0)}
-                                                className="w-20 text-center text-sm font-black text-gray-900 border-2 border-gray-200 rounded-lg py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-[#006795] focus:border-transparent transition-all hover:border-[#006795]/50"
-                                            />
-                                        </td>
-                                        <td className="py-6 px-8 text-center">
-                                            {completed > 0 ? (
-                                                <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold ${allDone ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
-                                                    {allDone ? <CheckCircle2 className="w-3.5 h-3.5" /> : <Clock className="w-3.5 h-3.5" />}
-                                                    {completed}/{building.unitsForInspection}
-                                                </span>
-                                            ) : (
-                                                <span className="text-xs text-gray-400 font-bold">Not started</span>
-                                            )}
-                                        </td>
-                                        <td className="py-6 px-8">
-                                            <Button
-                                                onClick={() => handleBuildingClick(building)}
-                                                className={`w-full font-black py-3 rounded-xl text-sm shadow-md transition-all active:scale-[0.98] ${
-                                                    allDone
-                                                        ? 'bg-green-500 hover:bg-green-600 text-white'
-                                                        : completed > 0
-                                                        ? 'bg-amber-500 hover:bg-amber-600 text-white'
-                                                        : 'bg-[#006795] hover:bg-[#00567a] text-white'
-                                                }`}
+                    )}
+                    
+                    {/* Desktop Table View */}
+                    <div className="hidden md:block bg-white border border-slate-200/80 rounded-2xl overflow-hidden shadow-sm">
+                        <table className="w-full">
+                            <thead className="bg-slate-50/80 border-b border-slate-150">
+                                <tr>
+                                    <th className="text-left py-4 px-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                                        <span className="inline-flex items-center gap-2">
+                                            {columnHeaderName}
+                                            <button
+                                                onClick={() => { setTempColumnHeaderName(columnHeaderName); setEditColumnHeaderOpen(true) }}
+                                                className="p-1 rounded-lg hover:bg-teal-50 text-teal-600 transition-colors"
+                                                title="Edit column name"
                                             >
-                                                {allDone ? 'Completed ✓' : completed > 0 ? 'Continue Inspection' : 'Start Inspection'}
-                                            </Button>
-                                        </td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                        <tfoot className="bg-[#F1F7FE] border-t-2 border-gray-200">
-                            <tr>
-                                <td className="py-4 px-8 text-sm font-black text-gray-900">Total</td>
-                                <td className="py-4 px-8 text-sm font-black text-gray-900 text-center">
-                                    {buildings.reduce((sum, b) => sum + b.totalUnits, 0)}
-                                </td>
-                                <td className="py-4 px-8 text-sm font-black text-center">
-                                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-black ${
-                                        buildings.reduce((sum, b) => sum + b.unitsForInspection, 0) === totalInspectionUnits
-                                            ? 'bg-green-100 text-green-700'
-                                            : 'bg-red-100 text-red-700'
-                                    }`}>
-                                        {buildings.reduce((sum, b) => sum + b.unitsForInspection, 0)} / {totalInspectionUnits}
-                                    </span>
-                                </td>
-                                <td className="py-4 px-8"></td>
-                                <td className="py-4 px-8"></td>
-                            </tr>
-                        </tfoot>
-                    </table>
+                                                <Pencil className="w-3.5 h-3.5" />
+                                            </button>
+                                        </span>
+                                    </th>
+                                    <th className="text-center py-4 px-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Total Units</th>
+                                    <th className="text-center py-4 px-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Units for Inspection</th>
+                                    <th className="text-center py-4 px-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Progress</th>
+                                    <th className="py-4 px-6 w-56"></th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-100">
+                                {buildings.map((building) => {
+                                    const completed = getCompletedCount(building.buildingId)
+                                    const allDone = isAllCompleted(building)
+                                    return (
+                                        <tr key={building.buildingId} className="hover:bg-slate-50/30 transition-colors">
+                                            <td className="py-5 px-6">
+                                                {editingBuildingId === building.buildingId ? (
+                                                    <div className="flex items-center gap-1.5">
+                                                        <input
+                                                            ref={buildingNameInputRef}
+                                                            value={tempBuildingName}
+                                                            onChange={e => setTempBuildingName(e.target.value)}
+                                                            onKeyDown={e => { if (e.key === 'Enter') handleSaveBuildingName(building.buildingId); if (e.key === 'Escape') setEditingBuildingId(null) }}
+                                                            className="w-24 text-sm font-bold text-slate-900 border border-teal-500 rounded-lg py-1 px-2 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
+                                                        />
+                                                        <button onClick={() => handleSaveBuildingName(building.buildingId)} className="p-1.5 rounded-lg bg-teal-600 hover:bg-teal-700 text-white transition-colors border-0">
+                                                            <Check className="w-3.5 h-3.5" />
+                                                        </button>
+                                                        <button onClick={() => setEditingBuildingId(null)} className="p-1.5 rounded-lg bg-slate-100 text-slate-500 hover:bg-slate-200 transition-colors border-0">
+                                                            <X className="w-3.5 h-3.5" />
+                                                        </button>
+                                                    </div>
+                                                ) : (
+                                                    <div className="flex items-center gap-1.5 group">
+                                                        <span className="text-sm text-slate-900 font-extrabold">{getBuildingDisplayName(building.buildingId)}</span>
+                                                        <button onClick={() => handleStartBuildingEdit(building.buildingId)} className="opacity-0 group-hover:opacity-100 p-1 rounded-lg hover:bg-teal-50 text-teal-600 transition-all">
+                                                            <Pencil className="w-3 h-3" />
+                                                        </button>
+                                                    </div>
+                                                )}
+                                            </td>
+                                            <td className="py-5 px-6 text-sm text-slate-600 text-center font-bold">{building.totalUnits}</td>
+                                            <td className="py-5 px-6 text-center">
+                                                <input
+                                                    type="number"
+                                                    min={0}
+                                                    max={totalInspectionUnits}
+                                                    value={building.unitsForInspection}
+                                                    onChange={(e) => handleInspectionUnitChange(building.buildingId, parseInt(e.target.value) || 0)}
+                                                    className="w-20 text-center text-sm font-extrabold text-slate-800 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 transition-all"
+                                                />
+                                            </td>
+                                            <td className="py-5 px-6 text-center">
+                                                {completed > 0 ? (
+                                                    <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold border ${allDone ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : 'bg-amber-50 text-amber-700 border-amber-100'}`}>
+                                                        {allDone ? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> : <Clock className="w-3.5 h-3.5 text-amber-500" />}
+                                                        {completed}/{building.unitsForInspection}
+                                                    </span>
+                                                ) : (
+                                                    <span className="text-xs text-slate-400 font-bold">Not started</span>
+                                                )}
+                                            </td>
+                                            <td className="py-5 px-6">
+                                                <Button
+                                                    onClick={() => handleBuildingClick(building)}
+                                                    className={`w-full font-bold py-2 rounded-xl text-xs shadow-sm transition-all border-0 ${
+                                                        allDone
+                                                            ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-600/10'
+                                                            : completed > 0
+                                                            ? 'bg-amber-500 hover:bg-amber-600 text-white shadow-amber-500/10'
+                                                            : 'bg-teal-600 hover:bg-teal-700 text-white shadow-teal-600/10'
+                                                    }`}
+                                                >
+                                                    {allDone ? 'Completed ✓' : completed > 0 ? 'Continue Inspection' : 'Start Inspection'}
+                                                </Button>
+                                            </td>
+                                        </tr>
+                                    )
+                                })}
+                            </tbody>
+                            <tfoot className="bg-slate-50/60 border-t-2 border-slate-200">
+                                <tr>
+                                    <td className="py-4 px-6 text-sm font-extrabold text-slate-900">Total</td>
+                                    <td className="py-4 px-6 text-sm font-bold text-slate-700 text-center">
+                                        {buildings.reduce((sum, b) => sum + b.totalUnits, 0)}
+                                    </td>
+                                    <td className="py-4 px-6 text-sm font-black text-center">
+                                        <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border ${
+                                            buildings.reduce((sum, b) => sum + b.unitsForInspection, 0) === totalInspectionUnits
+                                                ? 'bg-emerald-50 text-emerald-700 border-emerald-100'
+                                                : 'bg-rose-50 text-rose-700 border-rose-100'
+                                        }`}>
+                                            {buildings.reduce((sum, b) => sum + b.unitsForInspection, 0)} / {totalInspectionUnits}
+                                        </span>
+                                    </td>
+                                    <td className="py-4 px-6"></td>
+                                    <td className="py-4 px-6"></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
                 </div>
 
                 {/* Mobile Card View */}
@@ -1081,89 +1094,88 @@ export default function PropertyDetailsPage() {
                         const completed = getCompletedCount(building.buildingId)
                         const allDone = isAllCompleted(building)
                         return (
-                            <div key={building.buildingId} className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm">
-                                <div className="space-y-4">
-                                    <div className="flex justify-between items-center pb-3 border-b border-gray-100">
-                                        <span className="text-xs font-black text-gray-400 uppercase tracking-widest inline-flex items-center gap-1">
-                                            {columnHeaderName}
-                                            <button onClick={() => { setTempColumnHeaderName(columnHeaderName); setEditColumnHeaderOpen(true) }} className="p-0.5 rounded hover:bg-blue-50 text-[#006795]" title="Edit column name">
+                            <div key={building.buildingId} className="bg-white border border-slate-200/80 rounded-2xl p-4 shadow-sm space-y-4">
+                                <div className="flex justify-between items-center pb-3 border-b border-slate-100">
+                                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider inline-flex items-center gap-1">
+                                        {columnHeaderName}
+                                        <button onClick={() => { setTempColumnHeaderName(columnHeaderName); setEditColumnHeaderOpen(true) }} className="p-1 rounded-lg hover:bg-teal-50 text-teal-600" title="Edit column name">
+                                            <Pencil className="w-3 h-3" />
+                                        </button>
+                                    </span>
+                                    {editingBuildingId === building.buildingId ? (
+                                        <div className="flex items-center gap-1">
+                                            <input
+                                                ref={buildingNameInputRef}
+                                                value={tempBuildingName}
+                                                onChange={e => setTempBuildingName(e.target.value)}
+                                                onKeyDown={e => { if (e.key === 'Enter') handleSaveBuildingName(building.buildingId); if (e.key === 'Escape') setEditingBuildingId(null) }}
+                                                className="w-20 text-xs font-bold text-slate-900 border border-teal-500 rounded-lg py-1 px-1.5 focus:outline-none"
+                                            />
+                                            <button onClick={() => handleSaveBuildingName(building.buildingId)} className="p-1 rounded-lg bg-teal-600 text-white transition-colors border-0">
+                                                <Check className="w-3 h-3" />
+                                            </button>
+                                            <button onClick={() => setEditingBuildingId(null)} className="p-1 rounded-lg bg-slate-100 text-slate-500 transition-colors border-0">
+                                                <X className="w-3 h-3" />
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <div className="flex items-center gap-1 group">
+                                            <span className="text-sm text-slate-900 font-extrabold">{getBuildingDisplayName(building.buildingId)}</span>
+                                            <button onClick={() => handleStartBuildingEdit(building.buildingId)} className="opacity-0 group-hover:opacity-100 p-0.5 rounded hover:bg-teal-50 text-teal-600 transition-opacity">
                                                 <Pencil className="w-3 h-3" />
                                             </button>
-                                        </span>
-                                        {editingBuildingId === building.buildingId ? (
-                                                <div className="flex items-center gap-1">
-                                                    <input
-                                                        ref={buildingNameInputRef}
-                                                        value={tempBuildingName}
-                                                        onChange={e => setTempBuildingName(e.target.value)}
-                                                        onKeyDown={e => { if (e.key === 'Enter') handleSaveBuildingName(building.buildingId); if (e.key === 'Escape') setEditingBuildingId(null) }}
-                                                        className="w-20 text-sm font-black text-gray-900 border-2 border-[#006795] rounded-lg py-1 px-2 focus:outline-none"
-                                                    />
-                                                    <button onClick={() => handleSaveBuildingName(building.buildingId)} className="p-1 rounded-lg bg-[#006795] text-white hover:bg-[#00567a]">
-                                                        <Check className="w-3.5 h-3.5" />
-                                                    </button>
-                                                    <button onClick={() => setEditingBuildingId(null)} className="p-1 rounded-lg bg-gray-100 text-gray-500 hover:bg-gray-200">
-                                                        <X className="w-3.5 h-3.5" />
-                                                    </button>
-                                                </div>
-                                            ) : (
-                                                <div className="flex items-center gap-1.5 group">
-                                                    <span className="text-sm text-gray-900 font-black">{getBuildingDisplayName(building.buildingId)}</span>
-                                                    <button onClick={() => handleStartBuildingEdit(building.buildingId)} className="opacity-0 group-hover:opacity-100 p-0.5 rounded hover:bg-blue-50 text-[#006795] transition-opacity">
-                                                        <Pencil className="w-3.5 h-3.5" />
-                                                    </button>
-                                                </div>
-                                            )}
-                                    </div>
-                                    <div className="flex justify-between items-center pb-3 border-b border-gray-100">
-                                        <span className="text-xs font-black text-gray-400 uppercase tracking-widest">Total Units</span>
-                                        <span className="text-sm text-gray-900 font-black">{building.totalUnits}</span>
-                                    </div>
-                                    <div className="flex justify-between items-center pb-3 border-b border-gray-100">
-                                        <span className="text-xs font-black text-gray-400 uppercase tracking-widest">Unit for Inspection</span>
-                                        <input
-                                            type="number"
-                                            min={0}
-                                            max={totalInspectionUnits}
-                                            value={building.unitsForInspection}
-                                            onChange={(e) => handleInspectionUnitChange(building.buildingId, parseInt(e.target.value) || 0)}
-                                            className="w-16 text-center text-sm font-black text-gray-900 border-2 border-gray-200 rounded-lg py-1 px-1 focus:outline-none focus:ring-2 focus:ring-[#006795] focus:border-transparent"
-                                        />
-                                    </div>
-                                    <div className="flex justify-between items-center pb-4 border-b border-gray-100">
-                                        <span className="text-xs font-black text-gray-400 uppercase tracking-widest">Progress</span>
-                                        {completed > 0 ? (
-                                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold ${allDone ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
-                                                {allDone ? <CheckCircle2 className="w-3 h-3" /> : <Clock className="w-3 h-3" />}
-                                                {completed}/{building.unitsForInspection}
-                                            </span>
-                                        ) : (
-                                            <span className="text-xs text-gray-400 font-bold">Not started</span>
-                                        )}
-                                    </div>
-                                    <Button
-                                        onClick={() => handleBuildingClick(building)}
-                                        className={`w-full font-black py-3 rounded-xl text-sm shadow-md transition-all active:scale-[0.98] ${
-                                            allDone
-                                                ? 'bg-green-500 hover:bg-green-600 text-white'
-                                                : completed > 0
-                                                ? 'bg-amber-500 hover:bg-amber-600 text-white'
-                                                : 'bg-[#006795] hover:bg-[#00567a] text-white'
-                                        }`}
-                                    >
-                                        {allDone ? 'Completed ✓' : completed > 0 ? 'Continue Inspection' : 'Start Inspection'}
-                                    </Button>
+                                        </div>
+                                    )}
                                 </div>
+                                <div className="flex justify-between items-center pb-3 border-b border-slate-100 text-xs font-medium">
+                                    <span className="text-slate-400 font-bold uppercase tracking-wider">Total Units</span>
+                                    <span className="text-slate-800 font-extrabold">{building.totalUnits}</span>
+                                </div>
+                                <div className="flex justify-between items-center pb-3 border-b border-slate-100 text-xs font-medium">
+                                    <span className="text-slate-400 font-bold uppercase tracking-wider">Units for Inspection</span>
+                                    <input
+                                        type="number"
+                                        min={0}
+                                        max={totalInspectionUnits}
+                                        value={building.unitsForInspection}
+                                        onChange={(e) => handleInspectionUnitChange(building.buildingId, parseInt(e.target.value) || 0)}
+                                        className="w-16 text-center text-xs font-extrabold text-slate-800 border border-slate-200 bg-slate-50/50 rounded-lg py-1 px-1 focus:outline-none"
+                                    />
+                                </div>
+                                <div className="flex justify-between items-center pb-4 border-b border-slate-100 text-xs font-medium">
+                                    <span className="text-slate-400 font-bold uppercase tracking-wider">Progress</span>
+                                    {completed > 0 ? (
+                                        <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold border ${allDone ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : 'bg-amber-50 text-amber-700 border-amber-100'}`}>
+                                            {allDone ? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> : <Clock className="w-3.5 h-3.5 text-amber-500" />}
+                                            {completed}/{building.unitsForInspection}
+                                        </span>
+                                    ) : (
+                                        <span className="text-slate-400 font-bold">Not started</span>
+                                    )}
+                                </div>
+                                <Button
+                                    onClick={() => handleBuildingClick(building)}
+                                    className={`w-full font-bold py-2.5 rounded-xl text-xs shadow-sm transition-all border-0 ${
+                                        allDone
+                                            ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-600/10'
+                                            : completed > 0
+                                            ? 'bg-amber-500 hover:bg-amber-600 text-white shadow-amber-500/10'
+                                            : 'bg-teal-600 hover:bg-teal-700 text-white shadow-teal-600/10'
+                                    }`}
+                                >
+                                    {allDone ? 'Completed ✓' : completed > 0 ? 'Continue Inspection' : 'Start Inspection'}
+                                </Button>
                             </div>
                         )
                     })}
                 </div>
 
-                <div className="mt-8 flex justify-center">
+                {/* Bottom Actions */}
+                <div className="pt-4 flex justify-center">
                     <Button
                         onClick={handleExportInProgress}
                         disabled={isExporting}
-                        className="w-full md:w-auto min-w-[220px] bg-[#10B981] hover:bg-[#0ea56f] text-white font-black py-3 px-8 rounded-xl shadow-md"
+                        className="w-full md:w-auto min-w-[220px] bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-200 text-white font-bold py-3 px-8 rounded-xl shadow-md shadow-emerald-600/10 transition-all duration-200 border-0"
                     >
                         {isExporting ? 'Preparing Report...' : 'Export In Progress'}
                     </Button>
@@ -1172,15 +1184,15 @@ export default function PropertyDetailsPage() {
 
             {/* ====== Unit Selection Popup ====== */}
             {unitPopupOpen && selectedBuilding && (
-                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-3 sm:p-4" onClick={() => setUnitPopupOpen(false)}>
+                <div className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center z-50 p-3 sm:p-4" onClick={() => setUnitPopupOpen(false)}>
                     <div
-                        className="bg-white rounded-2xl w-full max-w-lg max-h-[85vh] overflow-hidden shadow-2xl"
+                        className="bg-white rounded-2xl w-full max-w-lg max-h-[85vh] overflow-hidden shadow-xl border border-slate-200/80 animate-in fade-in zoom-in-95 duration-200 flex flex-col"
                         onClick={(e) => e.stopPropagation()}
                     >
                         {/* Popup Header */}
-                        <div className="bg-gradient-to-r from-[#006795] to-[#0891B2] p-5 flex items-center justify-between">
+                        <div className="bg-gradient-to-r from-teal-700 to-teal-600 p-5 flex items-center justify-between">
                             <div>
-                                <h3 className="text-lg font-black text-white tracking-tight">
+                                <h3 className="text-base font-extrabold text-white tracking-tight">
                                     {selectedBuilding.buildingId} — Select Unit
                                 </h3>
                                 <p className="text-xs text-white/80 mt-0.5 font-medium">
@@ -1189,68 +1201,65 @@ export default function PropertyDetailsPage() {
                             </div>
                             <button
                                 onClick={() => setUnitPopupOpen(false)}
-                                className="w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors"
+                                className="w-8 h-8 flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 transition-colors text-white border-0"
                             >
-                                <X className="w-4 h-4 text-white" />
+                                <X className="w-4 h-4" />
                             </button>
                         </div>
 
                         {/* Sampling Information & Random Selection */}
-                        <div className="px-5 pt-4">
-                            <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-4">
-                                <p className="text-xs text-blue-800 font-bold leading-relaxed">
+                        <div className="px-5 pt-4 flex-shrink-0">
+                            <div className="bg-teal-50/50 border border-teal-100/70 rounded-xl p-4">
+                                <p className="text-xs text-teal-800 font-bold leading-relaxed">
                                     {getSamplingExplanation(selectedBuilding.totalUnits)}
                                 </p>
                                 <button
                                     onClick={() => {
                                         const sample = generateRandomUnitSample(selectedBuilding.totalUnits, property._id || id);
-                                        // Mark all selected units as completed/available? 
-                                        // Actually the app just highlights them.
-                                        // For the web, we'll toast the selection.
                                         toast.info(`Randomly selected: ${sample.selectedUnits.join(', ')}`, { position: 'top-right' });
                                     }}
-                                    className="mt-3 flex items-center gap-2 text-xs font-black text-[#006795] hover:text-[#0a5670] transition-colors"
+                                    className="mt-3 flex items-center gap-1.5 text-xs font-bold text-teal-600 hover:text-teal-700 transition-colors bg-transparent border-0 cursor-pointer p-0"
                                 >
-                                    <RefreshCw className="w-3.5 h-3.5" />
+                                    <RefreshCw className="w-3.5 h-3.5 animate-spin-hover" />
                                     Generate Random Sample
                                 </button>
                             </div>
                         </div>
 
                         {/* Progress Bar */}
-                        <div className="px-5 pt-4 pb-2">
-                            <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div className="px-5 pt-4 pb-2 flex-shrink-0">
+                            <div className="w-full bg-slate-100 border border-slate-200/50 rounded-full h-2 overflow-hidden">
                                 <div
-                                    className="bg-gradient-to-r from-[#006795] to-[#0891B2] h-2 rounded-full transition-all duration-500"
+                                    className="bg-gradient-to-r from-teal-600 to-emerald-500 h-full rounded-full transition-all duration-500"
                                     style={{ width: `${(getCompletedCount(selectedBuilding.buildingId) / selectedBuilding.unitsForInspection) * 100}%` }}
                                 />
                             </div>
                         </div>
 
                         {/* Unit List */}
-                        <div className="p-5 overflow-y-auto max-h-[60vh] space-y-2">
+                        <div className="p-5 overflow-y-auto flex-1 min-h-0 space-y-2.5">
                             {generateUnitNames(selectedBuilding.buildingId, selectedBuilding.unitsForInspection).map((unitName, idx) => {
                                 const completed = (completedUnitsMap[selectedBuilding.buildingId] || []).includes(unitName)
                                 return (
                                     <div
                                         key={unitName}
-                                        className={`flex items-center justify-between p-4 rounded-xl border-2 transition-all ${
+                                        className={`flex items-center justify-between p-3.5 rounded-2xl border transition-all ${
                                             completed
-                                                ? 'border-green-200 bg-green-50'
-                                                : 'border-gray-100 bg-white hover:border-[#006795]/30 hover:bg-[#F1F7FE]'
+                                                ? 'border-emerald-200 bg-emerald-50/40'
+                                                : 'border-slate-100 bg-white hover:border-teal-500/20 hover:bg-teal-50/10'
                                         }`}
                                     >
                                         <div className="flex items-center gap-3">
-                                            <div className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-black ${
-                                                completed ? 'bg-green-500 text-white' : 'bg-gray-100 text-gray-600'
+                                            <div className={`w-8 h-8 rounded-xl flex items-center justify-center text-xs font-extrabold ${
+                                                completed ? 'bg-emerald-500 text-white shadow-sm shadow-emerald-500/10' : 'bg-slate-100 text-slate-500'
                                             }`}>
-                                                {completed ? <CheckCircle2 className="w-5 h-5" /> : idx + 1}
+                                                {completed ? <CheckCircle2 className="w-4 h-4" /> : idx + 1}
                                             </div>
                                             <div>
-                                                <p className={`text-sm font-bold ${completed ? 'text-green-700' : 'text-gray-900'}`}>
+                                                <p className={`text-sm font-bold ${completed ? 'text-emerald-800' : 'text-slate-900'}`}>
                                                     {unitName}
                                                 </p>
-                                                <p className="text-[11px] text-gray-400 font-medium">
+                                                <p className="text-[10px] text-slate-400 font-medium">
                                                     {completed ? 'Inspection completed' : 'Pending inspection'}
                                                 </p>
                                             </div>
@@ -1259,15 +1268,15 @@ export default function PropertyDetailsPage() {
                                         <Button
                                             onClick={() => handleStartUnitInspection(selectedBuilding.buildingId, unitName)}
                                             size="sm"
-                                            className={`font-bold text-xs px-4 py-2 rounded-lg transition-all ${
+                                            className={`font-bold text-xs px-3.5 py-1.5 rounded-xl transition-all border-0 shadow-sm ${
                                                 completed
-                                                    ? 'bg-green-100 text-green-700 hover:bg-green-200 border border-green-200'
-                                                    : 'bg-[#006795] hover:bg-[#00567a] text-white shadow-md'
+                                                    ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-250'
+                                                    : 'bg-teal-600 hover:bg-teal-700 text-white shadow-teal-600/10'
                                             }`}
                                         >
                                             {completed ? (
                                                 <span className="flex items-center gap-1">
-                                                    <CheckCircle2 className="w-3.5 h-3.5" /> Done
+                                                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> Done
                                                 </span>
                                             ) : (
                                                 <span className="flex items-center gap-1">
@@ -1281,11 +1290,11 @@ export default function PropertyDetailsPage() {
                         </div>
 
                         {/* Popup Footer */}
-                        <div className="p-4 border-t border-gray-100 bg-gray-50 flex gap-3">
+                        <div className="p-4 border-t border-slate-100 bg-slate-50/50 flex gap-3 flex-shrink-0">
                             <Button
                                 variant="outline"
                                 onClick={() => setUnitPopupOpen(false)}
-                                className="flex-1 font-bold rounded-xl py-3 text-sm"
+                                className="flex-1 font-bold rounded-xl py-2.5 text-xs border-slate-200 text-slate-600 hover:bg-slate-50 bg-white"
                             >
                                 Close
                             </Button>
@@ -1295,9 +1304,9 @@ export default function PropertyDetailsPage() {
                                         setUnitPopupOpen(false)
                                         toast.success(`All units in ${selectedBuilding.buildingId} are completed!`, { position: "top-right" })
                                     }}
-                                    className="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold rounded-xl py-3 text-sm"
+                                    className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl py-2.5 text-xs border-0 shadow-sm shadow-emerald-600/10"
                                 >
-                                    <CheckCircle2 className="w-4 h-4 mr-1" /> All Done
+                                    <CheckCircle2 className="w-3.5 h-3.5 mr-1" /> All Done
                                 </Button>
                             )}
                         </div>

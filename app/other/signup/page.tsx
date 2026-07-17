@@ -204,80 +204,80 @@ export default function OtherSignup() {
   }
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
-      <div className="w-full bg-[#E8F4F8] px-6 text-center flex flex-col items-center justify-center rounded-b-[70px]" style={{ height: '280px' }}>
-        <div className="flex justify-center mb-8">
-          <Image src="/logo.png" alt="INSPIRE Logo" width={480} height={560} className="w-auto h-24 md:h-32 lg:h-36 cursor-pointer" onClick={() => router.push('/')} />
+    <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
+      <div className="w-full bg-gradient-to-b from-[#1E1B4B] to-[#312E81] text-white px-6 text-center flex flex-col items-center justify-center rounded-b-[50px] shadow-lg border-b border-indigo-950/20" style={{ height: '280px' }}>
+        <div className="flex justify-center mb-5 bg-white/10 backdrop-blur-md rounded-2xl p-4 shadow-inner border border-white/15">
+          <Image src="/logo.png" alt="INSPIRE Logo" width={480} height={560} className="w-auto h-16 md:h-20 lg:h-22 cursor-pointer filter brightness-0 invert" onClick={() => router.push('/')} />
         </div>
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">Create Your INSPIRE Account</h1>
-        <p className="text-sm md:text-base text-gray-600 px-4">Other Portal - Join our platform to access additional services.</p>
+        <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight text-white mb-1">Create Your INSPIRE Account</h1>
+        <p className="text-xs md:text-sm font-semibold tracking-wider uppercase text-amber-400 px-4">Other Portal</p>
       </div>
 
       <div className="flex-1 flex items-center justify-center px-4 py-8">
-        <div className="w-full max-w-[600px] px-6 md:px-12 py-8">
-          <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-8 text-center">Let's Get You Started</h2>
+        <div className="w-full max-w-[640px] px-6 md:px-10 py-8 bg-white rounded-2xl border border-slate-200/80 shadow-xl">
+          <h2 className="text-xl md:text-2xl font-bold text-slate-900 mb-8 text-center tracking-tight font-sans">Let's Get You Started</h2>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="fullName" className="block text-sm font-semibold text-[#006795] mb-2">Full Name</label>
-                <input type="text" id="fullName" value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Enter your full name" className="w-full px-4 py-3 rounded-lg bg-[#E8F4F8] border-0 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#006795]" />
+                <label htmlFor="fullName" className="block text-sm font-semibold text-slate-700 mb-2">Full Name</label>
+                <input type="text" id="fullName" value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Enter your full name" className="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all" />
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-semibold text-[#006795] mb-2">Email Address</label>
-                <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email address" className="w-full px-4 py-3 rounded-lg bg-[#E8F4F8] border-0 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#006795]" />
+                <label htmlFor="email" className="block text-sm font-semibold text-slate-700 mb-2">Email Address</label>
+                <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email address" className="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all" />
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="password" className="block text-sm font-semibold text-[#006795] mb-2">Password</label>
-                <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Create your Password" className="w-full px-4 py-3 rounded-lg bg-[#E8F4F8] border-0 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#006795]" />
+                <label htmlFor="password" className="block text-sm font-semibold text-slate-700 mb-2">Password</label>
+                <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Create your Password" className="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all" />
               </div>
 
               <div>
-                <label htmlFor="role" className="block text-sm font-semibold text-[#006795] mb-2">Role</label>
+                <label htmlFor="role" className="block text-sm font-semibold text-slate-700 mb-2">Role</label>
                 <input
                   type="text"
                   id="role"
                   value="Other"
                   readOnly
-                  className="w-full px-4 py-3 rounded-lg bg-[#E8F4F8] border-0 text-gray-900 font-semibold cursor-default"
+                  className="w-full px-4 py-3 rounded-lg bg-slate-100 border border-slate-200 text-slate-550 font-bold cursor-not-allowed"
                 />
               </div>
             </div>
 
             {/* CAPTCHA */}
             <div>
-              <label className="block text-sm font-semibold text-[#006795] mb-2">
+              <label className="block text-sm font-semibold text-slate-700 mb-2">
                 Security Check
               </label>
               <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 mb-3">
                 <div className="flex items-center gap-3">
                   {captchaLoading ? (
-                    <div className="w-40 sm:w-48 h-14 sm:h-16 bg-[#E8F4F8] rounded-lg flex items-center justify-center border-2 border-[#006795]">
-                      <div className="animate-spin h-5 w-5 sm:h-6 sm:w-6 border-2 border-[#006795] border-t-transparent rounded-full"></div>
+                    <div className="w-40 sm:w-48 h-14 sm:h-16 bg-slate-50 rounded-lg flex items-center justify-center border border-slate-200">
+                      <div className="animate-spin h-5 w-5 sm:h-6 sm:w-6 border-2 border-indigo-600 border-t-transparent rounded-full"></div>
                     </div>
                   ) : captchaImage ? (
                     <img
                       src={captchaImage}
                       alt="Security Code"
-                      className="w-40 sm:w-48 h-14 sm:h-16 rounded-lg border-2 border-[#006795] object-contain bg-white"
+                      className="w-40 sm:w-48 h-14 sm:h-16 rounded-lg border border-slate-200 object-contain bg-white shadow-sm"
                     />
                   ) : (
-                    <div className="w-40 sm:w-48 h-14 sm:h-16 bg-[#E8F4F8] rounded-lg flex items-center justify-center border-2 border-[#006795]">
-                      <span className="text-xs text-gray-500">Click refresh →</span>
+                    <div className="w-40 sm:w-48 h-14 sm:h-16 bg-slate-50 rounded-lg flex items-center justify-center border border-slate-200">
+                      <span className="text-xs text-slate-400">Click refresh →</span>
                     </div>
                   )}
                   <button
                     type="button"
                     onClick={loadCaptcha}
                     disabled={captchaLoading}
-                    className="p-2 sm:p-3 bg-[#E8F4F8] rounded-lg hover:bg-[#D1F2EB] transition-colors disabled:opacity-50 flex-shrink-0"
+                    className="p-2 sm:p-3 bg-slate-50 border border-slate-200 rounded-lg hover:bg-slate-100 transition-colors disabled:opacity-50 flex-shrink-0 text-slate-600"
                     title="Refresh security code"
                   >
-                    <svg className="w-5 h-5 text-[#006795]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                     </svg>
                   </button>
@@ -289,11 +289,11 @@ export default function OtherSignup() {
                 onChange={(e) => setCaptchaCode(e.target.value.toUpperCase())}
                 placeholder="Enter code from image"
                 maxLength={5}
-                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg bg-[#E8F4F8] border-0 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#006795] text-center text-base sm:text-lg font-semibold tracking-widest uppercase"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg bg-slate-50 border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-center text-base sm:text-lg font-bold tracking-widest uppercase focus:border-transparent transition-all"
               />
             </div>
 
-            <Button type="submit" disabled={isLoading} className="w-full bg-[#006795] hover:bg-[#006795]/90 text-white rounded-lg py-6 font-semibold text-base disabled:opacity-50">
+            <Button type="submit" disabled={isLoading} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg py-6 font-bold text-base disabled:opacity-50 shadow-md transition-all duration-200">
               {isLoading ? "Creating Account..." : "Create Account"}
             </Button>
           </form>
@@ -308,9 +308,9 @@ export default function OtherSignup() {
             />
           </div>
 
-          <p className="text-center text-sm text-gray-600 mt-6">
+          <p className="text-center text-sm text-slate-500 mt-6 font-medium">
             Already have an account?{" "}
-            <button onClick={() => router.push('/other/login')} className="text-[#006795] hover:underline font-semibold bg-transparent border-0 cursor-pointer">Log in here</button>
+            <button onClick={() => router.push('/other/login')} className="text-indigo-600 hover:text-indigo-800 hover:underline font-bold bg-transparent border-0 cursor-pointer">Log in here</button>
           </p>
         </div>
       </div>

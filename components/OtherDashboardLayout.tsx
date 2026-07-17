@@ -74,16 +74,16 @@ export default function OtherDashboardLayout({ children }: OtherDashboardLayoutP
   ]
 
   return (
-    <div className="min-h-screen bg-[#E8F4F8] flex">
+    <div className="min-h-screen bg-slate-100 flex font-lexend">
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex lg:flex-col w-64 bg-gradient-to-b from-[#0D7FA8] to-[#0A5F7F] shadow-lg fixed h-full z-10">
-        <div className="p-6 border-b border-[#0A5F7F] flex justify-center">
+      <aside className="hidden lg:flex lg:flex-col w-64 bg-gradient-to-b from-[#1E1B4B] to-[#312E81] shadow-xl border-r border-[#312E81]/30 fixed h-full z-10">
+        <div className="p-6 border-b border-[#312E81]/40 flex justify-center">
           <Image
             src="/logo.png"
             alt="INSPIRE"
             width={300}
             height={100}
-            className="h-28 w-auto cursor-pointer"
+            className="h-28 w-auto cursor-pointer filter brightness-110"
             onClick={() => router.push('/')}
           />
         </div>
@@ -93,8 +93,10 @@ export default function OtherDashboardLayout({ children }: OtherDashboardLayoutP
             <button
               key={item.path}
               onClick={() => router.push(item.path)}
-              className={`w-full flex items-center gap-3 px-4 py-3 mb-2 rounded-lg font-medium transition-colors ${
-                isActive(item.path) ? 'bg-white text-[#0D7FA8]' : 'text-white hover:bg-[#0A5F7F]'
+              className={`w-full flex items-center gap-3 px-4 py-3 mb-2 rounded-lg font-medium transition-all duration-200 ${
+                isActive(item.path) 
+                  ? 'bg-amber-500 text-slate-950 font-bold shadow-md shadow-amber-500/20' 
+                  : 'text-white/80 hover:text-white hover:bg-white/10'
               }`}
             >
               {item.icon}
@@ -103,11 +105,13 @@ export default function OtherDashboardLayout({ children }: OtherDashboardLayoutP
           ))}
         </nav>
         
-        <div className="p-4 border-t border-[#0A5F7F]">
+        <div className="p-4 border-t border-[#312E81]/40">
           <button
             onClick={() => router.push('/other/settings')}
-            className={`w-full flex items-center gap-3 px-4 py-3 mb-2 rounded-lg font-medium transition-colors ${
-              isActive('/other/settings') ? 'bg-white text-[#0D7FA8]' : 'text-white hover:bg-[#0A5F7F]'
+            className={`w-full flex items-center gap-3 px-4 py-3 mb-2 rounded-lg font-medium transition-all duration-200 ${
+              isActive('/other/settings') 
+                ? 'bg-amber-500 text-slate-950 font-bold shadow-md shadow-amber-500/20' 
+                : 'text-white/80 hover:text-white hover:bg-white/10'
             }`}
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -123,7 +127,7 @@ export default function OtherDashboardLayout({ children }: OtherDashboardLayoutP
               toast.success("Logged out successfully!", { position: "top-right" })
               setTimeout(() => router.push('/'), 1500)
             }}
-            className="w-full flex items-center gap-3 px-4 py-3 text-white hover:bg-[#0A5F7F] rounded-lg font-medium transition-colors"
+            className="w-full flex items-center gap-3 px-4 py-3 text-white/80 hover:text-white hover:bg-white/10 rounded-lg font-medium transition-all duration-200"
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd" />
@@ -142,10 +146,10 @@ export default function OtherDashboardLayout({ children }: OtherDashboardLayoutP
       )}
 
       {/* Mobile Sidebar */}
-      <aside className={`fixed top-0 left-0 h-full w-64 bg-gradient-to-b from-[#0D7FA8] to-[#0A5F7F] shadow-lg z-50 transform transition-transform duration-300 lg:hidden ${
+      <aside className={`fixed top-0 left-0 h-full w-64 bg-gradient-to-b from-[#1E1B4B] to-[#312E81] shadow-lg z-50 transform transition-transform duration-300 lg:hidden ${
         isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
       }`}>
-        <div className="p-4 border-b border-[#0A5F7F] flex items-center justify-between">
+        <div className="p-4 border-b border-[#312E81]/40 flex items-center justify-between">
           <Image
             src="/logo.png"
             alt="INSPIRE"
@@ -159,7 +163,7 @@ export default function OtherDashboardLayout({ children }: OtherDashboardLayoutP
           />
           <button
             onClick={() => setIsMobileMenuOpen(false)}
-            className="p-2 hover:bg-[#0A5F7F] rounded-lg text-white"
+            className="p-2 hover:bg-white/10 rounded-lg text-white"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -175,8 +179,10 @@ export default function OtherDashboardLayout({ children }: OtherDashboardLayoutP
                 router.push(item.path)
                 setIsMobileMenuOpen(false)
               }}
-              className={`w-full flex items-center gap-3 px-4 py-3 mb-2 rounded-lg font-medium transition-colors ${
-                isActive(item.path) ? 'bg-white text-[#0D7FA8]' : 'text-white hover:bg-[#0A5F7F]'
+              className={`w-full flex items-center gap-3 px-4 py-3 mb-2 rounded-lg font-medium transition-all duration-200 ${
+                isActive(item.path) 
+                  ? 'bg-amber-500 text-slate-950 font-bold shadow-md shadow-amber-500/20' 
+                  : 'text-white/80 hover:text-white hover:bg-white/10'
               }`}
             >
               {item.icon}
@@ -185,14 +191,16 @@ export default function OtherDashboardLayout({ children }: OtherDashboardLayoutP
           ))}
         </nav>
         
-        <div className="p-4 border-t border-[#0A5F7F]">
+        <div className="p-4 border-t border-[#312E81]/40">
           <button
             onClick={() => {
               router.push('/other/settings')
               setIsMobileMenuOpen(false)
             }}
-            className={`w-full flex items-center gap-3 px-4 py-3 mb-2 rounded-lg font-medium transition-colors ${
-              isActive('/other/settings') ? 'bg-white text-[#0D7FA8]' : 'text-white hover:bg-[#0A5F7F]'
+            className={`w-full flex items-center gap-3 px-4 py-3 mb-2 rounded-lg font-medium transition-all duration-200 ${
+              isActive('/other/settings') 
+                ? 'bg-amber-500 text-slate-950 font-bold shadow-md shadow-amber-500/20' 
+                : 'text-white/80 hover:text-white hover:bg-white/10'
             }`}
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -209,7 +217,7 @@ export default function OtherDashboardLayout({ children }: OtherDashboardLayoutP
               setTimeout(() => router.push('/'), 1500)
               setIsMobileMenuOpen(false)
             }}
-            className="w-full flex items-center gap-3 px-4 py-3 text-white hover:bg-[#0A5F7F] rounded-lg font-medium transition-colors"
+            className="w-full flex items-center gap-3 px-4 py-3 text-white/80 hover:text-white hover:bg-white/10 rounded-lg font-medium transition-all duration-200"
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd" />
@@ -222,12 +230,12 @@ export default function OtherDashboardLayout({ children }: OtherDashboardLayoutP
       {/* Main Content */}
       <main className="flex-1 lg:ml-64">
         {/* Top Header */}
-        <header className="bg-gradient-to-r from-[#0D7FA8] to-[#0A5F7F] shadow-md px-4 md:px-6 py-4 sticky top-0 z-30">
+        <header className="bg-gradient-to-r from-[#1E1B4B] to-[#312E81] shadow-md px-4 md:px-6 py-4 sticky top-0 z-30">
           <div className="flex items-center justify-between gap-4">
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(true)}
-              className="lg:hidden p-2 hover:bg-[#0A5F7F] rounded-lg text-white"
+              className="lg:hidden p-2 hover:bg-white/10 rounded-lg text-white"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -247,21 +255,21 @@ export default function OtherDashboardLayout({ children }: OtherDashboardLayoutP
             </div>
 
             {/* Desktop Search */}
-            <div className="hidden md:flex items-center gap-3 flex-1 max-w-xl px-4 py-2 border border-white rounded-lg">
-              <svg className="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="hidden md:flex items-center gap-3 flex-1 max-w-xl px-4 py-2 border border-white/20 rounded-lg bg-white/10">
+              <svg className="w-5 h-5 text-amber-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
               <input
                 type="text"
-                placeholder="Search"
-                className="flex-1 outline-none text-sm bg-transparent text-white placeholder-white placeholder-opacity-70"
+                placeholder="Search portal..."
+                className="flex-1 outline-none text-sm bg-transparent text-white placeholder-white/50"
               />
             </div>
             
             <div className="flex items-center gap-2 md:gap-4">
               <button 
                 onClick={() => router.push('/other/notifications')}
-                className="relative p-2 hover:bg-[#0A5F7F] rounded-lg transition-colors"
+                className="relative p-2 hover:bg-white/10 rounded-lg transition-colors text-white"
               >
                 <svg className="w-5 h-5 md:w-6 md:h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
@@ -271,15 +279,15 @@ export default function OtherDashboardLayout({ children }: OtherDashboardLayoutP
               
               <div className="flex items-center gap-2">
                 <Image
-                  src={`https://ui-avatars.com/api/?name=${encodeURIComponent(user?.fullName || 'Other')}&background=0D7FA8&color=fff`}
+                  src={`https://ui-avatars.com/api/?name=${encodeURIComponent(user?.fullName || 'Other')}&background=4F46E5&color=fff`}
                   alt="User"
                   width={40}
                   height={40}
-                  className="rounded-full w-8 h-8 md:w-10 md:h-10"
+                  className="rounded-full w-8 h-8 md:w-10 md:h-10 border border-white/20"
                 />
                 <div className="hidden sm:block">
                   <p className="text-sm font-semibold text-white">{(user?.fullName || 'Other Manager').toUpperCase()}</p>
-                  <p className="text-xs text-white text-opacity-70">{user?.role ? roleDisplayNames[user.role] || user.role : 'Other Portal'}</p>
+                  <p className="text-xs text-amber-300 font-medium">{user?.role ? roleDisplayNames[user.role] || user.role : 'Other Portal'}</p>
                 </div>
               </div>
             </div>

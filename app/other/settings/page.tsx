@@ -165,22 +165,22 @@ export default function OtherSettingsPage() {
 
   return (
     <OtherDashboardLayout>
-      <div className="p-4 md:p-6">
-        <div className="bg-white rounded-lg p-6 mb-6 shadow-sm">
-          <h1 className="text-2xl font-bold text-gray-800 mb-1">Settings</h1>
-          <p className="text-gray-600">Manage your account preferences and security</p>
+      <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
+        <div className="bg-white rounded-xl border border-slate-200/80 p-6 mb-6 shadow-sm">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-1">Settings</h1>
+          <p className="text-slate-500 text-sm">Manage your account preferences and security</p>
         </div>
 
         <div className="grid lg:grid-cols-4 gap-6">
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg p-4 shadow-sm">
-              <nav className="space-y-2">
+            <div className="bg-white rounded-xl border border-slate-200/80 p-4 shadow-sm">
+              <nav className="space-y-1.5">
                 <button
                   onClick={() => setActiveTab("profile")}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors ${
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
                     activeTab === "profile"
-                      ? "bg-[#006795] text-white"
-                      : "text-gray-700 hover:bg-gray-100"
+                      ? "bg-indigo-600 text-white"
+                      : "text-slate-700 hover:bg-slate-100"
                   }`}
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -191,10 +191,10 @@ export default function OtherSettingsPage() {
 
                 <button
                   onClick={() => setActiveTab("notifications")}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors ${
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
                     activeTab === "notifications"
-                      ? "bg-[#006795] text-white"
-                      : "text-gray-700 hover:bg-gray-100"
+                      ? "bg-indigo-600 text-white"
+                      : "text-slate-700 hover:bg-slate-100"
                   }`}
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -205,10 +205,10 @@ export default function OtherSettingsPage() {
 
                 <button
                   onClick={() => setActiveTab("security")}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors ${
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
                     activeTab === "security"
-                      ? "bg-[#006795] text-white"
-                      : "text-gray-700 hover:bg-gray-100"
+                      ? "bg-indigo-600 text-white"
+                      : "text-slate-700 hover:bg-slate-100"
                   }`}
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -222,62 +222,62 @@ export default function OtherSettingsPage() {
 
           <div className="lg:col-span-3">
             {activeTab === "profile" && (
-              <div className="bg-white rounded-lg p-6 shadow-sm">
-                <h2 className="text-xl font-bold text-gray-800 mb-6">Profile Settings</h2>
+              <div className="bg-white rounded-xl border border-slate-200/80 p-6 shadow-sm">
+                <h2 className="text-lg font-bold text-slate-900 mb-6">Profile Settings</h2>
 
-                <div className="flex items-center gap-4 mb-8 pb-6 border-b">
+                <div className="flex items-center gap-4 mb-8 pb-6 border-b border-slate-200">
                   <Image
-                    src={`https://ui-avatars.com/api/?name=${encodeURIComponent(name || 'User')}&size=100&background=0D7FA8&color=fff`}
+                    src={`https://ui-avatars.com/api/?name=${encodeURIComponent(name || 'User')}&size=100&background=1E1B4B&color=fbbf24`}
                     alt="Profile"
                     width={100}
                     height={100}
-                    className="rounded-full"
+                    className="rounded-full shadow-inner border-2 border-indigo-100"
                   />
                   <div>
-                    <Button className="bg-[#006795] hover:bg-[#0a5670] text-white">
+                    <Button className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold">
                       Change Photo
                     </Button>
-                    <p className="text-sm text-gray-500 mt-2">JPG, PNG or GIF. Max size 2MB</p>
+                    <p className="text-xs text-slate-500 mt-2">JPG, PNG or GIF. Max size 2MB</p>
                   </div>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-6 mb-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">Full Name</label>
                     <input
                       type="text"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795]"
+                      className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50/50"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">Email Address</label>
                     <input
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795]"
+                      className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50/50"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">Phone Number</label>
                     <input
                       type="tel"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795]"
+                      className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50/50"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Role</label>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">Role</label>
                     <select
                       value={role}
                       onChange={(e) => setRole(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795]"
+                      className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50/50"
                     >
                       <option value="other">Other</option>
                       <option value="property-manager">Property Manager</option>
@@ -287,11 +287,11 @@ export default function OtherSettingsPage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Language</label>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">Language</label>
                     <select
                       value={language}
                       onChange={(e) => setLanguage(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795]"
+                      className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50/50"
                     >
                       <option value="English">English</option>
                       <option value="Spanish">Spanish</option>
@@ -300,11 +300,11 @@ export default function OtherSettingsPage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Timezone</label>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">Timezone</label>
                     <select
                       value={timezone}
                       onChange={(e) => setTimezone(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795]"
+                      className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50/50"
                     >
                       <option value="EST">EST (UTC-5)</option>
                       <option value="CST">CST (UTC-6)</option>
@@ -315,7 +315,7 @@ export default function OtherSettingsPage() {
                 </div>
 
                 <div className="flex justify-end">
-                  <Button onClick={handleSaveProfile} disabled={isLoading} className="px-8 bg-[#006795] hover:bg-[#6de600] text-white font-semibold">
+                  <Button onClick={handleSaveProfile} disabled={isLoading} className="px-8 bg-indigo-600 hover:bg-indigo-700 text-white font-bold">
                     {isLoading ? "Saving..." : "Save Changes"}
                   </Button>
                 </div>
@@ -323,20 +323,20 @@ export default function OtherSettingsPage() {
             )}
 
             {activeTab === "notifications" && (
-              <div className="bg-white rounded-lg p-6 shadow-sm">
-                <h2 className="text-xl font-bold text-gray-800 mb-6">Notification Preferences</h2>
+              <div className="bg-white rounded-xl border border-slate-200/80 p-6 shadow-sm">
+                <h2 className="text-lg font-bold text-slate-900 mb-6">Notification Preferences</h2>
 
                 <div className="space-y-8">
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-800 mb-4">Email Notifications</h3>
-                    <div className="space-y-4">
+                    <h3 className="text-base font-bold text-slate-800 mb-4">Email Notifications</h3>
+                    <div className="space-y-3">
                       {Object.entries(emailNotifications).map(([key, value]) => (
-                        <div key={key} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <div key={key} className="flex items-center justify-between p-4 bg-slate-50 rounded-lg border border-slate-100">
                           <div>
-                            <p className="font-medium text-gray-800">
+                            <p className="font-semibold text-slate-800 text-sm">
                               {key.replace(/([A-Z])/g, " $1").replace(/^./, (str) => str.toUpperCase())}
                             </p>
-                            <p className="text-sm text-gray-600">
+                            <p className="text-xs text-slate-500">
                               Receive email notifications for{" "}
                               {key.replace(/([A-Z])/g, " $1").toLowerCase()}
                             </p>
@@ -350,7 +350,7 @@ export default function OtherSettingsPage() {
                               }
                               className="sr-only peer"
                             />
-                            <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#006795]/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#006795]"></div>
+                            <div className="w-11 h-6 bg-slate-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-500/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
                           </label>
                         </div>
                       ))}
@@ -358,15 +358,15 @@ export default function OtherSettingsPage() {
                   </div>
 
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-800 mb-4">In-App Notifications</h3>
-                    <div className="space-y-4">
+                    <h3 className="text-base font-bold text-slate-800 mb-4">In-App Notifications</h3>
+                    <div className="space-y-3">
                       {Object.entries(inAppNotifications).map(([key, value]) => (
-                        <div key={key} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <div key={key} className="flex items-center justify-between p-4 bg-slate-50 rounded-lg border border-slate-100">
                           <div>
-                            <p className="font-medium text-gray-800">
+                            <p className="font-semibold text-slate-800 text-sm">
                               {key.replace(/([A-Z])/g, " $1").replace(/^./, (str) => str.toUpperCase())}
                             </p>
-                            <p className="text-sm text-gray-600">
+                            <p className="text-xs text-slate-500">
                               Show in-app notifications for{" "}
                               {key.replace(/([A-Z])/g, " $1").toLowerCase()}
                             </p>
@@ -380,7 +380,7 @@ export default function OtherSettingsPage() {
                               }
                               className="sr-only peer"
                             />
-                            <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#006795]/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#006795]"></div>
+                            <div className="w-11 h-6 bg-slate-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-500/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
                           </label>
                         </div>
                       ))}
@@ -389,7 +389,7 @@ export default function OtherSettingsPage() {
                 </div>
 
                 <div className="flex justify-end mt-6">
-                  <Button onClick={handleSaveNotifications} disabled={isLoading} className="px-8 bg-[#006795] hover:bg-[#6de600] text-white font-semibold">
+                  <Button onClick={handleSaveNotifications} disabled={isLoading} className="px-8 bg-indigo-600 hover:bg-indigo-700 text-white font-bold">
                     {isLoading ? "Saving..." : "Save Preferences"}
                   </Button>
                 </div>
@@ -397,54 +397,54 @@ export default function OtherSettingsPage() {
             )}
 
             {activeTab === "security" && (
-              <div className="bg-white rounded-lg p-6 shadow-sm">
-                <h2 className="text-xl font-bold text-gray-800 mb-6">Security Settings</h2>
+              <div className="bg-white rounded-xl border border-slate-200/80 p-6 shadow-sm">
+                <h2 className="text-lg font-bold text-slate-900 mb-6">Security Settings</h2>
 
-                <div className="mb-8 pb-8 border-b">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-4">Change Password</h3>
+                <div className="mb-8 pb-8 border-b border-slate-200">
+                  <h3 className="text-base font-bold text-slate-800 mb-4">Change Password</h3>
                   <div className="space-y-4 max-w-md">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Current Password</label>
+                      <label className="block text-sm font-semibold text-slate-700 mb-2">Current Password</label>
                       <input
                         type="password"
                         value={currentPassword}
                         onChange={(e) => setCurrentPassword(e.target.value)}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795]"
+                        className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50/50"
                         placeholder="Enter current password"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">New Password</label>
+                      <label className="block text-sm font-semibold text-slate-700 mb-2">New Password</label>
                       <input
                         type="password"
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795]"
+                        className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50/50"
                         placeholder="Enter new password"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Confirm New Password</label>
+                      <label className="block text-sm font-semibold text-slate-700 mb-2">Confirm New Password</label>
                       <input
                         type="password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795]"
+                        className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50/50"
                         placeholder="Confirm new password"
                       />
                     </div>
-                    <Button onClick={handleChangePassword} disabled={isLoading} className="bg-[#006795] hover:bg-[#0a5670] text-white">
+                    <Button onClick={handleChangePassword} disabled={isLoading} className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold">
                       {isLoading ? "Updating..." : "Update Password"}
                     </Button>
                   </div>
                 </div>
 
-                <div className="mb-8 pb-8 border-b">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-4">Two-Factor Authentication</h3>
-                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg max-w-2xl">
-                    <div>
-                      <p className="font-medium text-gray-800 mb-1">Enable Two-Factor Authentication</p>
-                      <p className="text-sm text-gray-600">
+                <div className="mb-8 pb-8 border-b border-slate-200">
+                  <h3 className="text-base font-bold text-slate-800 mb-4">Two-Factor Authentication</h3>
+                  <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg border border-slate-100 max-w-2xl">
+                    <div className="pr-4">
+                      <p className="font-semibold text-slate-800 text-sm mb-1">Enable Two-Factor Authentication</p>
+                      <p className="text-xs text-slate-500">
                         Add an extra layer of security to your account by requiring a verification code
                       </p>
                     </div>
@@ -453,9 +453,9 @@ export default function OtherSettingsPage() {
                       disabled={isLoading}
                       className={`${
                         twoFactorEnabled
-                          ? "bg-red-500 hover:bg-red-600"
-                          : "bg-[#006795] hover:bg-[#6de600] text-black"
-                      } text-white font-semibold`}
+                          ? "bg-rose-600 hover:bg-rose-700"
+                          : "bg-indigo-600 hover:bg-indigo-700"
+                      } text-white font-bold`}
                     >
                       {twoFactorEnabled ? "Disable" : "Enable"}
                     </Button>
@@ -463,23 +463,23 @@ export default function OtherSettingsPage() {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-800 mb-4">Session Management</h3>
+                  <h3 className="text-base font-bold text-slate-800 mb-4">Session Management</h3>
                   <div className="space-y-3">
-                    <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg border border-slate-100">
                       <div>
-                        <p className="font-medium text-gray-800">Current Device</p>
-                        <p className="text-sm text-gray-600">Windows · Chrome · {new Date().toLocaleString()}</p>
+                        <p className="font-semibold text-slate-800 text-sm">Current Device</p>
+                        <p className="text-xs text-slate-550">Linux · Chrome · {new Date().toLocaleString()}</p>
                       </div>
-                      <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">
+                      <span className="px-3 py-1 bg-emerald-50 text-emerald-700 text-xs font-semibold rounded-full border border-emerald-100">
                         Active
                       </span>
                     </div>
-                    <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg border border-slate-100">
                       <div>
-                        <p className="font-medium text-gray-800">iPhone 13</p>
-                        <p className="text-sm text-gray-600">iOS · Safari · Last active 2 hours ago</p>
+                        <p className="font-semibold text-slate-800 text-sm">Mobile App</p>
+                        <p className="text-xs text-slate-500">Android · InspireApp · Last active 2 hours ago</p>
                       </div>
-                      <Button variant="outline" className="text-red-600 hover:text-red-700">
+                      <Button variant="outline" className="text-rose-600 hover:text-rose-700 hover:bg-rose-50 border-rose-200">
                         Log Out
                       </Button>
                     </div>
@@ -488,7 +488,7 @@ export default function OtherSettingsPage() {
                     <Button
                       onClick={handleLogout}
                       variant="outline"
-                      className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                      className="text-rose-600 hover:text-rose-700 hover:bg-rose-50 border-rose-200"
                     >
                       Log Out From All Devices
                     </Button>

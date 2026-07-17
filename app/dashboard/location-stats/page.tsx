@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import DashboardLayout from "@/components/DashboardLayout"
 import { Card } from "@/components/ui/card"
 import { Country, State, City } from 'country-state-city'
+import { Globe, Map, Navigation, Compass, ChevronDown, Info, ListOrdered } from "lucide-react"
 
 interface LocationStats {
   totalCountries: number
@@ -13,7 +14,7 @@ interface LocationStats {
   statesWithCities: { [key: string]: number }
 }
 
-export default function LocationStats() {
+export default function LocationStatsPage() {
   const [stats, setStats] = useState<LocationStats | null>(null)
   const [loading, setLoading] = useState(true)
   const [showCountryDetails, setShowCountryDetails] = useState(false)
@@ -89,14 +90,10 @@ export default function LocationStats() {
   if (loading) {
     return (
       <DashboardLayout>
-        <div className="min-h-screen bg-[#E8F4F8] p-3 sm:p-4 md:p-6">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex items-center justify-center h-64">
-              <div className="text-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#0D7FA8] mx-auto mb-4"></div>
-                <p className="text-gray-600">Loading location data...</p>
-              </div>
-            </div>
+        <div className="min-h-screen bg-slate-50 p-4 sm:p-6 lg:p-8 flex items-center justify-center font-lexend">
+          <div className="text-center space-y-3">
+            <div className="animate-spin rounded-full h-10 w-10 border-2 border-teal-600 border-t-transparent mx-auto"></div>
+            <p className="text-slate-500 text-sm font-semibold">Loading location statistics...</p>
           </div>
         </div>
       </DashboardLayout>
@@ -105,102 +102,88 @@ export default function LocationStats() {
 
   return (
     <DashboardLayout>
-      <div className="min-h-screen bg-[#E8F4F8] p-3 sm:p-4 md:p-6">
-        <div className="max-w-7xl mx-auto">
+      <div className="min-h-screen bg-slate-50 p-4 sm:p-6 lg:p-8 text-slate-900 font-lexend space-y-6">
+        <div className="max-w-7xl mx-auto space-y-6">
 
           {/* Header */}
-          <div className="mb-6">
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-              Location Statistics
-            </h1>
-            <p className="text-gray-600">
-              Inspector Portal location data coverage and statistics
-            </p>
+          <div className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
+                <Compass className="w-6 h-6 text-teal-600" />
+                Location Statistics
+              </h1>
+              <p className="text-slate-500 text-xs sm:text-sm font-medium mt-0.5">
+                Inspector Portal location data coverage, states, and city metrics.
+              </p>
+            </div>
           </div>
 
           {/* Overview Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-            <Card className="bg-white rounded-lg shadow-sm p-6">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
-                    <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 4a1 1 0 011-1h12a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1V8z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                </div>
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">Countries</p>
-                  <p className="text-3xl font-bold text-gray-900">
-                    {formatNumber(stats?.totalCountries || 0)}
-                  </p>
-                </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <Card className="bg-white border border-slate-200/80 rounded-2xl shadow-sm p-6 flex items-center justify-between">
+              <div>
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Countries Covered</p>
+                <p className="text-3xl font-extrabold text-slate-900 tracking-tight">
+                  {formatNumber(stats?.totalCountries || 0)}
+                </p>
+              </div>
+              <div className="w-12 h-12 rounded-xl bg-teal-50 border border-teal-100 flex items-center justify-center text-teal-600">
+                <Globe className="w-6 h-6" />
               </div>
             </Card>
 
-            <Card className="bg-white rounded-lg shadow-sm p-6">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center">
-                    <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                </div>
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">States/Provinces</p>
-                  <p className="text-3xl font-bold text-gray-900">
-                    {formatNumber(stats?.totalStates || 0)}
-                  </p>
-                </div>
+            <Card className="bg-white border border-slate-200/80 rounded-2xl shadow-sm p-6 flex items-center justify-between">
+              <div>
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">States/Provinces</p>
+                <p className="text-3xl font-extrabold text-slate-900 tracking-tight">
+                  {formatNumber(stats?.totalStates || 0)}
+                </p>
+              </div>
+              <div className="w-12 h-12 rounded-xl bg-violet-50 border border-violet-100 flex items-center justify-center text-violet-600">
+                <Map className="w-6 h-6" />
               </div>
             </Card>
 
-            <Card className="bg-white rounded-lg shadow-sm p-6">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center">
-                    <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm3 5a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1zm0 3a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                </div>
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">Cities</p>
-                  <p className="text-3xl font-bold text-gray-900">
-                    {formatNumber(stats?.totalCities || 0)}
-                  </p>
-                </div>
+            <Card className="bg-white border border-slate-200/80 rounded-2xl shadow-sm p-6 flex items-center justify-between">
+              <div>
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Cities Registered</p>
+                <p className="text-3xl font-extrabold text-slate-900 tracking-tight">
+                  {formatNumber(stats?.totalCities || 0)}
+                </p>
+              </div>
+              <div className="w-12 h-12 rounded-xl bg-sky-50 border border-sky-100 flex items-center justify-center text-sky-600">
+                <Navigation className="w-6 h-6" />
               </div>
             </Card>
           </div>
 
           {/* Countries Breakdown */}
-          <Card className="bg-white rounded-lg shadow-sm mb-6">
+          <Card className="bg-white border border-slate-200/80 rounded-2xl shadow-sm overflow-hidden">
             <div className="p-6">
               <button
                 onClick={() => setShowCountryDetails(!showCountryDetails)}
                 className="flex items-center justify-between w-full text-left"
               >
-                <h3 className="text-lg font-semibold text-gray-900">Countries by States/Provinces</h3>
-                <svg
-                  className={`w-5 h-5 text-gray-500 transform transition-transform ${showCountryDetails ? 'rotate-180' : ''}`}
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                </svg>
+                <div className="flex items-center gap-2">
+                  <Globe className="w-5 h-5 text-teal-600" />
+                  <h3 className="text-base font-extrabold text-slate-900 tracking-tight">Countries by States/Provinces</h3>
+                </div>
+                <ChevronDown
+                  className={`w-5 h-5 text-slate-400 transform transition-transform duration-200 ${showCountryDetails ? 'rotate-180' : ''}`}
+                />
               </button>
 
               {showCountryDetails && (
-                <div className="mt-4 space-y-3">
+                <div className="mt-4 pt-4 border-t border-slate-100 space-y-3">
                   {getTopCountriesWithStates().map(([country, count], index) => (
-                    <div key={country} className="flex items-center justify-between py-2 border-b border-gray-100 last:border-b-0">
-                      <div className="flex items-center">
-                        <span className="text-sm font-medium text-gray-500 w-8">#{index + 1}</span>
-                        <span className="text-sm text-gray-900">{country}</span>
+                    <div key={country} className="flex items-center justify-between py-2.5 border-b border-slate-50 last:border-b-0">
+                      <div className="flex items-center gap-3">
+                        <span className="text-xs font-bold text-slate-400 w-6">#{index + 1}</span>
+                        <span className="text-sm font-semibold text-slate-800">{country}</span>
                       </div>
-                      <span className="text-sm font-semibold text-[#0D7FA8]">{formatNumber(count)} states</span>
+                      <span className="text-xs font-bold bg-teal-50 text-teal-700 border border-teal-100 px-3 py-1 rounded-full">
+                        {formatNumber(count)} states
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -209,31 +192,32 @@ export default function LocationStats() {
           </Card>
 
           {/* States Breakdown */}
-          <Card className="bg-white rounded-lg shadow-sm mb-6">
+          <Card className="bg-white border border-slate-200/80 rounded-2xl shadow-sm overflow-hidden">
             <div className="p-6">
               <button
                 onClick={() => setShowStateDetails(!showStateDetails)}
                 className="flex items-center justify-between w-full text-left"
               >
-                <h3 className="text-lg font-semibold text-gray-900">Top States/Provinces by Cities (Sample)</h3>
-                <svg
-                  className={`w-5 h-5 text-gray-500 transform transition-transform ${showStateDetails ? 'rotate-180' : ''}`}
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                </svg>
+                <div className="flex items-center gap-2">
+                  <ListOrdered className="w-5 h-5 text-teal-600" />
+                  <h3 className="text-base font-extrabold text-slate-900 tracking-tight">Top States/Provinces by Cities (Sample)</h3>
+                </div>
+                <ChevronDown
+                  className={`w-5 h-5 text-slate-400 transform transition-transform duration-200 ${showStateDetails ? 'rotate-180' : ''}`}
+                />
               </button>
 
               {showStateDetails && (
-                <div className="mt-4 space-y-3">
+                <div className="mt-4 pt-4 border-t border-slate-100 space-y-3">
                   {getTopStatesWithCities().map(([state, count], index) => (
-                    <div key={state} className="flex items-center justify-between py-2 border-b border-gray-100 last:border-b-0">
-                      <div className="flex items-center">
-                        <span className="text-sm font-medium text-gray-500 w-8">#{index + 1}</span>
-                        <span className="text-sm text-gray-900">{state}</span>
+                    <div key={state} className="flex items-center justify-between py-2.5 border-b border-slate-50 last:border-b-0">
+                      <div className="flex items-center gap-3">
+                        <span className="text-xs font-bold text-slate-400 w-6">#{index + 1}</span>
+                        <span className="text-sm font-semibold text-slate-800">{state}</span>
                       </div>
-                      <span className="text-sm font-semibold text-[#0D7FA8]">{formatNumber(count)} cities</span>
+                      <span className="text-xs font-bold bg-sky-50 text-sky-700 border border-sky-100 px-3 py-1 rounded-full">
+                        {formatNumber(count)} cities
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -242,27 +226,42 @@ export default function LocationStats() {
           </Card>
 
           {/* Info Section */}
-          <Card className="bg-white rounded-lg shadow-sm">
-            <div className="p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Inspector Portal Coverage</h3>
-              <div className="space-y-3 text-sm text-gray-600">
-                <p>
-                  This inspector portal supports property management in four key countries:
-                  United States, Canada, United Kingdom, and Australia.
-                </p>
-                <p>
-                  Complete coverage includes all states, provinces, territories, and cities
-                  within these countries for accurate property location selection.
-                </p>
-                <div className="bg-gray-50 p-4 rounded-lg mt-4">
-                  <h4 className="font-semibold text-gray-900 mb-2">Coverage Details:</h4>
-                  <ul className="space-y-1 text-sm">
-                    <li>• <strong>United States:</strong> 66 states/territories with 19,821 cities</li>
-                    <li>• <strong>Canada:</strong> 13 provinces/territories with 1,079 cities</li>
-                    <li>• <strong>United Kingdom:</strong> 247 regions with 3,871 cities</li>
-                    <li>• <strong>Australia:</strong> 8 states/territories with 4,152 cities</li>
-                  </ul>
-                </div>
+          <Card className="bg-white border border-slate-200/80 rounded-2xl shadow-sm p-6 space-y-4">
+            <div className="flex items-center gap-2 pb-3 border-b border-slate-100">
+              <Info className="w-5 h-5 text-teal-600" />
+              <h3 className="text-base font-extrabold text-slate-900 tracking-tight">Inspector Portal Coverage</h3>
+            </div>
+            
+            <div className="space-y-3 text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
+              <p>
+                This inspector portal supports property management in four key countries:
+                United States, Canada, United Kingdom, and Australia.
+              </p>
+              <p>
+                Complete coverage includes all states, provinces, territories, and cities
+                within these countries for accurate property location selection.
+              </p>
+              
+              <div className="bg-slate-50 border border-slate-200/60 p-5 rounded-2xl mt-4">
+                <h4 className="font-extrabold text-slate-900 text-xs uppercase tracking-wider mb-3">Coverage Details:</h4>
+                <ul className="space-y-2 text-xs sm:text-sm text-slate-700 font-semibold">
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-teal-500" />
+                    <span><strong>United States:</strong> 66 states/territories with 19,821 cities</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-teal-500" />
+                    <span><strong>Canada:</strong> 13 provinces/territories with 1,079 cities</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-teal-500" />
+                    <span><strong>United Kingdom:</strong> 247 regions with 3,871 cities</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-teal-500" />
+                    <span><strong>Australia:</strong> 8 states/territories with 4,152 cities</span>
+                  </li>
+                </ul>
               </div>
             </div>
           </Card>

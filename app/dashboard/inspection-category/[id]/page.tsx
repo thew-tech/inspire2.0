@@ -100,6 +100,8 @@ export default function InspectionCategoryPage() {
     const [propertyFindings, setPropertyFindings] = useState<any[]>([])
     const [currentSection, setCurrentSection] = useState<'outside' | 'inside' | 'unit'>('outside')
     const [completedUnits, setCompletedUnits] = useState<string[]>([])
+    const [isOnline, setIsOnline] = useState(true)
+    const [offlineChangesCount, setOfflineChangesCount] = useState(0)
 
     // Read building & unit from URL query params (set by property-details page)
     const urlBuilding = searchParams.get('building') || 'B1'
@@ -364,105 +366,327 @@ export default function InspectionCategoryPage() {
         }
     }, [id, urlBuilding, activeInspectionUnit]);
 
-    const loadSavedProgress = async () => {
+    const applyProgressData = (progressList: any[]) => {
+        if (!progressList) return;
+        const outsideRec = progressList.find((p: any) => {
+            const typeMatch = p.inspectionType === 'Outside';
+            const bId = String(urlBuilding || '').toUpperCase();
+            const pUnitId = String(p.unitId || '').toUpperCase();
+            const pBldgId = String(p.buildingId || '').toUpperCase();
+            const isB1Match = (bId === 'B1' || bId === 'BUILDING 1') && (pUnitId === 'B1' || pUnitId === 'BUILDING 1' || pBldgId === 'B1' || pBldgId === 'BUILDING 1');
+            return typeMatch && (pUnitId === bId || pBldgId === bId || isB1Match);
+        });
+
+        const insideRec = progressList.find((p: any) => {
+            const typeMatch = p.inspectionType === 'Inside';
+            const bId = String(urlBuilding || '').toUpperCase();
+            const pUnitId = String(p.unitId || '').toUpperCase();
+            const pBldgId = String(p.buildingId || '').toUpperCase();
+            const isB1Match = (bId === 'B1' || bId === 'BUILDING 1') && (pUnitId === 'B1' || pUnitId === 'BUILDING 1' || pBldgId === 'B1' || pBldgId === 'BUILDING 1');
+            return typeMatch && (pUnitId === bId || pBldgId === bId || isB1Match);
+        });
+        
+        if (outsideRec && outsideRec.responses) setOutsideStatuses(outsideRec.responses);
+        if (insideRec && insideRec.responses) setInsideStatuses(insideRec.responses);
+
+        if (activeInspectionUnit) {
+            const unitRec = progressList.find((p: any) => {
+                const pType = String(p.inspectionType || '').toLowerCase();
+                const typeMatch = pType === 'unit' 
+                    || pType === `unit_${activeInspectionUnit}`.toLowerCase()
+                    || pType === `unit_${urlBuilding}_${activeInspectionUnit}`.toLowerCase();
+                const uId = String(activeInspectionUnit).toUpperCase();
+                const pUnitId = String(p.unitId).toUpperCase();
+                const bId = String(urlBuilding || '').toUpperCase();
+                const pBldgId = String(p.buildingId || '').toUpperCase();
+                return typeMatch && pUnitId === uId && (pBldgId === bId || !pBldgId);
+            });
+            if (unitRec && unitRec.responses) setUnitStatuses(unitRec.responses);
+        }
+
+        const allFindings: any[] = [];
+        progressList.forEach((p: any) => {
+            if (p.inspectionData && Array.isArray(p.inspectionData.findings)) {
+                allFindings.push(...p.inspectionData.findings);
+            }
+        });
+
+        if (allFindings.length > 0) {
+            const seen = new Set();
+            const uniqueFindings = allFindings.filter((f: any) => {
+                const bldg = (f.building && !['unknown', 'UNKNOWN-BUILDING'].includes(f.building)) ? f.building : (urlBuilding || 'unknown');
+                const area = f.area || f.category || 'unknown';
+                const unit = f.unit || '-';
+                const item = f.item || f.deficiencyName || f.title || 'unknown';
+                const key = `${bldg}|${area}|${unit}|${item}`.toLowerCase().trim();
+                if (seen.has(key)) return false;
+                seen.add(key);
+                return true;
+            });
+            setPropertyFindings(uniqueFindings);
+        }
+
+        const restoredSnapshots: Record<string, any> = {};
+        const restoredSavedODKeys = new Set<string>();
+        progressList.forEach((p: any) => {
+            if (p.inspectionData && p.inspectionData.odFormSnapshots) {
+                Object.entries(p.inspectionData.odFormSnapshots).forEach(([key, val]) => {
+                    restoredSnapshots[key] = val;
+                    restoredSavedODKeys.add(key);
+                });
+            }
+        });
+        if (Object.keys(restoredSnapshots).length > 0) {
+            setSavedODFormData(restoredSnapshots);
+            setSavedODItems(restoredSavedODKeys);
+        }
+    };
+
+    const updateLocalCache = (type: string, responses: any, isComplete: boolean, unitId?: string) => {
+        const localCacheKey = `cached_progress_${id}_${urlBuilding}`;
+        let cachedList: any[] = [];
         try {
-            // Fetch ALL progress for this property to populate all progress bars
+            const cachedDataStr = localStorage.getItem(localCacheKey);
+            if (cachedDataStr) {
+                cachedList = JSON.parse(cachedDataStr);
+            }
+        } catch (e) {
+            console.error("Cache read error:", e);
+        }
+
+        let recordIndex = cachedList.findIndex((p: any) => {
+            if (type === 'Outside' || type === 'Inside') {
+                return p.inspectionType === type;
+            } else {
+                return String(p.inspectionType || '').toLowerCase().includes('unit_') && p.unitId === unitId;
+            }
+        });
+
+        const newRecord = {
+            propertyId: id,
+            buildingId: urlBuilding,
+            unitId: unitId || urlBuilding,
+            inspectionType: type,
+            responses: responses,
+            inspectionData: {
+                isComplete,
+                findings: propertyFindings,
+                odFormSnapshots: savedODFormData
+            }
+        };
+
+        if (recordIndex >= 0) {
+            const prevRecord = cachedList[recordIndex];
+            newRecord.inspectionData.findings = prevRecord.inspectionData?.findings || propertyFindings;
+            newRecord.inspectionData.odFormSnapshots = {
+                ...(prevRecord.inspectionData?.odFormSnapshots || {}),
+                ...savedODFormData
+            };
+            cachedList[recordIndex] = newRecord;
+        } else {
+            cachedList.push(newRecord);
+        }
+
+        localStorage.setItem(localCacheKey, JSON.stringify(cachedList));
+    };
+
+    const queueForOfflineSync = (payload: any) => {
+        try {
+            const syncKey = `pending_sync_${id}`;
+            const existingSyncStr = localStorage.getItem(syncKey);
+            const existingSync = existingSyncStr ? JSON.parse(existingSyncStr) : [];
+            const filteredSync = existingSync.filter((item: any) => 
+                !(item.inspection_type === payload.inspection_type && item.unit_id === payload.unit_id)
+            );
+            filteredSync.push(payload);
+            localStorage.setItem(syncKey, JSON.stringify(filteredSync));
+            setOfflineChangesCount(filteredSync.length);
+        } catch (e) {
+            console.error("Error queueing offline sync:", e);
+        }
+    };
+
+    const syncPendingChanges = async () => {
+        try {
+            const syncKey = `pending_sync_${id}`;
+            const existingSyncStr = localStorage.getItem(syncKey);
+            if (!existingSyncStr) return;
+            const existingSync = JSON.parse(existingSyncStr);
+            if (existingSync.length === 0) return;
+
+            toast.info(`Syncing ${existingSync.length} offline changes...`);
+            const promises = existingSync.map((payload: any) => 
+                inspectionsAPI.saveProgress(payload)
+            );
+            await Promise.all(promises);
+            localStorage.removeItem(syncKey);
+            setOfflineChangesCount(0);
+            toast.success("All offline changes synced successfully!");
+            await refreshCompletedUnits();
+        } catch (error) {
+            console.error("Error syncing offline changes:", error);
+            toast.error("Failed to sync some offline changes. Will retry later.");
+        }
+    };
+
+    useEffect(() => {
+        setIsOnline(navigator.onLine);
+        const handleOnline = () => {
+            setIsOnline(true);
+            toast.success("Connection restored! Syncing offline changes...");
+            syncPendingChanges();
+        };
+        const handleOffline = () => {
+            setIsOnline(false);
+            toast.warn("You are offline. Progress will be saved locally.");
+        };
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOffline);
+        
+        try {
+            const syncKey = `pending_sync_${id}`;
+            const existingSyncStr = localStorage.getItem(syncKey);
+            if (existingSyncStr) {
+                const existingSync = JSON.parse(existingSyncStr);
+                setOfflineChangesCount(existingSync.length);
+                if (navigator.onLine && existingSync.length > 0) {
+                    syncPendingChanges();
+                }
+            }
+        } catch (e) {}
+
+        return () => {
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('offline', handleOffline);
+        };
+    }, [id]);
+
+    const loadSavedProgress = async () => {
+        const localCacheKey = `cached_progress_${id}_${urlBuilding}`;
+        try {
+            const cachedDataStr = localStorage.getItem(localCacheKey);
+            if (cachedDataStr) {
+                const cached = JSON.parse(cachedDataStr);
+                applyProgressData(cached);
+            }
+        } catch (e) {
+            console.error("Cache load error:", e);
+        }
+
+        try {
             const res = await inspectionsAPI.getProgress({
                 property_id: id,
                 building_id: urlBuilding
             });
 
-            if (res.success && res.progress) {
-                // Find Inside and Outside progress for this building
-                const outsideRec = res.progress.find((p: any) => {
-                    const typeMatch = p.inspectionType === 'Outside';
-                    const bId = String(urlBuilding || '').toUpperCase();
-                    const pUnitId = String(p.unitId || '').toUpperCase();
-                    const pBldgId = String(p.buildingId || '').toUpperCase();
-                    const isB1Match = (bId === 'B1' || bId === 'BUILDING 1') && (pUnitId === 'B1' || pUnitId === 'BUILDING 1' || pBldgId === 'B1' || pBldgId === 'BUILDING 1');
-                    return typeMatch && (pUnitId === bId || pBldgId === bId || isB1Match);
-                });
-
-                const insideRec = res.progress.find((p: any) => {
-                    const typeMatch = p.inspectionType === 'Inside';
-                    const bId = String(urlBuilding || '').toUpperCase();
-                    const pUnitId = String(p.unitId || '').toUpperCase();
-                    const pBldgId = String(p.buildingId || '').toUpperCase();
-                    const isB1Match = (bId === 'B1' || bId === 'BUILDING 1') && (pUnitId === 'B1' || pUnitId === 'BUILDING 1' || pBldgId === 'B1' || pBldgId === 'BUILDING 1');
-                    return typeMatch && (pUnitId === bId || pBldgId === bId || isB1Match);
-                });
-                
-                if (outsideRec && outsideRec.responses) setOutsideStatuses(outsideRec.responses);
-                if (insideRec && insideRec.responses) setInsideStatuses(insideRec.responses);
-
-                // If a unit is active, find its progress too
-                if (activeInspectionUnit) {
-                    const unitRec = res.progress.find((p: any) => {
-                        const pType = String(p.inspectionType || '').toLowerCase();
-                        const typeMatch = pType === 'unit' 
-                            || pType === `unit_${activeInspectionUnit}`.toLowerCase()
-                            || pType === `unit_${urlBuilding}_${activeInspectionUnit}`.toLowerCase();
-                        const uId = String(activeInspectionUnit).toUpperCase();
-                        const pUnitId = String(p.unitId).toUpperCase();
-                        const bId = String(urlBuilding || '').toUpperCase();
-                        const pBldgId = String(p.buildingId || '').toUpperCase();
-                        
-                        // Cross-building fix: ensure buildingId matches
-                        return typeMatch && pUnitId === uId && (pBldgId === bId || !pBldgId);
-                    });
-                    if (unitRec && unitRec.responses) setUnitStatuses(unitRec.responses);
-                }
-
-                // Restore findings for summary page if they exist in any record
-                const allFindings: any[] = [];
-                res.progress.forEach((p: any) => {
-                    if (p.inspectionData && Array.isArray(p.inspectionData.findings)) {
-                        allFindings.push(...p.inspectionData.findings);
-                    }
-                });
-
-                if (allFindings.length > 0) {
-                    // Dedupe findings
-                    const seen = new Set();
-                    const uniqueFindings = allFindings.filter((f: any) => {
-                        // Aggressive deduplication: Building + Area + Unit + Item
-                        // If building is unknown, we treat it as potentially belonging to the current building to avoid duplicates
-                        const bldg = (f.building && !['unknown', 'UNKNOWN-BUILDING'].includes(f.building)) ? f.building : (urlBuilding || 'unknown');
-                        const area = f.area || f.category || 'unknown';
-                        const unit = f.unit || '-';
-                        const item = f.item || f.deficiencyName || f.title || 'unknown';
-                        
-                        const key = `${bldg}|${area}|${unit}|${item}`.toLowerCase().trim();
-                        if (seen.has(key)) return false;
-                        seen.add(key);
-                        return true;
-                    });
-
-                    // CRITICAL: Always use server findings as the source of truth
-                    setPropertyFindings(uniqueFindings);
-                }
-                // Restore OD form snapshots so re-opening a saved OD pre-fills the form
-                const restoredSnapshots: Record<string, any> = {};
-                const restoredSavedODKeys = new Set<string>();
-                res.progress.forEach((p: any) => {
-                    if (p.inspectionData && p.inspectionData.odFormSnapshots) {
-                        Object.entries(p.inspectionData.odFormSnapshots).forEach(([key, val]) => {
-                            restoredSnapshots[key] = val;
-                            restoredSavedODKeys.add(key);
-                        });
-                    }
-                });
-                if (Object.keys(restoredSnapshots).length > 0) {
-                    setSavedODFormData(restoredSnapshots);
-                    setSavedODItems(restoredSavedODKeys);
-                }
+            if (res.progress) {
+                localStorage.setItem(localCacheKey, JSON.stringify(res.progress));
+                applyProgressData(res.progress);
             }
         } catch (error) {
-            console.error("Error loading progress:", error);
+            console.error("Error loading progress from API:", error);
         }
     };
 
-    // Save progress whenever statuses change
+    const saveCurrentProgress = async () => {
+        if (!id || !user) return;
+        
+        try {
+            const payloads = [];
+            
+            if (Object.keys(outsideStatuses).length > 0) {
+                const isComplete = outsideItemsList.every(item => outsideStatuses[item] !== null && outsideStatuses[item] !== undefined);
+                const payload = {
+                    property_id: id,
+                    unit_id: urlBuilding,
+                    inspection_type: 'Outside',
+                    responses: outsideStatuses,
+                    building_id: urlBuilding,
+                    inspectionData: { isComplete }
+                };
+                payloads.push({ type: 'Outside', isComplete, payload });
+                updateLocalCache('Outside', outsideStatuses, isComplete);
+            }
+            
+            if (Object.keys(insideStatuses).length > 0) {
+                const isComplete = insideItemsList.every(item => insideStatuses[item] !== null && insideStatuses[item] !== undefined);
+                const payload = {
+                    property_id: id,
+                    unit_id: urlBuilding,
+                    inspection_type: 'Inside',
+                    responses: insideStatuses,
+                    building_id: urlBuilding,
+                    inspectionData: { isComplete }
+                };
+                payloads.push({ type: 'Inside', isComplete, payload });
+                updateLocalCache('Inside', insideStatuses, isComplete);
+            }
+            
+            if (Object.keys(unitStatuses).length > 0 && activeInspectionUnit) {
+                const isComplete = unitItemsList.every(item => {
+                    const status = unitStatuses[item];
+                    return status !== null && status !== undefined;
+                });
+                const payload = {
+                    property_id: id,
+                    unit_id: activeInspectionUnit,
+                    inspection_type: `unit_${urlBuilding}_${activeInspectionUnit}`,
+                    responses: unitStatuses,
+                    building_id: urlBuilding,
+                    inspectionData: { isComplete }
+                };
+                payloads.push({ type: `unit_${urlBuilding}_${activeInspectionUnit}`, isComplete, payload, unitId: activeInspectionUnit });
+                updateLocalCache(`unit_${urlBuilding}_${activeInspectionUnit}`, unitStatuses, isComplete, activeInspectionUnit);
+            }
+            
+            if (navigator.onLine) {
+                const promises = payloads.map(p => inspectionsAPI.saveProgress(p.payload));
+                await Promise.all(promises);
+                await refreshCompletedUnits();
+            } else {
+                payloads.forEach(p => queueForOfflineSync(p.payload));
+            }
+        } catch (error) {
+            console.error("Error saving progress:", error);
+            if (Object.keys(outsideStatuses).length > 0) {
+                const isComplete = outsideItemsList.every(item => outsideStatuses[item] !== null && outsideStatuses[item] !== undefined);
+                queueForOfflineSync({
+                    property_id: id,
+                    unit_id: urlBuilding,
+                    inspection_type: 'Outside',
+                    responses: outsideStatuses,
+                    building_id: urlBuilding,
+                    inspectionData: { isComplete }
+                });
+            }
+            if (Object.keys(insideStatuses).length > 0) {
+                const isComplete = insideItemsList.every(item => insideStatuses[item] !== null && insideStatuses[item] !== undefined);
+                queueForOfflineSync({
+                    property_id: id,
+                    unit_id: urlBuilding,
+                    inspection_type: 'Inside',
+                    responses: insideStatuses,
+                    building_id: urlBuilding,
+                    inspectionData: { isComplete }
+                });
+            }
+            if (Object.keys(unitStatuses).length > 0 && activeInspectionUnit) {
+                const isComplete = unitItemsList.every(item => {
+                    const status = unitStatuses[item];
+                    return status !== null && status !== undefined;
+                });
+                queueForOfflineSync({
+                    property_id: id,
+                    unit_id: activeInspectionUnit,
+                    inspection_type: `unit_${urlBuilding}_${activeInspectionUnit}`,
+                    responses: unitStatuses,
+                    building_id: urlBuilding,
+                    inspectionData: { isComplete }
+                });
+            }
+        }
+    };
+
     useEffect(() => {
         const timer = setTimeout(() => {
             saveCurrentProgress();
@@ -470,60 +694,6 @@ export default function InspectionCategoryPage() {
 
         return () => clearTimeout(timer);
     }, [outsideStatuses, insideStatuses, unitStatuses, urlBuilding, activeInspectionUnit]);
-
-    const saveCurrentProgress = async () => {
-        if (!id || !user) return;
-        
-        try {
-            const promises = [];
-            
-            if (Object.keys(outsideStatuses).length > 0) {
-                const isComplete = outsideItemsList.every(item => outsideStatuses[item] !== null && outsideStatuses[item] !== undefined);
-                promises.push(inspectionsAPI.saveProgress({
-                    property_id: id,
-                    unit_id: urlBuilding,
-                    inspection_type: 'Outside',
-                    responses: outsideStatuses,
-                    building_id: urlBuilding,
-                    inspectionData: { isComplete }
-                }));
-            }
-            
-            if (Object.keys(insideStatuses).length > 0) {
-                const isComplete = insideItemsList.every(item => insideStatuses[item] !== null && insideStatuses[item] !== undefined);
-                promises.push(inspectionsAPI.saveProgress({
-                    property_id: id,
-                    unit_id: urlBuilding,
-                    inspection_type: 'Inside',
-                    responses: insideStatuses,
-                    building_id: urlBuilding,
-                    inspectionData: { isComplete }
-                }));
-            }
-            
-            if (Object.keys(unitStatuses).length > 0 && activeInspectionUnit) {
-                // Check if all items are filled to mark as fully complete
-                const isComplete = unitItemsList.every(item => {
-                    const status = unitStatuses[item];
-                    return status !== null && status !== undefined;
-                });
-
-                promises.push(inspectionsAPI.saveProgress({
-                    property_id: id,
-                    unit_id: activeInspectionUnit,
-                    inspection_type: `unit_${urlBuilding}_${activeInspectionUnit}`,
-                    responses: unitStatuses,
-                    building_id: urlBuilding,
-                    inspectionData: { isComplete }
-                }));
-            }
-            
-            await Promise.all(promises);
-            await refreshCompletedUnits();
-        } catch (error) {
-            console.error("Error saving progress:", error);
-        }
-    };
 
     useEffect(() => {
         if (activeInspectionUnit) {
@@ -630,7 +800,7 @@ export default function InspectionCategoryPage() {
         }
 
         // If status is being changed away from OD, clean up the saved finding
-        if (status !== 'OD') {
+        if ((status as any) !== 'OD') {
             const savedKey = `${urlBuilding}:${section}:${itemName}`;
             setSavedODItems(prev => {
                 const next = new Set(prev);
@@ -869,9 +1039,9 @@ export default function InspectionCategoryPage() {
                                      : unitStatuses;
                 
                 // Ensure the item is marked as OD
-                const updatedStatuses = {
+                const updatedStatuses: Record<string, any> = {
                     ...currentStatuses,
-                    [currentModalItem]: 'OD'
+                    [(currentModalItem as string) || '']: 'OD'
                 };
 
                 if (currentSection === 'outside') setOutsideStatuses(updatedStatuses as Record<string, ItemStatus>);
@@ -936,8 +1106,7 @@ export default function InspectionCategoryPage() {
                                 modalStep: 2
                             }
                         }
-                    },
-                    building_id: urlBuilding
+                    }
                 });
                 
                 // NO LONGER USING localStorage FOR FINDINGS
@@ -1350,9 +1519,22 @@ export default function InspectionCategoryPage() {
                     <button onClick={() => router.back()} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
                         <ChevronLeft className="w-6 h-6 text-gray-600" />
                     </button>
-                    <div className="flex items-center gap-2">
-                        <span className="text-sm font-bold text-gray-900">{user?.fullName || "Guest User"}</span>
-                        <div className="w-3 h-1.5 border-2 border-gray-400 rotate-45 border-t-0 border-l-0 ml-1" />
+                    <div className="flex items-center gap-4">
+                        {!isOnline ? (
+                            <span className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 border border-amber-200 shadow-sm animate-pulse">
+                                <span className="w-2 h-2 rounded-full bg-amber-600"></span>
+                                Offline {offlineChangesCount > 0 && `(${offlineChangesCount} local)`}
+                            </span>
+                        ) : (
+                            <span className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200 shadow-sm">
+                                <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
+                                Connected
+                            </span>
+                        )}
+                        <div className="flex items-center gap-2">
+                            <span className="text-sm font-bold text-gray-900">{user?.fullName || "Guest User"}</span>
+                            <div className="w-3 h-1.5 border-2 border-gray-400 rotate-45 border-t-0 border-l-0 ml-1" />
+                        </div>
                     </div>
                 </div>
                 <div className="mb-8 flex items-center justify-between">

@@ -172,151 +172,156 @@ export default function SettingsPage() {
 
   return (
     <DashboardLayout>
-      <div className="p-4 md:p-6">
+      <div className="p-4 sm:p-6 lg:p-8 space-y-6 lg:space-y-8 font-lexend">
         {/* Header */}
-        <div className="bg-white rounded-lg p-6 mb-6 shadow-sm">
-          <h1 className="text-2xl font-bold text-gray-800 mb-1">Settings</h1>
-          <p className="text-gray-600">Manage your account preferences and security</p>
+        <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Settings</h1>
+          <p className="text-slate-500 text-sm sm:text-base mt-1">Manage your account preferences, notifications, and security</p>
         </div>
-
+ 
         <div className="grid lg:grid-cols-4 gap-6">
           {/* Sidebar Tabs */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg p-4 shadow-sm">
-              <nav className="space-y-2">
+            <div className="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-sm">
+              <nav className="space-y-1.5">
                 <button
                   onClick={() => setActiveTab("profile")}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors ${
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 ${
                     activeTab === "profile"
-                      ? "bg-[#006795] text-white"
-                      : "text-gray-700 hover:bg-gray-100"
+                      ? "bg-teal-600 text-white shadow-md shadow-teal-600/10"
+                      : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
                   }`}
                 >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
                   Profile Settings
                 </button>
-
+ 
                 <button
                   onClick={() => setActiveTab("notifications")}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors ${
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 ${
                     activeTab === "notifications"
-                      ? "bg-[#006795] text-white"
-                      : "text-gray-700 hover:bg-gray-100"
+                      ? "bg-teal-600 text-white shadow-md shadow-teal-600/10"
+                      : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
                   }`}
                 >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                   </svg>
                   Notifications
                 </button>
-
+ 
                 <button
                   onClick={() => setActiveTab("security")}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors ${
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 ${
                     activeTab === "security"
-                      ? "bg-[#006795] text-white"
-                      : "text-gray-700 hover:bg-gray-100"
+                      ? "bg-teal-600 text-white shadow-md shadow-teal-600/10"
+                      : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
                   }`}
                 >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
                   Security Settings
                 </button>
               </nav>
             </div>
           </div>
-
+ 
           {/* Content Area */}
           <div className="lg:col-span-3">
             {/* Profile Settings */}
             {activeTab === "profile" && (
-              <div className="bg-white rounded-lg p-6 shadow-sm">
-                <h2 className="text-xl font-bold text-gray-800 mb-6">Profile Settings</h2>
-
+              <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm space-y-6">
+                <div className="border-b border-slate-100 pb-4">
+                  <h2 className="text-lg font-bold text-slate-900">Profile Settings</h2>
+                  <p className="text-slate-500 text-xs mt-0.5 font-medium">Update your personal information and profile picture</p>
+                </div>
+ 
                 {/* Avatar */}
-                <div className="flex items-center gap-4 mb-8 pb-6 border-b">
-                  <Image
-                    src="https://ui-avatars.com/api/?name=Emma+Johnson&size=100&background=FF4757&color=fff"
-                    alt="Profile"
-                    width={100}
-                    height={100}
-                    className="rounded-full"
-                  />
-                  <div>
-                    <Button className="bg-[#006795] hover:bg-[#0a5670] text-white">
+                <div className="flex flex-col sm:flex-row items-center gap-6 pb-6 border-b border-slate-100">
+                  <div className="relative group">
+                    <Image
+                      src="https://ui-avatars.com/api/?name=Emma+Johnson&size=100&background=0F4C5C&color=fff"
+                      alt="Profile"
+                      width={100}
+                      height={100}
+                      className="rounded-2xl border-2 border-slate-100 shadow-sm"
+                    />
+                  </div>
+                  <div className="text-center sm:text-left space-y-2">
+                    <Button className="bg-teal-600 hover:bg-teal-700 text-white font-bold px-4 py-2 rounded-xl text-xs shadow-sm hover:shadow-md transition-all duration-200 border-0">
                       Change Photo
                     </Button>
-                    <p className="text-sm text-gray-500 mt-2">JPG, PNG or GIF. Max size 2MB</p>
+                    <p className="text-[11px] font-semibold text-slate-400">JPG, PNG or GIF. Max size 2MB</p>
                   </div>
                 </div>
-
+ 
                 {/* Form */}
-                <div className="grid md:grid-cols-2 gap-6 mb-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                <div className="grid md:grid-cols-2 gap-5">
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider">Full Name</label>
                     <input
                       type="text"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795]"
+                      className="w-full px-3.5 py-2 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all duration-200"
                     />
                   </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+ 
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider">Email Address</label>
                     <input
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795]"
+                      className="w-full px-3.5 py-2 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all duration-200"
                     />
                   </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+ 
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider">Phone Number</label>
                     <input
                       type="tel"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795]"
+                      className="w-full px-3.5 py-2 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all duration-200"
                     />
                   </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Role</label>
+ 
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider">Role</label>
                     <select
                       value={role}
                       onChange={(e) => setRole(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795]"
+                      className="w-full px-3.5 py-2 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-semibold text-slate-800 transition-all duration-200 cursor-pointer"
                     >
                       <option value="Inspector">Inspector</option>
                       <option value="Property Manager">Property Manager</option>
                       <option value="Admin">Admin</option>
                     </select>
                   </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Language</label>
+ 
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider">Language</label>
                     <select
                       value={language}
                       onChange={(e) => setLanguage(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795]"
+                      className="w-full px-3.5 py-2 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-semibold text-slate-800 transition-all duration-200 cursor-pointer"
                     >
                       <option value="English">English</option>
                       <option value="Spanish">Spanish</option>
                       <option value="French">French</option>
                     </select>
                   </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Timezone</label>
+ 
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider">Timezone</label>
                     <select
                       value={timezone}
                       onChange={(e) => setTimezone(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795]"
+                      className="w-full px-3.5 py-2 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-semibold text-slate-800 transition-all duration-200 cursor-pointer"
                     >
                       <option value="EST">EST (UTC-5)</option>
                       <option value="CST">CST (UTC-6)</option>
@@ -325,33 +330,39 @@ export default function SettingsPage() {
                     </select>
                   </div>
                 </div>
-
-                <div className="flex justify-end">
-                  <Button onClick={handleSaveProfile} className="px-8 bg-[#006795] hover:bg-[#6de600] text-white font-semibold">
-                    Save Changes
+ 
+                <div className="flex justify-end pt-4 border-t border-slate-100">
+                  <Button
+                    onClick={handleSaveProfile}
+                    disabled={isLoading}
+                    className="bg-teal-600 hover:bg-teal-700 disabled:bg-slate-300 text-white font-bold px-6 py-2.5 rounded-xl text-sm shadow-md shadow-teal-600/10 transition-all duration-200 border-0"
+                  >
+                    {isLoading ? "Saving..." : "Save Changes"}
                   </Button>
                 </div>
               </div>
             )}
-
+ 
             {/* Notification Preferences */}
             {activeTab === "notifications" && (
-              <div className="bg-white rounded-lg p-6 shadow-sm">
-                <h2 className="text-xl font-bold text-gray-800 mb-6">Notification Preferences</h2>
-
+              <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm space-y-6">
+                <div className="border-b border-slate-100 pb-4">
+                  <h2 className="text-lg font-bold text-slate-900">Notification Preferences</h2>
+                  <p className="text-slate-500 text-xs mt-0.5 font-medium">Control how and when you receive portal alerts</p>
+                </div>
+ 
                 <div className="space-y-8">
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-800 mb-4">Email Notifications</h3>
-                    <div className="space-y-4">
+                  <div className="space-y-4">
+                    <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider">Email Notifications</h3>
+                    <div className="grid gap-3.5">
                       {Object.entries(emailNotifications).map(([key, value]) => (
-                        <div key={key} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                          <div>
-                            <p className="font-medium text-gray-800">
+                        <div key={key} className="flex items-center justify-between p-4 bg-slate-50/50 border border-slate-100 rounded-2xl hover:bg-slate-50 transition-colors">
+                          <div className="space-y-0.5">
+                            <p className="font-bold text-slate-800 text-sm">
                               {key.replace(/([A-Z])/g, " $1").replace(/^./, (str) => str.toUpperCase())}
                             </p>
-                            <p className="text-sm text-gray-600">
-                              Receive email notifications for{" "}
-                              {key.replace(/([A-Z])/g, " $1").toLowerCase()}
+                            <p className="text-xs font-semibold text-slate-500">
+                              Receive email notifications for {key.replace(/([A-Z])/g, " $1").toLowerCase()}
                             </p>
                           </div>
                           <label className="relative inline-flex items-center cursor-pointer">
@@ -363,25 +374,24 @@ export default function SettingsPage() {
                               }
                               className="sr-only peer"
                             />
-                            <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#006795]/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#006795]"></div>
+                            <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-teal-500/10 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-200 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-teal-600"></div>
                           </label>
                         </div>
                       ))}
                     </div>
                   </div>
-
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-800 mb-4">In-App Notifications</h3>
-                    <div className="space-y-4">
+ 
+                  <div className="space-y-4">
+                    <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider">In-App Notifications</h3>
+                    <div className="grid gap-3.5">
                       {Object.entries(inAppNotifications).map(([key, value]) => (
-                        <div key={key} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                          <div>
-                            <p className="font-medium text-gray-800">
+                        <div key={key} className="flex items-center justify-between p-4 bg-slate-50/50 border border-slate-100 rounded-2xl hover:bg-slate-50 transition-colors">
+                          <div className="space-y-0.5">
+                            <p className="font-bold text-slate-800 text-sm">
                               {key.replace(/([A-Z])/g, " $1").replace(/^./, (str) => str.toUpperCase())}
                             </p>
-                            <p className="text-sm text-gray-600">
-                              Show in-app notifications for{" "}
-                              {key.replace(/([A-Z])/g, " $1").toLowerCase()}
+                            <p className="text-xs font-semibold text-slate-500">
+                              Show in-app notifications for {key.replace(/([A-Z])/g, " $1").toLowerCase()}
                             </p>
                           </div>
                           <label className="relative inline-flex items-center cursor-pointer">
@@ -393,119 +403,134 @@ export default function SettingsPage() {
                               }
                               className="sr-only peer"
                             />
-                            <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#006795]/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#006795]"></div>
+                            <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-teal-500/10 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-200 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-teal-600"></div>
                           </label>
                         </div>
                       ))}
                     </div>
                   </div>
                 </div>
-
-                <div className="flex justify-end mt-6">
-                  <Button onClick={handleSaveNotifications} className="px-8 bg-[#006795] hover:bg-[#6de600] text-white font-semibold">
-                    Save Preferences
+ 
+                <div className="flex justify-end pt-4 border-t border-slate-100">
+                  <Button
+                    onClick={handleSaveNotifications}
+                    disabled={isLoading}
+                    className="bg-teal-600 hover:bg-teal-700 disabled:bg-slate-300 text-white font-bold px-6 py-2.5 rounded-xl text-sm shadow-md shadow-teal-600/10 transition-all duration-200 border-0"
+                  >
+                    {isLoading ? "Saving..." : "Save Preferences"}
                   </Button>
                 </div>
               </div>
             )}
-
+ 
             {/* Security Settings */}
             {activeTab === "security" && (
-              <div className="bg-white rounded-lg p-6 shadow-sm">
-                <h2 className="text-xl font-bold text-gray-800 mb-6">Security Settings</h2>
-
+              <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm space-y-8">
                 {/* Change Password */}
-                <div className="mb-8 pb-8 border-b">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-4">Change Password</h3>
+                <div className="space-y-5 pb-6 border-b border-slate-100">
+                  <div>
+                    <h2 className="text-lg font-bold text-slate-900">Change Password</h2>
+                    <p className="text-slate-500 text-xs mt-0.5 font-medium">Update your password regularly to keep your account secure</p>
+                  </div>
                   <div className="space-y-4 max-w-md">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Current Password</label>
+                    <div className="space-y-1.5">
+                      <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider">Current Password</label>
                       <input
                         type="password"
                         value={currentPassword}
                         onChange={(e) => setCurrentPassword(e.target.value)}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795]"
+                        className="w-full px-3.5 py-2 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all duration-200"
                         placeholder="Enter current password"
                       />
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">New Password</label>
+                    <div className="space-y-1.5">
+                      <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider">New Password</label>
                       <input
                         type="password"
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795]"
-                        placeholder="Enter new password"
+                        className="w-full px-3.5 py-2 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all duration-200"
+                        placeholder="Enter new password (min. 8 characters)"
                       />
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Confirm New Password</label>
+                    <div className="space-y-1.5">
+                      <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider">Confirm New Password</label>
                       <input
                         type="password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795]"
+                        className="w-full px-3.5 py-2 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all duration-200"
                         placeholder="Confirm new password"
                       />
                     </div>
-                    <Button onClick={handleChangePassword} className="bg-[#006795] hover:bg-[#0a5670] text-white">
+                    <Button onClick={handleChangePassword} disabled={isLoading} className="bg-teal-600 hover:bg-teal-700 disabled:bg-slate-300 text-white font-bold px-4 py-2 rounded-xl text-xs border-0 shadow-sm shadow-teal-600/10">
                       Update Password
                     </Button>
                   </div>
                 </div>
-
+ 
                 {/* Two-Factor Authentication */}
-                <div className="mb-8 pb-8 border-b">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-4">Two-Factor Authentication</h3>
-                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg max-w-2xl">
-                    <div>
-                      <p className="font-medium text-gray-800 mb-1">Enable Two-Factor Authentication</p>
-                      <p className="text-sm text-gray-600">
-                        Add an extra layer of security to your account by requiring a verification code
+                <div className="space-y-4 pb-6 border-b border-slate-100">
+                  <div>
+                    <h2 className="text-lg font-bold text-slate-900">Two-Factor Authentication</h2>
+                    <p className="text-slate-500 text-xs mt-0.5 font-medium">Add an extra layer of security to your account logins</p>
+                  </div>
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-slate-50/50 border border-slate-100 rounded-2xl gap-4">
+                    <div className="space-y-1">
+                      <p className="font-bold text-slate-800 text-sm">Require authentication code</p>
+                      <p className="text-xs font-semibold text-slate-500 max-w-lg">
+                        We will ask for a verification code via your registered communication channels whenever you log in from an untrusted device.
                       </p>
                     </div>
                     <Button
                       onClick={handleToggle2FA}
-                      className={`${
+                      disabled={isLoading}
+                      className={`w-full sm:w-auto font-bold px-5 py-2.5 rounded-xl text-xs border-0 shadow-sm transition-all duration-200 ${
                         twoFactorEnabled
-                          ? "bg-red-500 hover:bg-red-600"
-                          : "bg-[#006795] hover:bg-[#6de600] text-black"
-                      } text-white font-semibold`}
+                          ? "bg-rose-600 hover:bg-rose-700 text-white shadow-rose-600/10"
+                          : "bg-teal-600 hover:bg-teal-700 text-white shadow-teal-600/10"
+                      }`}
                     >
-                      {twoFactorEnabled ? "Disable" : "Enable"}
+                      {twoFactorEnabled ? "Disable 2FA" : "Enable 2FA"}
                     </Button>
                   </div>
                 </div>
-
+ 
                 {/* Session Management */}
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-800 mb-4">Session Management</h3>
+                <div className="space-y-4">
+                  <div>
+                    <h2 className="text-lg font-bold text-slate-900">Session Management</h2>
+                    <p className="text-slate-500 text-xs mt-0.5 font-medium">View and manage your active web portal sessions</p>
+                  </div>
                   <div className="space-y-3">
-                    <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                      <div>
-                        <p className="font-medium text-gray-800">Current Device</p>
-                        <p className="text-sm text-gray-600">Windows · Chrome · {new Date().toLocaleString()}</p>
+                    <div className="flex items-center justify-between p-4 bg-slate-50/50 border border-slate-100 rounded-2xl">
+                      <div className="space-y-0.5">
+                        <p className="font-bold text-slate-800 text-sm">Current Device</p>
+                        <p className="text-xs font-semibold text-slate-400">Windows · Chrome · {new Date().toLocaleString()}</p>
                       </div>
-                      <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">
-                        Active
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-100">
+                        Active Now
                       </span>
                     </div>
-                    <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                      <div>
-                        <p className="font-medium text-gray-800">iPhone 13</p>
-                        <p className="text-sm text-gray-600">iOS · Safari · Last active 2 hours ago</p>
+                    <div className="flex items-center justify-between p-4 bg-slate-50/50 border border-slate-100 rounded-2xl">
+                      <div className="space-y-0.5">
+                        <p className="font-bold text-slate-800 text-sm">iPhone 13</p>
+                        <p className="text-xs font-semibold text-slate-400">iOS · Safari · Last active 2 hours ago</p>
                       </div>
-                      <Button variant="outline" className="text-red-600 hover:text-red-700">
-                        Log Out
+                      <Button variant="outline" className="text-rose-600 hover:text-rose-700 bg-rose-50/50 hover:bg-rose-50 border-rose-100 rounded-xl px-4 py-2 text-xs font-bold">
+                        Revoke
                       </Button>
                     </div>
                   </div>
-                  <div className="mt-6">
+                  <div className="pt-2 flex justify-start">
                     <Button
                       onClick={handleLogout}
                       variant="outline"
-                      className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                      className="text-rose-600 hover:text-rose-700 hover:bg-rose-50 border-rose-100 rounded-xl px-5 py-2.5 text-xs font-bold flex items-center gap-1.5"
                     >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                      </svg>
                       Log Out From All Devices
                     </Button>
                   </div>

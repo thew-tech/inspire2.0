@@ -4,6 +4,8 @@ import { useState, useEffect, useMemo, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import DashboardLayout from "@/components/DashboardLayout"
 import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import { CheckCircle2 } from "lucide-react"
 import { toast } from "react-toastify"
 import { propertiesAPI, inspectionsAPI, paymentsAPI } from "@/lib/api"
 import {
@@ -192,7 +194,7 @@ function NSPIREInspectionSummaryContent() {
       try {
         setLoading(true);
         // IGNORE localStorage - fetch everything from server to ensure fresh data
-        let inspectionData = null;
+        let inspectionData: any = null;
         let propertyData = null;
 
         const propertyId = searchParams.get('propertyId') || searchParams.get('id');
@@ -222,7 +224,7 @@ function NSPIREInspectionSummaryContent() {
             let serverUnlocked = false;
 
             // 1. Collect findings from all progress (draft) records
-            if (progData.success && progData.progress) {
+            if (progData && progData.progress) {
               const allProgress = progData.progress || [];
               allProgress.forEach((record: any) => {
                 const recordFindings = record.inspectionData?.findings || record.inspectionData?.deficiencies || [];
@@ -387,7 +389,7 @@ function NSPIREInspectionSummaryContent() {
           const data = await paymentsAPI.getStripeSessionStatus(sessionId);
           
           if (!data?.success) {
-            throw new Error(data?.message || 'Unable to verify Stripe payment status.')
+            throw new Error((data as any)?.message || 'Unable to verify Stripe payment status.')
           }
 
           if (data?.isReportUnlocked) {
@@ -790,7 +792,7 @@ function NSPIREInspectionSummaryContent() {
 
         payloadData = {
           ...report.metadata, // Spread metadata (inspectionNo, propertyName, etc.) to root
-          deficiencies: exportDeficiencies.map(d => {
+          deficiencies: exportDeficiencies.map((d: any) => {
             const img = d.imageUri || d.imageUrl || (Array.isArray(d.photos) && d.photos.length > 0 ? (typeof d.photos[0] === 'string' ? d.photos[0] : d.photos[0].url) : '') || '';
             return {
               ...d,
@@ -803,7 +805,7 @@ function NSPIREInspectionSummaryContent() {
               photos: [img]
             };
           }),
-          findings: exportDeficiencies.map(d => {
+          findings: exportDeficiencies.map((d: any) => {
             const img = d.imageUri || d.imageUrl || (Array.isArray(d.photos) && d.photos.length > 0 ? (typeof d.photos[0] === 'string' ? d.photos[0] : d.photos[0].url) : '') || '';
             return {
               ...d,
@@ -1021,29 +1023,32 @@ function NSPIREInspectionSummaryContent() {
   // Get severity badge styling
   const getSeverityBadgeClass = (severity: DeficiencySeverity): string => {
     const classes: Record<DeficiencySeverity, string> = {
-      'Life-Threatening': 'bg-red-600 text-white',
-      'Severe': 'bg-orange-500 text-white',
-      'Moderate': 'bg-blue-500 text-white',
-      'Low': 'bg-gray-500 text-white',
+      'Life-Threatening': 'bg-rose-50 text-rose-700 border border-rose-100 rounded-xl font-bold shadow-sm',
+      'Severe': 'bg-amber-50 text-amber-700 border border-amber-100 rounded-xl font-bold shadow-sm',
+      'Moderate': 'bg-sky-50 text-sky-700 border border-sky-100 rounded-xl font-bold shadow-sm',
+      'Low': 'bg-slate-50 text-slate-705 border border-slate-200 rounded-xl font-bold shadow-sm',
     }
-    return classes[severity] || 'bg-gray-500 text-white'
+    return classes[severity] || 'bg-slate-50 text-slate-700 border border-slate-200 rounded-xl font-bold shadow-sm'
   }
 
   const getStatusBadgeClass = (status: string): string => {
     const classes: Record<string, string> = {
-      'Open': 'bg-red-100 text-red-700',
-      'In Progress': 'bg-yellow-100 text-yellow-700',
-      'Resolved': 'bg-green-100 text-green-700',
-      'Verified': 'bg-blue-100 text-blue-700',
+      'Open': 'bg-rose-50 text-rose-700 border border-rose-100/60 rounded-xl font-bold px-2 py-1',
+      'In Progress': 'bg-amber-50 text-amber-800 border border-amber-100/60 rounded-xl font-bold px-2 py-1',
+      'Resolved': 'bg-emerald-50 text-emerald-700 border border-emerald-100/60 rounded-xl font-bold px-2 py-1',
+      'Verified': 'bg-sky-50 text-sky-700 border border-sky-100/60 rounded-xl font-bold px-2 py-1',
     }
-    return classes[status] || 'bg-gray-100 text-gray-700'
+    return classes[status] || 'bg-slate-50 text-slate-700 border border-slate-200 rounded-xl font-bold px-2 py-1'
   }
 
   if (loading) {
     return (
       <DashboardLayout>
-        <div className="flex items-center justify-center h-96">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#006795]"></div>
+        <div className="min-h-screen bg-slate-50 p-4 sm:p-6 lg:p-8 flex items-center justify-center font-lexend">
+          <div className="text-center space-y-3">
+            <div className="animate-spin rounded-full h-10 w-10 border-2 border-teal-600 border-t-transparent mx-auto"></div>
+            <p className="text-slate-500 text-sm font-semibold">Loading inspection summary...</p>
+          </div>
         </div>
       </DashboardLayout>
     )
@@ -1052,11 +1057,16 @@ function NSPIREInspectionSummaryContent() {
   if (!report) {
     return (
       <DashboardLayout>
-        <div className="flex flex-col items-center justify-center h-96">
-          <p className="text-gray-600 mb-4">No inspection data found</p>
-          <Button onClick={() => router.push('/dashboard/my-inspection')}>
-            Back to Inspections
-          </Button>
+        <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center font-lexend p-6">
+          <div className="text-center space-y-4">
+            <p className="text-slate-600 font-bold">No inspection data found</p>
+            <Button 
+              onClick={() => router.push('/dashboard/my-inspection')}
+              className="bg-teal-600 hover:bg-teal-700 text-white font-bold px-6 py-2.5 rounded-xl border-0 shadow-sm shadow-teal-600/10 text-xs sm:text-sm"
+            >
+              Back to Inspections
+            </Button>
+          </div>
         </div>
       </DashboardLayout>
     )
@@ -1064,54 +1074,54 @@ function NSPIREInspectionSummaryContent() {
 
   return (
     <DashboardLayout>
-      <div className="p-4 md:p-6 max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="bg-white rounded-lg p-6 mb-6 shadow-sm border border-gray-200">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+      <div className="min-h-screen bg-slate-50 p-4 sm:p-6 lg:p-8 text-slate-900 font-lexend space-y-6">
+        <div className="max-w-7xl mx-auto space-y-6">
+          {/* Header */}
+          <div className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
             <div>
-              <div className="flex items-center gap-2 mb-2">
-                <h1 className="text-2xl font-bold text-[#006795]">
-                  {searchParams.get('finalize') === 'true' ? 'HUD INSPIRE INSPECTION REPORT' : 'HUD INSPIRE INSPECTION PROGRESS'}
+              <div className="flex items-center gap-2 mb-1.5">
+                <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+                  {searchParams.get('finalize') === 'true' ? 'HUD NSPIRE Inspection Report' : 'HUD NSPIRE Inspection Progress'}
                 </h1>
               </div>
-              <p className="text-gray-600 font-medium">{report.metadata.propertyName}</p>
-              <p className="text-sm text-gray-500">{report.metadata.propertyAddress}</p>
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="text-slate-700 text-sm sm:text-base font-extrabold">{report.metadata.propertyName}</p>
+              <p className="text-xs sm:text-sm text-slate-500 font-medium">{report.metadata.propertyAddress}</p>
+              <p className="text-xs text-slate-400 font-bold mt-1">
                 Inspection #{report.metadata.inspectionNo} | {report.metadata.startDate}
               </p>
               {inspectionContext?.unitName && (
-                <p className="text-sm font-bold text-[#006795] mt-1">
+                <p className="text-xs sm:text-sm font-bold text-teal-600 mt-1">
                   {buildingColumnHeader}: {inspectionContext.buildingId} &rarr; {inspectionContext.unitName}
                 </p>
               )}
               <div className="mt-3 flex flex-wrap items-center gap-2">
                 {checkingUnlock ? (
-                  <span className="inline-flex items-center gap-2 rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-600">
-                    <svg className="h-3 w-3 animate-spin" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-                    </svg>
+                  <span className="inline-flex items-center gap-1.5 rounded-xl bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-600 border border-slate-200">
+                    <span className="h-3 w-3 animate-spin rounded-full border-2 border-slate-450 border-t-transparent"></span>
                     Checking report access...
                   </span>
                 ) : isReportUnlocked ? (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
+                  <span className="inline-flex items-center gap-1 rounded-xl bg-emerald-50 border border-emerald-100 px-3 py-1.5 text-xs font-bold text-emerald-700 shadow-sm">
                     <Unlock className="w-3.5 h-3.5" />
-                    Report unlocked
+                    Report Unlocked
                   </span>
                 ) : (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-800">
+                  <span className="inline-flex items-center gap-1 rounded-xl bg-rose-50 border border-rose-100 px-3 py-1.5 text-xs font-bold text-rose-700 shadow-sm">
                     <Lock className="w-3.5 h-3.5" />
-                    Report locked
+                    Report Locked
                   </span>
                 )}
 
                 {!checkingUnlock && !isReportUnlocked && (
-                  <div className="flex flex-col gap-1.5 p-3 rounded-lg bg-amber-50 border border-amber-200">
-                    <h3 className="text-sm font-black text-amber-900 uppercase tracking-tight">Unlock to Export PDF</h3>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-3 p-4 rounded-2xl bg-amber-50/50 border border-amber-250 mt-2">
+                    <div className="space-y-0.5">
+                      <h3 className="text-xs font-extrabold text-amber-900 uppercase tracking-wider">Unlock to Export PDF</h3>
+                      <p className="text-xs text-amber-700 font-semibold">Get complete records with full detail and print/share options.</p>
+                    </div>
                     <Button
                       onClick={handleUnlockWithStripe}
                       disabled={purchasingUnlock}
-                      className="h-9 gap-1.5 bg-amber-500 px-4 text-xs font-bold text-white hover:bg-amber-600 shadow-sm"
+                      className="h-10 gap-1.5 bg-amber-500 hover:bg-amber-600 px-5 text-xs font-bold text-white rounded-xl border-0 shadow-sm shadow-amber-600/10"
                     >
                       <Lock className="w-4 h-4" />
                       {purchasingUnlock ? 'Redirecting...' : 'Unlock Full Report - $99.00'}
@@ -1120,62 +1130,66 @@ function NSPIREInspectionSummaryContent() {
                 )}
               </div>
             </div>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-2.5">
               <Button
                 onClick={handleExportPDF}
                 disabled={exporting || checkingUnlock || purchasingUnlock}
-                className="gap-2 bg-[#006795] hover:bg-[#0a5670] text-white"
+                className="bg-teal-600 hover:bg-teal-700 text-white font-bold px-5 py-2.5 rounded-xl border-0 shadow-sm shadow-teal-600/10 text-xs flex items-center justify-center gap-1.5"
               >
-                {isReportUnlocked ? <Download /> : <Lock className="w-5 h-5" />} {exporting ? 'Generating...' : isReportUnlocked ? 'Export PDF' : 'Unlock to Export'}
+                {isReportUnlocked ? <Download /> : <Lock className="w-4 h-4" />} {exporting ? 'Generating...' : isReportUnlocked ? 'Export PDF' : 'Unlock to Export'}
               </Button>
               <Button
                 onClick={handleExportExcel}
                 disabled={exportingExcel || checkingUnlock || purchasingUnlock}
-                className="gap-2 bg-emerald-600 hover:bg-emerald-700 text-white"
+                className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-5 py-2.5 rounded-xl border-0 shadow-sm shadow-emerald-600/10 text-xs flex items-center justify-center gap-1.5"
               >
-                {isReportUnlocked ? <Excel /> : <Lock className="w-5 h-5" />} {exportingExcel ? 'Generating...' : isReportUnlocked ? 'Export Excel' : 'Unlock to Export Excel'}
+                {isReportUnlocked ? <Excel /> : <Lock className="w-4 h-4" />} {exportingExcel ? 'Generating...' : isReportUnlocked ? 'Export Excel' : 'Unlock to Export Excel'}
               </Button>
               <Button
                 onClick={handleBackToInspection}
-                className="gap-2 bg-amber-500 hover:bg-amber-600 text-white font-bold"
+                className="bg-amber-500 hover:bg-amber-600 text-white font-bold px-5 py-2.5 rounded-xl border-0 shadow-sm shadow-amber-600/10 text-xs flex items-center justify-center gap-1.5"
               >
-                <ChevronLeft className="w-5 h-5" />
-                {searchParams.get('finalize') === 'true' ? 'Back to Inspection' : 'CONTINUE INSPECTION'}
+                <ChevronLeft className="w-4 h-4" />
+                {searchParams.get('finalize') === 'true' ? 'Back to Inspection' : 'Continue Inspection'}
               </Button>
             </div>
           </div>
         </div>
 
         {/* Score Cards */}
-        <div className="bg-gradient-to-r from-[#006795] to-[#0891B2] rounded-lg p-4 mb-6 text-white">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
-            <div className="sm:border-r border-white/30 pb-4 sm:pb-0">
-              <p className="text-xs opacity-80 uppercase tracking-wide">Preliminary Score</p>
-              <p className="text-3xl font-bold">{report.metadata.preliminaryScore}</p>
+        <div className="max-w-7xl mx-auto bg-gradient-to-r from-teal-600 to-cyan-600 rounded-2xl p-6 shadow-sm text-white">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center divide-y sm:divide-y-0 sm:divide-x divide-white/20">
+            <div className="py-2 sm:py-0">
+              <p className="text-[10px] font-bold text-teal-100 uppercase tracking-wider mb-1">Preliminary Score</p>
+              <p className="text-3xl sm:text-4xl font-extrabold">{report.metadata.preliminaryScore}</p>
             </div>
-            <div className="sm:border-r border-white/30 pb-4 sm:pb-0">
-              <p className="text-xs opacity-80 uppercase tracking-wide">Calculated Score</p>
-              <p className="text-3xl font-bold">{report.metadata.calculatedScore}</p>
+            <div className="py-2 sm:py-0">
+              <p className="text-[10px] font-bold text-teal-100 uppercase tracking-wider mb-1">Calculated Score</p>
+              <p className="text-3xl sm:text-4xl font-extrabold">{report.metadata.calculatedScore}</p>
             </div>
-            <div>
-              <p className="text-xs opacity-80 uppercase tracking-wide">Final Score</p>
-              <p className="text-3xl font-bold">{report.metadata.finalScore}</p>
-              <p className="text-xs opacity-80 mt-1">
-                {report.metadata.finalScore >= 60 ? '✓ Passing' : '✗ Below Threshold'}
+            <div className="py-2 sm:py-0">
+              <p className="text-[10px] font-bold text-teal-100 uppercase tracking-wider mb-1">Final Score</p>
+              <p className="text-3xl sm:text-4xl font-extrabold">{report.metadata.finalScore}</p>
+              <p className="text-xs font-bold text-teal-200 mt-1.5 flex items-center justify-center gap-1">
+                {report.metadata.finalScore >= 60 ? (
+                  <span className="bg-emerald-500/35 border border-emerald-450 px-2 py-0.5 rounded-md">✓ Passing</span>
+                ) : (
+                  <span className="bg-rose-500/35 border border-rose-450 px-2 py-0.5 rounded-md">✗ Below Threshold</span>
+                )}
               </p>
             </div>
           </div>
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-1 mb-6 bg-gray-100 p-1 rounded-lg overflow-x-auto">
+        <div className="max-w-7xl mx-auto bg-white border border-slate-200/80 rounded-2xl shadow-sm p-1.5 flex gap-1.5 overflow-x-auto scrollbar-none">
           {(['summary', 'deficiencies'] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-4 sm:px-6 py-2 rounded-md font-medium transition-all whitespace-nowrap ${activeTab === tab
-                ? 'bg-white text-[#006795] shadow-sm'
-                : 'text-gray-600 hover:text-gray-800'
+              className={`px-5 py-2.5 rounded-xl font-bold whitespace-nowrap transition-all text-xs sm:text-sm flex-1 text-center ${activeTab === tab
+                ? 'bg-teal-600 text-white shadow-sm shadow-teal-600/10'
+                : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
                 }`}
             >
               {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -1184,376 +1198,389 @@ function NSPIREInspectionSummaryContent() {
         </div>
 
         {/* Summary Tab */}
-        {activeTab === 'summary' && (
-          <div className="space-y-6">
-            {/* Deficiency Summary */}
-            <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
-              <h2 className="text-lg font-bold text-[#006795] mb-4 pb-2 border-b-2 border-[#006795]">
-                DEFICIENCY SUMMARY
-              </h2>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 mb-4">
-                <div className="bg-red-50 border-l-4 border-red-600 p-4 rounded-r-lg text-center">
-                  <p className="text-3xl font-bold text-red-600">{report.summary.lifeThreatening}</p>
-                  <p className="text-xs font-semibold text-red-600 uppercase">Life-Threat</p>
+        <div className="max-w-7xl mx-auto space-y-6">
+          {activeTab === 'summary' && (
+            <div className="space-y-6">
+              {/* Deficiency Summary */}
+              <Card className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm space-y-5">
+                <div className="border-b border-slate-100 pb-3 flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-teal-500" />
+                  <h2 className="text-base font-extrabold text-slate-900 tracking-tight">Deficiency Summary</h2>
                 </div>
-                <div className="bg-orange-50 border-l-4 border-orange-500 p-4 rounded-r-lg text-center">
-                  <p className="text-3xl font-bold text-orange-500">{report.summary.severe}</p>
-                  <p className="text-xs font-semibold text-orange-500 uppercase">Severe</p>
+                
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3.5">
+                  <div className="bg-rose-50/50 border-l-4 border-l-rose-500 border border-rose-100 rounded-r-2xl p-4 text-center shadow-sm">
+                    <p className="text-3xl font-extrabold text-rose-700">{report.summary.lifeThreatening}</p>
+                    <p className="text-[10px] font-bold text-rose-600 uppercase tracking-wider mt-0.5">Life-Threat</p>
+                  </div>
+                  <div className="bg-amber-50/50 border-l-4 border-l-amber-500 border border-amber-100 rounded-r-2xl p-4 text-center shadow-sm">
+                    <p className="text-3xl font-extrabold text-amber-700">{report.summary.severe}</p>
+                    <p className="text-[10px] font-bold text-amber-600 uppercase tracking-wider mt-0.5">Severe</p>
+                  </div>
+                  <div className="bg-sky-50/50 border-l-4 border-l-sky-500 border border-sky-100 rounded-r-2xl p-4 text-center shadow-sm">
+                    <p className="text-3xl font-extrabold text-sky-700">{report.summary.moderate}</p>
+                    <p className="text-[10px] font-bold text-sky-600 uppercase tracking-wider mt-0.5">Moderate</p>
+                  </div>
+                  <div className="bg-slate-50 border-l-4 border-l-slate-400 border border-slate-200 rounded-r-2xl p-4 text-center shadow-sm">
+                    <p className="text-3xl font-extrabold text-slate-700">{report.summary.low}</p>
+                    <p className="text-[10px] font-bold text-slate-600 uppercase tracking-wider mt-0.5">Low</p>
+                  </div>
+                  <div className="bg-teal-50/50 border-l-4 border-l-teal-600 border border-teal-100 rounded-r-2xl p-4 text-center shadow-sm">
+                    <p className="text-3xl font-extrabold text-teal-700">{report.summary.total}</p>
+                    <p className="text-[10px] font-bold text-teal-600 uppercase tracking-wider mt-0.5">Total</p>
+                  </div>
                 </div>
-                <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg text-center">
-                  <p className="text-3xl font-bold text-blue-500">{report.summary.moderate}</p>
-                  <p className="text-xs font-semibold text-blue-500 uppercase">Moderate</p>
-                </div>
-                <div className="bg-gray-50 border-l-4 border-gray-500 p-4 rounded-r-lg text-center">
-                  <p className="text-3xl font-bold text-gray-500">{report.summary.low}</p>
-                  <p className="text-xs font-semibold text-gray-500 uppercase">Low</p>
-                </div>
-                <div className="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg text-center">
-                  <p className="text-3xl font-bold text-green-600">{report.summary.total}</p>
-                  <p className="text-xs font-semibold text-green-600 uppercase">Total</p>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-amber-50 p-3 rounded-lg text-center">
-                  <p className="text-2xl font-bold text-amber-700">{report.summary.repeatDeficiencies}</p>
-                  <p className="text-xs font-semibold text-amber-700">Repeat Deficiencies</p>
-                </div>
-                <div className="bg-blue-50 p-3 rounded-lg text-center">
-                  <p className="text-2xl font-bold text-blue-700">{report.summary.newDeficiencies}</p>
-                  <p className="text-xs font-semibold text-blue-700">New Deficiencies</p>
-                </div>
-              </div>
-            </div>
 
-            {/* Property Info */}
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
-                <h2 className="text-lg font-bold text-[#006795] mb-4 pb-2 border-b-2 border-[#006795]">
-                  PROPERTY INFORMATION
-                </h2>
-                <div className="space-y-3">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Property Name</span>
-                    <span className="font-semibold">{report.metadata.propertyName}</span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                  <div className="bg-amber-50/50 border border-amber-100 p-4 rounded-2xl text-center shadow-sm">
+                    <p className="text-2xl font-extrabold text-amber-800">{report.summary.repeatDeficiencies}</p>
+                    <p className="text-[10px] font-bold text-amber-600 uppercase tracking-wider mt-0.5">Repeat Deficiencies</p>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Address</span>
-                    <span className="font-semibold text-right max-w-[200px]">{report.metadata.propertyAddress}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Property ID</span>
-                    <span className="font-semibold">{report.metadata.propertyId}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Inspector</span>
-                    <span className="font-semibold">{report.metadata.inspectorName}</span>
+                  <div className="bg-sky-50/50 border border-sky-100 p-4 rounded-2xl text-center shadow-sm">
+                    <p className="text-2xl font-extrabold text-sky-800">{report.summary.newDeficiencies}</p>
+                    <p className="text-[10px] font-bold text-sky-600 uppercase tracking-wider mt-0.5">New Deficiencies</p>
                   </div>
                 </div>
+              </Card>
+
+              {/* Property & Occupancy Info */}
+              <div className="grid md:grid-cols-2 gap-6">
+                <Card className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm space-y-4">
+                  <div className="border-b border-slate-100 pb-3 flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-teal-500" />
+                    <h2 className="text-base font-extrabold text-slate-900 tracking-tight">Property Information</h2>
+                  </div>
+                  <div className="divide-y divide-slate-50 text-sm font-medium text-slate-700">
+                    <div className="flex justify-between py-2.5">
+                      <span className="text-slate-450 font-semibold text-xs uppercase tracking-wider">Property Name</span>
+                      <span className="font-extrabold text-slate-800">{report.metadata.propertyName}</span>
+                    </div>
+                    <div className="flex justify-between py-2.5 gap-4">
+                      <span className="text-slate-450 font-semibold text-xs uppercase tracking-wider">Address</span>
+                      <span className="font-extrabold text-slate-800 text-right">{report.metadata.propertyAddress}</span>
+                    </div>
+                    <div className="flex justify-between py-2.5">
+                      <span className="text-slate-450 font-semibold text-xs uppercase tracking-wider">Property ID</span>
+                      <span className="font-extrabold text-slate-800">{report.metadata.propertyId}</span>
+                    </div>
+                    <div className="flex justify-between py-2.5">
+                      <span className="text-slate-450 font-semibold text-xs uppercase tracking-wider">Inspector</span>
+                      <span className="font-extrabold text-slate-800">{report.metadata.inspectorName}</span>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm space-y-4">
+                  <div className="border-b border-slate-100 pb-3 flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-teal-500" />
+                    <h2 className="text-base font-extrabold text-slate-900 tracking-tight">Occupancy Information</h2>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-slate-50/50 border border-slate-100 p-4 rounded-2xl text-center shadow-sm">
+                      <p className="text-2xl font-extrabold text-slate-800">{report.occupancyInfo.totalUnits}</p>
+                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-0.5">Total Units</p>
+                    </div>
+                    <div className="bg-emerald-50/50 border border-emerald-100 p-4 rounded-2xl text-center shadow-sm">
+                      <p className="text-2xl font-extrabold text-emerald-700">{report.occupancyInfo.occupiedUnits}</p>
+                      <p className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider mt-0.5">Occupied</p>
+                    </div>
+                    <div className="bg-rose-50/50 border border-rose-100 p-4 rounded-2xl text-center shadow-sm">
+                      <p className="text-2xl font-extrabold text-rose-700">{report.occupancyInfo.vacantUnits}</p>
+                      <p className="text-[10px] font-bold text-rose-600 uppercase tracking-wider mt-0.5">Vacant</p>
+                    </div>
+                    <div className="bg-sky-50/50 border border-sky-100 p-4 rounded-2xl text-center shadow-sm">
+                      <p className="text-2xl font-extrabold text-sky-700">{report.occupancyInfo.occupancyRate.toFixed(0)}%</p>
+                      <p className="text-[10px] font-bold text-sky-600 uppercase tracking-wider mt-0.5">Occupancy Rate</p>
+                    </div>
+                  </div>
+                </Card>
               </div>
 
-              <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
-                <h2 className="text-lg font-bold text-[#006795] mb-4 pb-2 border-b-2 border-[#006795]">
-                  OCCUPANCY INFORMATION
-                </h2>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-gray-50 p-3 rounded-lg text-center">
-                    <p className="text-2xl font-bold text-gray-800">{report.occupancyInfo.totalUnits}</p>
-                    <p className="text-xs text-gray-600">Total Units</p>
-                  </div>
-                  <div className="bg-green-50 p-3 rounded-lg text-center">
-                    <p className="text-2xl font-bold text-green-600">{report.occupancyInfo.occupiedUnits}</p>
-                    <p className="text-xs text-green-600">Occupied</p>
-                  </div>
-                  <div className="bg-red-50 p-3 rounded-lg text-center">
-                    <p className="text-2xl font-bold text-red-600">{report.occupancyInfo.vacantUnits}</p>
-                    <p className="text-xs text-red-600">Vacant</p>
-                  </div>
-                  <div className="bg-blue-50 p-3 rounded-lg text-center">
-                    <p className="text-2xl font-bold text-blue-600">{report.occupancyInfo.occupancyRate.toFixed(0)}%</p>
-                    <p className="text-xs text-blue-600">Occupancy Rate</p>
-                  </div>
+              {/* Inspection Data Table */}
+              <Card className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm space-y-4">
+                <div className="border-b border-slate-100 pb-3 flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-teal-500" />
+                  <h2 className="text-base font-extrabold text-slate-900 tracking-tight">Inspection Data Breakdown</h2>
                 </div>
-              </div>
-            </div>
-
-            {/* Inspection Data Table */}
-            <div className="bg-white rounded-lg p-4 sm:p-6 shadow-sm border border-gray-200">
-              <h2 className="text-lg font-bold text-[#006795] mb-4 pb-2 border-b-2 border-[#006795]">
-                INSPECTION DATA
-              </h2>
-              
-              {/* Desktop Table */}
-              <div className="hidden sm:block overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="bg-[#006795] text-white">
-                      <th className="text-left p-3 rounded-tl-lg">Type</th>
-                      <th className="text-center p-3">Property Total</th>
-                      <th className="text-center p-3">Sample Size</th>
-                      <th className="text-center p-3 rounded-tr-lg">Units Inspected</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {report.inspectionData.map((row, index) => (
-                      <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
-                        <td className="p-3 font-semibold">{row.type}</td>
-                        <td className="p-3 text-center">{row.propertyTotal}</td>
-                        <td className="p-3 text-center">{row.sampleSize}</td>
-                        <td className="p-3 text-center">{row.totalUnitsInspected}</td>
+                
+                {/* Desktop Table */}
+                <div className="hidden sm:block overflow-x-auto rounded-xl border border-slate-100">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="bg-slate-50 text-slate-705 font-bold border-b border-slate-200">
+                        <th className="text-left p-4">Type</th>
+                        <th className="text-center p-4">Property Total</th>
+                        <th className="text-center p-4">Sample Size</th>
+                        <th className="text-center p-4">Units Inspected</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                    </thead>
+                    <tbody className="divide-y divide-slate-150 font-medium text-slate-700">
+                      {report.inspectionData.map((row, index) => (
+                        <tr key={index} className="hover:bg-slate-50/40">
+                          <td className="p-4 font-extrabold text-slate-800">{row.type}</td>
+                          <td className="p-4 text-center">{row.propertyTotal}</td>
+                          <td className="p-4 text-center">{row.sampleSize}</td>
+                          <td className="p-4 text-center">{row.totalUnitsInspected}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
 
-              {/* Mobile Cards */}
-              <div className="sm:hidden space-y-3">
-                {report.inspectionData.map((row, index) => (
-                  <div key={index} className="bg-gray-50 rounded-lg p-3 border border-gray-200">
-                    <div className="font-bold text-[#006795] mb-2">{row.type}</div>
-                    <div className="grid grid-cols-3 gap-2 text-sm">
-                      <div>
-                        <div className="text-xs text-gray-500">Property Total</div>
-                        <div className="font-semibold">{row.propertyTotal}</div>
-                      </div>
-                      <div>
-                        <div className="text-xs text-gray-500">Sample Size</div>
-                        <div className="font-semibold">{row.sampleSize}</div>
-                      </div>
-                      <div>
-                        <div className="text-xs text-gray-500">Inspected</div>
-                        <div className="font-semibold">{row.totalUnitsInspected}</div>
+                {/* Mobile Cards */}
+                <div className="sm:hidden space-y-3">
+                  {report.inspectionData.map((row, index) => (
+                    <div key={index} className="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-2">
+                      <div className="font-extrabold text-slate-800 text-sm">{row.type}</div>
+                      <div className="grid grid-cols-3 gap-2 text-xs font-semibold">
+                        <div>
+                          <div className="text-[10px] text-slate-400 uppercase tracking-wider">Property Total</div>
+                          <div className="font-extrabold text-slate-700 mt-0.5">{row.propertyTotal}</div>
+                        </div>
+                        <div>
+                          <div className="text-[10px] text-slate-400 uppercase tracking-wider">Sample Size</div>
+                          <div className="font-extrabold text-slate-700 mt-0.5">{row.sampleSize}</div>
+                        </div>
+                        <div>
+                          <div className="text-[10px] text-slate-400 uppercase tracking-wider">Inspected</div>
+                          <div className="font-extrabold text-slate-700 mt-0.5">{row.totalUnitsInspected}</div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              </Card>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Deficiencies Tab */}
-        {activeTab === 'deficiencies' && (
-          <div className="bg-white rounded-lg p-4 sm:p-6 shadow-sm border border-gray-200">
-            <h2 className="text-lg font-bold text-[#006795] mb-4 pb-2 border-b-2 border-[#006795]">
-              DEFICIENCY DETAILS
-            </h2>
-
-            {!checkingUnlock && !isReportUnlocked && report.deficiencies.length > visibleDeficiencies.length && (
-              <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
-                <span className="font-semibold text-base block mb-1">Unlock to Export PDF</span>
-                <span className="font-semibold italic">Locked preview:</span> showing {visibleDeficiencies.length} of {report.deficiencies.length} deficiencies. Unlock for $99.00 to view all items and export full PDF.
+          {/* Deficiencies Tab */}
+          {activeTab === 'deficiencies' && (
+            <Card className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm space-y-6">
+              <div className="border-b border-slate-100 pb-3 flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-teal-500" />
+                <h2 className="text-base font-extrabold text-slate-900 tracking-tight">Deficiency Details</h2>
               </div>
-            )}
 
-            {/* Unit header banner */}
-            {inspectionContext?.unitName && (
-              <div className="bg-gradient-to-r from-[#006795]/10 to-[#0891B2]/10 rounded-lg p-4 mb-4 border border-[#006795]/20">
-                <h3 className="text-base font-black text-[#006795] tracking-tight">
-                  {inspectionContext.unitName} — Inspection Details
-                </h3>
-                <p className="text-xs text-gray-500 mt-0.5">{buildingColumnHeader}: {inspectionContext.buildingId}</p>
-              </div>
-            )}
+              {!checkingUnlock && !isReportUnlocked && report.deficiencies.length > visibleDeficiencies.length && (
+                <div className="rounded-2xl border border-amber-200 bg-amber-50/50 p-4 text-xs sm:text-sm text-amber-900 font-semibold shadow-sm leading-relaxed">
+                  <span className="text-sm font-extrabold block mb-1">Unlock to Export PDF</span>
+                  <span className="italic">Locked preview:</span> showing {visibleDeficiencies.length} of {report.deficiencies.length} deficiencies. Unlock for $99.00 to view all items and export full PDF.
+                </div>
+              )}
 
-            {report.deficiencies.length === 0 ? (
-              <div className="text-center py-12">
-                <div className="text-6xl mb-4">✓</div>
-                <p className="text-xl font-bold text-green-600">No Deficiencies Found</p>
-                <p className="text-gray-600 mt-2">This property passed inspection with no issues identified.</p>
-              </div>
-            ) : (
-              <div className="space-y-8">
-                {/* Group by Area (Outside, Inside, Unit) */}
-                {['Outside', 'Inside', 'Unit', 'General'].map(area => {
-                  const areaDeficiencies = visibleDeficiencies.filter(d => d.area === area);
-                  if (areaDeficiencies.length === 0) return null;
+              {/* Unit header banner */}
+              {inspectionContext?.unitName && (
+                <div className="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-2xl p-4 border border-teal-100/80 shadow-sm text-teal-800">
+                  <h3 className="text-sm font-extrabold tracking-tight">
+                    {inspectionContext.unitName} — Inspection Details
+                  </h3>
+                  <p className="text-[10px] text-teal-600 font-bold mt-0.5">{buildingColumnHeader}: {inspectionContext.buildingId}</p>
+                </div>
+              )}
 
-                  return (
-                    <div key={area} className="space-y-4">
-                      <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-100 rounded-lg w-fit border border-gray-200">
-                        <span className="text-sm font-black text-[#006795] uppercase tracking-wider">{area} Summary</span>
-                        <span className="bg-[#006795] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
-                          {areaDeficiencies.length}
-                        </span>
-                      </div>
-                      
-                      {/* Desktop Table View for this Area */}
-                      <div className="hidden lg:block overflow-x-auto rounded-xl border border-gray-100 shadow-sm">
-                        <table className="w-full text-sm">
-                          <thead>
-                            <tr className="bg-[#006795] text-white">
-                              <th className="p-3 text-left w-12">#</th>
-                              <th className="p-3 text-center w-24">Proof</th>
-                              <th className="p-3 text-left">Location</th>
-                              <th className="p-3 text-left">Deficiency</th>
-                              <th className="p-3 text-left">Description</th>
-                              <th className="p-3 text-center">Severity</th>
-                              <th className="p-3 text-center">H&S</th>
-                              <th className="p-3 text-center">Repair By</th>
-                              <th className="p-3 text-center">Status</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {areaDeficiencies.map((def, idx) => (
-                              <tr key={def.id} className={`${idx % 2 === 0 ? 'bg-gray-50/50' : 'bg-white'} border-b border-gray-50`}>
-                                <td className="p-3 font-bold text-center text-gray-400">{idx + 1}</td>
-                                <td className="p-3 text-center">
-                                  {def.imageUri ? (
-                                    <div className="relative w-16 h-16 mx-auto group">
-                                      <img
-                                        src={def.imageUri}
-                                        alt="Deficiency Proof"
-                                        className="w-full h-full object-cover rounded-md border border-gray-200 shadow-sm cursor-zoom-in group-hover:scale-150 transition-transform z-10 relative"
-                                      />
-                                    </div>
-                                  ) : (
-                                    <div className="w-16 h-16 mx-auto bg-gray-100 rounded-md flex items-center justify-center text-gray-300">
-                                      <ImageIcon className="w-6 h-6" />
-                                    </div>
-                                  )}
-                                </td>
-                                <td className="p-3 min-w-[120px]">
-                                  <div className="text-xs">
-                                    {area === 'Unit' && (
-                                      <>
-                                        <div><span className="text-gray-500">{buildingColumnHeader}:</span> <span className="font-semibold">{def.building}</span></div>
-                                        <div><span className="text-gray-500">Unit:</span> <span className="font-semibold">{def.unit}</span></div>
-                                      </>
-                                    )}
-                                    {area !== 'Unit' && (
-                                      <div><span className="text-gray-500">Location:</span> <span className="font-semibold">{def.building}</span></div>
-                                    )}
-                                    <div><span className="text-gray-500">Room/Area:</span> <span className="font-semibold">{def.room}</span></div>
-                                  </div>
-                                </td>
-                                <td className="p-3">
-                                  <div className="font-bold text-gray-800 mb-1">{def.deficiencyName}</div>
-                                  <span className="inline-block bg-cyan-100 text-cyan-700 text-[10px] font-black px-2 py-0.5 rounded uppercase">
-                                    {def.nspireCode}
-                                  </span>
-                                </td>
-                                <td className="p-3 max-w-[250px]">
-                                  <div className="text-gray-700 text-xs mb-2 leading-relaxed">{def.deficiencyDetails}</div>
-                                  {def.comments && (
-                                    <div className="text-[10px] text-gray-500 italic bg-gray-100 p-1.5 rounded-lg">
-                                      <span className="font-bold uppercase text-[9px] block mb-0.5">Inspector Notes:</span>
-                                      {def.comments}
-                                    </div>
-                                  )}
-                                </td>
-                                <td className="p-3 text-center">
-                                  <span className={`inline-block px-3 py-1 rounded text-[10px] font-black uppercase ${getSeverityBadgeClass(def.severity)}`}>
-                                    {def.severity}
-                                  </span>
-                                  <div className="text-[10px] text-gray-400 mt-1 font-bold">-{def.deductionPts} PTS</div>
-                                </td>
-                                <td className="p-3 text-center">
-                                  <span className="text-[10px] font-black text-red-600 uppercase">{def.healthAndSafety}</span>
-                                </td>
-                                <td className="p-3 text-center">
-                                  <span className="inline-block bg-amber-100 text-amber-800 text-[10px] font-black px-2 py-1 rounded">
-                                    {def.repairTimeline}
-                                  </span>
-                                </td>
-                                <td className="p-3 text-center">
-                                  <span className={`inline-block px-2 py-1 rounded text-[10px] font-black uppercase ${getStatusBadgeClass(def.status)}`}>
-                                    {def.status}
-                                  </span>
-                                </td>
+              {report.deficiencies.length === 0 ? (
+                <div className="text-center py-12 space-y-3">
+                  <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-600 shadow-sm border border-emerald-100">
+                    <CheckCircle2 className="w-8 h-8" />
+                  </div>
+                  <div>
+                    <p className="text-base font-extrabold text-emerald-800">No Deficiencies Found</p>
+                    <p className="text-xs text-slate-500 font-semibold mt-1">This property passed inspection with no issues identified.</p>
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-8">
+                  {/* Group by Area (Outside, Inside, Unit) */}
+                  {['Outside', 'Inside', 'Unit', 'General'].map(area => {
+                    const areaDeficiencies = visibleDeficiencies.filter(d => d.area === area);
+                    if (areaDeficiencies.length === 0) return null;
+
+                    return (
+                      <div key={area} className="space-y-4">
+                        <div className="flex items-center gap-2 px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl w-fit font-extrabold text-xs">
+                          <span className="text-slate-550 uppercase tracking-wider">{area} Summary</span>
+                          <span className="bg-teal-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                            {areaDeficiencies.length}
+                          </span>
+                        </div>
+                        
+                        {/* Desktop Table View for this Area */}
+                        <div className="hidden lg:block overflow-x-auto rounded-2xl border border-slate-100">
+                          <table className="w-full text-sm">
+                            <thead>
+                              <tr className="bg-slate-50 text-slate-705 font-bold border-b border-slate-200">
+                                <th className="p-3 text-left w-12">#</th>
+                                <th className="p-3 text-center w-24">Proof</th>
+                                <th className="p-3 text-left">Location</th>
+                                <th className="p-3 text-left">Deficiency</th>
+                                <th className="p-3 text-left">Description</th>
+                                <th className="p-3 text-center">Severity</th>
+                                <th className="p-3 text-center">H&S</th>
+                                <th className="p-3 text-center">Repair By</th>
+                                <th className="p-3 text-center">Status</th>
                               </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
+                            </thead>
+                            <tbody className="divide-y divide-slate-150 text-xs font-semibold text-slate-700">
+                              {areaDeficiencies.map((def, idx) => (
+                                <tr key={def.id} className="hover:bg-slate-50/40">
+                                  <td className="p-3 font-bold text-center text-slate-400">{idx + 1}</td>
+                                  <td className="p-3 text-center">
+                                    {def.imageUri ? (
+                                      <div className="relative w-14 h-14 mx-auto group">
+                                        <img
+                                          src={def.imageUri}
+                                          alt="Deficiency Proof"
+                                          className="w-full h-full object-cover rounded-xl border border-slate-200 shadow-sm cursor-zoom-in group-hover:scale-150 transition-transform z-10 relative"
+                                        />
+                                      </div>
+                                    ) : (
+                                      <div className="w-14 h-14 mx-auto bg-slate-50 border border-slate-150 rounded-xl flex items-center justify-center text-slate-350">
+                                        <ImageIcon className="w-5 h-5" />
+                                      </div>
+                                    )}
+                                  </td>
+                                  <td className="p-3 min-w-[120px]">
+                                    <div className="space-y-0.5">
+                                      {area === 'Unit' && (
+                                        <>
+                                          <div><span className="text-slate-400 font-bold">Bldg:</span> <span className="font-extrabold text-slate-700">{def.building}</span></div>
+                                          <div><span className="text-slate-400 font-bold">Unit:</span> <span className="font-extrabold text-slate-700">{def.unit}</span></div>
+                                        </>
+                                      )}
+                                      {area !== 'Unit' && (
+                                        <div><span className="text-slate-400 font-bold">Loc:</span> <span className="font-extrabold text-slate-700">{def.building}</span></div>
+                                      )}
+                                      <div><span className="text-slate-400 font-bold">Area:</span> <span className="font-extrabold text-slate-700">{def.room}</span></div>
+                                    </div>
+                                  </td>
+                                  <td className="p-3">
+                                    <div className="font-extrabold text-slate-800 text-sm mb-1">{def.deficiencyName}</div>
+                                    <span className="inline-block bg-teal-50 text-teal-700 border border-teal-100 text-[10px] font-bold px-2 py-0.5 rounded-lg uppercase">
+                                      {def.nspireCode}
+                                    </span>
+                                  </td>
+                                  <td className="p-3 max-w-[250px] leading-relaxed">
+                                    <div className="text-slate-600 text-xs mb-2">{def.deficiencyDetails}</div>
+                                    {def.comments && (
+                                      <div className="text-[10px] text-slate-500 italic bg-slate-50 border border-slate-100 p-2 rounded-xl">
+                                        <span className="font-extrabold uppercase text-[8px] text-slate-400 block mb-0.5">Inspector Notes:</span>
+                                        {def.comments}
+                                      </div>
+                                    )}
+                                  </td>
+                                  <td className="p-3 text-center">
+                                    <span className={`inline-block px-2.5 py-1 text-[10px] ${getSeverityBadgeClass(def.severity)}`}>
+                                      {def.severity}
+                                    </span>
+                                    <div className="text-[10px] text-slate-400 mt-1 font-bold">-{def.deductionPts} PTS</div>
+                                  </td>
+                                  <td className="p-3 text-center">
+                                    <span className="text-[10px] font-extrabold text-rose-600 uppercase">{def.healthAndSafety}</span>
+                                  </td>
+                                  <td className="p-3 text-center">
+                                    <span className="inline-block bg-amber-50 text-amber-700 border border-amber-100 text-[10px] font-bold px-2.5 py-1 rounded-xl">
+                                      {def.repairTimeline}
+                                    </span>
+                                  </td>
+                                  <td className="p-3 text-center">
+                                    <span className={`inline-block ${getStatusBadgeClass(def.status)}`}>
+                                      {def.status}
+                                    </span>
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
 
-                      {/* Mobile View for this Area */}
-                      <div className="lg:hidden space-y-4">
-                        {areaDeficiencies.map((def, idx) => (
-                          <div key={def.id} className="border border-gray-200 rounded-xl p-4 bg-gray-50 shadow-sm">
-                            <div className="flex items-start gap-3 mb-3">
-                              <div className="flex-shrink-0 w-8 h-8 bg-[#006795] text-white rounded-full flex items-center justify-center font-bold text-sm shadow-md">
-                                {idx + 1}
+                        {/* Mobile View for this Area */}
+                        <div className="lg:hidden space-y-4">
+                          {areaDeficiencies.map((def, idx) => (
+                            <div key={def.id} className="border border-slate-200 rounded-2xl p-4 bg-slate-50/50 shadow-sm space-y-3">
+                              <div className="flex items-start gap-3">
+                                <div className="flex-shrink-0 w-8 h-8 bg-teal-600 text-white rounded-full flex items-center justify-center font-bold text-sm shadow-sm">
+                                  {idx + 1}
+                                </div>
+                                {def.imageUri ? (
+                                  <img
+                                    src={def.imageUri}
+                                    alt="Deficiency Proof"
+                                    className="w-20 h-20 object-cover rounded-xl border border-slate-200 shadow-sm"
+                                  />
+                                ) : (
+                                  <div className="w-20 h-20 bg-slate-100 rounded-xl flex items-center justify-center text-slate-350 border border-slate-150">
+                                    <ImageIcon className="w-6 h-6" />
+                                  </div>
+                                )}
+                                <div className="flex-1 min-w-0">
+                                  <h3 className="font-extrabold text-slate-900 text-sm mb-1 break-words leading-tight">{def.deficiencyName}</h3>
+                                  <div className="flex flex-wrap gap-1">
+                                    <span className="inline-block bg-teal-50 text-teal-700 border border-teal-100 text-[10px] font-bold px-2 py-0.5 rounded-lg uppercase">
+                                      {def.nspireCode}
+                                    </span>
+                                    <span className={`inline-block px-2 py-0.5 text-[10px] ${getSeverityBadgeClass(def.severity)}`}>
+                                      {def.severity}
+                                    </span>
+                                  </div>
+                                </div>
                               </div>
-                              {def.imageUri ? (
-                                <img
-                                  src={def.imageUri}
-                                  alt="Deficiency Proof"
-                                  className="w-20 h-20 object-cover rounded-xl border-2 border-white shadow-sm"
-                                />
-                              ) : (
-                                <div className="w-20 h-20 bg-gray-200 rounded-xl flex items-center justify-center text-gray-400">
-                                  <ImageIcon className="w-8 h-8" />
-                                </div>
-                              )}
-                              <div className="flex-1 min-w-0">
-                                <h3 className="font-black text-gray-900 text-sm mb-1 break-words">{def.deficiencyName}</h3>
-                                <div className="flex flex-wrap gap-1">
-                                  <span className="inline-block bg-cyan-100 text-cyan-700 text-[10px] font-black px-2 py-0.5 rounded uppercase">
-                                    {def.nspireCode}
-                                  </span>
-                                  <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-black uppercase ${getSeverityBadgeClass(def.severity)}`}>
-                                    {def.severity}
-                                  </span>
-                                </div>
+                              <div className="pt-3 border-t border-slate-200/60 text-xs font-semibold space-y-2">
+                                 <p className="text-slate-650 leading-relaxed">{def.deficiencyDetails}</p>
+                                 <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-[10px] text-slate-450">
+                                    <div><span className="font-bold text-slate-500">Location:</span> {def.building} {def.unit !== '-' ? `| Unit ${def.unit}` : ''}</div>
+                                    <div><span className="font-bold text-slate-500">Room:</span> {def.room}</div>
+                                    <div><span className="font-bold text-slate-500">Repair By:</span> {def.repairTimeline}</div>
+                                    <div><span className="font-bold text-slate-500">Status:</span> <span className="text-slate-700 font-extrabold">{def.status}</span></div>
+                                 </div>
                               </div>
                             </div>
-                            <div className="pt-3 border-t border-gray-200 text-xs space-y-2">
-                               <p className="text-gray-700 leading-relaxed">{def.deficiencyDetails}</p>
-                               <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-[10px] text-gray-500">
-                                  <div><span className="font-bold">Location:</span> {def.building} {def.unit !== '-' ? `| Unit ${def.unit}` : ''}</div>
-                                  <div><span className="font-bold">Room:</span> {def.room}</div>
-                                  <div><span className="font-bold">Repair By:</span> {def.repairTimeline}</div>
-                                  <div><span className="font-bold">Status:</span> {def.status}</div>
-                               </div>
-                            </div>
-                          </div>
-                        ))}
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-        )}
+                    );
+                  })}
+                </div>
+              )}
+            </Card>
+          )}
 
-        {/* General Comments */}
-        {report.generalComments && (
-          <div className="bg-white rounded-lg p-6 shadow-sm border-l-4 border-[#006795] mt-6">
-            <h3 className="font-bold text-[#006795] mb-2">General Comments</h3>
-            <p className="text-gray-700">{report.generalComments}</p>
-          </div>
-        )}
+          {/* General Comments */}
+          {report.generalComments && (
+            <div className="bg-white border border-slate-200/80 border-l-4 border-l-teal-600 rounded-2xl p-6 shadow-sm mt-6">
+              <h3 className="font-extrabold text-teal-800 text-sm uppercase tracking-wider mb-2">General Comments</h3>
+              <p className="text-slate-650 text-sm font-semibold leading-relaxed">{report.generalComments}</p>
+            </div>
+          )}
 
-        {/* Recommendations */}
-        {report.recommendations && report.recommendations.length > 0 && (
-          <div className="bg-white rounded-lg p-6 shadow-sm border-l-4 border-green-500 mt-6">
-            <h3 className="font-bold text-green-700 mb-2">Recommendations</h3>
-            <ul className="list-disc list-inside space-y-1">
-              {report.recommendations.map((rec, index) => (
-                <li key={index} className="text-gray-700">{rec}</li>
-              ))}
-            </ul>
-          </div>
-        )}
+          {/* Recommendations */}
+          {report.recommendations && report.recommendations.length > 0 && (
+            <div className="bg-white border border-slate-200/80 border-l-4 border-l-emerald-600 rounded-2xl p-6 shadow-sm mt-6">
+              <h3 className="font-extrabold text-emerald-800 text-sm uppercase tracking-wider mb-2">Recommendations</h3>
+              <ul className="list-disc list-inside space-y-1.5 text-slate-650 text-sm font-semibold">
+                {report.recommendations.map((rec, index) => (
+                  <li key={index} className="leading-relaxed">{rec}</li>
+                ))}
+              </ul>
+            </div>
+          )}
 
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row justify-center gap-4 mt-12 mb-12">
-          <Button
-            onClick={handleBackToInspection}
-            className="px-10 h-14 w-full sm:w-auto bg-amber-500 hover:bg-amber-600 text-white font-black rounded-xl shadow-lg flex items-center justify-center gap-2"
-          >
-            <ChevronLeft className="w-5 h-5" />
-            BACK TO INSPECTION
-          </Button>
-          <Button
-            onClick={() => router.push('/dashboard/my-inspection')}
-            variant="outline"
-            className="px-10 h-14 w-full sm:w-auto font-black rounded-xl border-2 hover:bg-gray-50 text-gray-600"
-          >
-            MY INSPECTIONS
-          </Button>
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row justify-center gap-4 mt-12 mb-12">
+            <Button
+              onClick={handleBackToInspection}
+              className="px-10 py-3.5 w-full sm:w-auto bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl shadow-sm flex items-center justify-center gap-2 text-xs sm:text-sm border-0"
+            >
+              <ChevronLeft className="w-5 h-5" />
+              BACK TO INSPECTION
+            </Button>
+            <Button
+              onClick={() => router.push('/dashboard/my-inspection')}
+              variant="outline"
+              className="px-10 py-3.5 w-full sm:w-auto border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold rounded-xl shadow-sm text-xs sm:text-sm"
+            >
+              MY INSPECTIONS
+            </Button>
+          </div>
         </div>
       </div>
     </DashboardLayout>

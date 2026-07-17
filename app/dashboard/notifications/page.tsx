@@ -5,6 +5,7 @@ import DashboardLayout from "@/components/DashboardLayout"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { toast } from "react-toastify"
+import { Bell, Info, CheckCircle2, AlertTriangle, XCircle, Trash2, Check, CheckCheck } from "lucide-react"
 
 interface Notification {
   _id: string
@@ -28,7 +29,6 @@ export default function NotificationsPage() {
   const fetchNotifications = async () => {
     try {
       setIsLoading(true)
-      // Mock notifications for now - replace with API call when backend is ready
       const mockNotifications: Notification[] = [
         {
           _id: '1',
@@ -107,42 +107,26 @@ export default function NotificationsPage() {
   const getTypeStyles = (type: string) => {
     switch (type) {
       case 'success':
-        return { bg: 'bg-green-50', border: 'border-l-green-500', icon: 'text-green-500' }
+        return { bg: 'bg-emerald-50/50 hover:bg-emerald-50', border: 'border-l-emerald-500 border border-slate-200/80', icon: 'text-emerald-600', badge: 'bg-emerald-50 text-emerald-700 border border-emerald-100' }
       case 'warning':
-        return { bg: 'bg-yellow-50', border: 'border-l-yellow-500', icon: 'text-yellow-500' }
+        return { bg: 'bg-amber-50/50 hover:bg-amber-50', border: 'border-l-amber-500 border border-slate-200/80', icon: 'text-amber-600', badge: 'bg-amber-50 text-amber-700 border border-amber-100' }
       case 'error':
-        return { bg: 'bg-red-50', border: 'border-l-red-500', icon: 'text-red-500' }
+        return { bg: 'bg-rose-50/50 hover:bg-rose-50', border: 'border-l-rose-500 border border-slate-200/80', icon: 'text-rose-600', badge: 'bg-rose-50 text-rose-700 border border-rose-100' }
       default:
-        return { bg: 'bg-blue-50', border: 'border-l-blue-500', icon: 'text-blue-500' }
+        return { bg: 'bg-sky-50/50 hover:bg-sky-50', border: 'border-l-sky-500 border border-slate-200/80', icon: 'text-sky-600', badge: 'bg-sky-50 text-sky-700 border border-sky-100' }
     }
   }
 
   const getTypeIcon = (type: string) => {
     switch (type) {
       case 'success':
-        return (
-          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-          </svg>
-        )
+        return <CheckCircle2 className="w-5 h-5" />
       case 'warning':
-        return (
-          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-          </svg>
-        )
+        return <AlertTriangle className="w-5 h-5" />
       case 'error':
-        return (
-          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-          </svg>
-        )
+        return <XCircle className="w-5 h-5" />
       default:
-        return (
-          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-          </svg>
-        )
+        return <Info className="w-5 h-5" />
     }
   }
 
@@ -155,7 +139,7 @@ export default function NotificationsPage() {
     const diffDays = Math.floor(diffMs / 86400000)
 
     if (diffMins < 1) return 'Just now'
-    if (diffMins < 60) return `${diffMins} minute${diffMins > 1 ? 's' : ''} ago`
+    if (diffMins < 60) return `${diffMins} min${diffMins > 1 ? 's' : ''} ago`
     if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`
     if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
@@ -171,142 +155,156 @@ export default function NotificationsPage() {
 
   return (
     <DashboardLayout>
-      <div className="p-4 md:p-6">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-          <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Notifications</h1>
-            <p className="text-sm text-gray-600 mt-1">
-              {unreadCount > 0 ? `You have ${unreadCount} unread notification${unreadCount > 1 ? 's' : ''}` : 'All caught up!'}
-            </p>
-          </div>
-          <div className="flex gap-2">
-            {unreadCount > 0 && (
-              <Button
-                onClick={markAllAsRead}
-                variant="outline"
-                className="text-sm"
-              >
-                Mark all as read
-              </Button>
-            )}
-            {notifications.length > 0 && (
-              <Button
-                onClick={clearAll}
-                variant="outline"
-                className="text-sm text-red-600 border-red-300 hover:bg-red-50"
-              >
-                Clear all
-              </Button>
-            )}
-          </div>
-        </div>
-
-        {/* Filter Tabs */}
-        <div className="flex gap-2 mb-6">
-          <button
-            onClick={() => setFilter('all')}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-              filter === 'all' 
-                ? 'bg-[#0D7FA8] text-white' 
-                : 'bg-white text-gray-700 hover:bg-gray-100'
-            }`}
-          >
-            All ({notifications.length})
-          </button>
-          <button
-            onClick={() => setFilter('unread')}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-              filter === 'unread' 
-                ? 'bg-[#0D7FA8] text-white' 
-                : 'bg-white text-gray-700 hover:bg-gray-100'
-            }`}
-          >
-            Unread ({unreadCount})
-          </button>
-          <button
-            onClick={() => setFilter('read')}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-              filter === 'read' 
-                ? 'bg-[#0D7FA8] text-white' 
-                : 'bg-white text-gray-700 hover:bg-gray-100'
-            }`}
-          >
-            Read ({notifications.length - unreadCount})
-          </button>
-        </div>
-
-        {/* Notifications List */}
-        <div className="space-y-4">
-          {isLoading ? (
-            <Card className="p-8 text-center text-gray-500">
-              Loading notifications...
-            </Card>
-          ) : filteredNotifications.length === 0 ? (
-            <Card className="p-8 text-center">
-              <svg className="w-16 h-16 mx-auto text-gray-300 mb-4" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
-              </svg>
-              <p className="text-gray-500 text-lg font-medium">No notifications</p>
-              <p className="text-gray-400 text-sm mt-1">
-                {filter === 'unread' ? "You're all caught up!" : "No notifications to display"}
+      <div className="min-h-screen bg-slate-50 p-4 sm:p-6 lg:p-8 text-slate-900 font-lexend space-y-6">
+        <div className="max-w-4xl mx-auto space-y-6">
+          {/* Header */}
+          <div className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div>
+              <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
+                <Bell className="w-6 h-6 text-teal-600" />
+                Notifications
+              </h1>
+              <p className="text-slate-500 text-xs sm:text-sm font-medium mt-0.5">
+                {unreadCount > 0 ? `You have ${unreadCount} unread notification${unreadCount > 1 ? 's' : ''}` : 'All caught up!'}
               </p>
-            </Card>
-          ) : (
-            filteredNotifications.map((notification) => {
-              const styles = getTypeStyles(notification.type)
-              return (
-                <Card 
-                  key={notification._id}
-                  className={`p-4 border-l-4 ${styles.border} ${styles.bg} ${
-                    !notification.isRead ? 'ring-1 ring-blue-200' : ''
-                  } transition-all hover:shadow-md`}
+            </div>
+            
+            <div className="flex gap-2 w-full sm:w-auto">
+              {unreadCount > 0 && (
+                <Button
+                  onClick={markAllAsRead}
+                  variant="outline"
+                  className="flex-1 sm:flex-initial bg-white border border-slate-200 hover:border-slate-350 hover:bg-slate-50 text-slate-700 font-bold px-4 py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-sm"
                 >
-                  <div className="flex items-start gap-4">
-                    <div className={`flex-shrink-0 ${styles.icon}`}>
-                      {getTypeIcon(notification.type)}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between gap-2">
-                        <div>
-                          <h3 className={`font-semibold text-gray-900 ${!notification.isRead ? 'text-blue-900' : ''}`}>
-                            {notification.title}
+                  <CheckCheck className="w-4 h-4 text-teal-600" />
+                  Mark all as read
+                </Button>
+              )}
+              {notifications.length > 0 && (
+                <Button
+                  onClick={clearAll}
+                  variant="outline"
+                  className="flex-1 sm:flex-initial bg-white border border-rose-200 hover:border-rose-300 hover:bg-rose-50 text-rose-600 font-bold px-4 py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-sm"
+                >
+                  <Trash2 className="w-4 h-4 text-rose-500" />
+                  Clear all
+                </Button>
+              )}
+            </div>
+          </div>
+
+          {/* Filter Tabs */}
+          <div className="flex gap-2 bg-white p-1.5 border border-slate-200/80 rounded-2xl shadow-sm w-max">
+            <button
+              onClick={() => setFilter('all')}
+              className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all ${
+                filter === 'all' 
+                  ? 'bg-teal-600 text-white shadow-sm' 
+                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+              }`}
+            >
+              All ({notifications.length})
+            </button>
+            <button
+              onClick={() => setFilter('unread')}
+              className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all ${
+                filter === 'unread' 
+                  ? 'bg-teal-600 text-white shadow-sm' 
+                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+              }`}
+            >
+              Unread ({unreadCount})
+            </button>
+            <button
+              onClick={() => setFilter('read')}
+              className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all ${
+                filter === 'read' 
+                  ? 'bg-teal-600 text-white shadow-sm' 
+                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+              }`}
+            >
+              Read ({notifications.length - unreadCount})
+            </button>
+          </div>
+
+          {/* Notifications List */}
+          <div className="space-y-4">
+            {isLoading ? (
+              <div className="bg-white border border-slate-200/80 rounded-2xl p-12 text-center text-slate-500 font-medium">
+                <div className="animate-spin rounded-full h-8 w-8 border-2 border-teal-600 border-t-transparent mx-auto mb-3"></div>
+                Loading notifications...
+              </div>
+            ) : filteredNotifications.length === 0 ? (
+              <Card className="bg-white border border-slate-200/80 rounded-2xl p-12 text-center max-w-md mx-auto">
+                <div className="w-16 h-16 bg-slate-50 border border-slate-200/60 rounded-2xl flex items-center justify-center text-slate-400 mx-auto mb-4">
+                  <Bell className="w-8 h-8" />
+                </div>
+                <p className="text-slate-700 font-extrabold text-lg">No notifications</p>
+                <p className="text-slate-400 text-xs mt-1">
+                  {filter === 'unread' ? "You are completely caught up!" : "No notifications to display"}
+                </p>
+              </Card>
+            ) : (
+              filteredNotifications.map((notification) => {
+                const styles = getTypeStyles(notification.type)
+                return (
+                  <Card 
+                    key={notification._id}
+                    className={`p-5 rounded-2xl border-l-4 ${styles.border} ${styles.bg} ${
+                      !notification.isRead ? 'ring-1 ring-teal-500/10' : ''
+                    } transition-all hover:shadow-md`}
+                  >
+                    <div className="flex gap-4">
+                      <div className={`flex-shrink-0 ${styles.icon} mt-0.5`}>
+                        {getTypeIcon(notification.type)}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="space-y-1">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <h3 className="font-extrabold text-slate-900 tracking-tight text-sm">
+                                {notification.title}
+                              </h3>
+                              {!notification.isRead && (
+                                <span className="inline-block px-2 py-0.5 rounded-full text-[9px] font-extrabold uppercase tracking-wider bg-teal-500 text-white animate-pulse">
+                                  New
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
+                              {notification.message}
+                            </p>
+                            <p className="text-[10px] text-slate-400 font-bold pt-1">
+                              {formatDate(notification.createdAt)}
+                            </p>
+                          </div>
+                          
+                          <div className="flex items-center gap-1.5 flex-shrink-0">
                             {!notification.isRead && (
-                              <span className="ml-2 inline-block w-2 h-2 bg-blue-500 rounded-full"></span>
+                              <button
+                                onClick={() => markAsRead(notification._id)}
+                                className="p-2 hover:bg-white rounded-xl transition-all border border-transparent hover:border-slate-200 text-slate-500 hover:text-teal-600 shadow-sm"
+                                title="Mark as read"
+                              >
+                                <Check className="w-4 h-4" />
+                              </button>
                             )}
-                          </h3>
-                          <p className="text-sm text-gray-600 mt-1">{notification.message}</p>
-                          <p className="text-xs text-gray-400 mt-2">{formatDate(notification.createdAt)}</p>
-                        </div>
-                        <div className="flex items-center gap-2 flex-shrink-0">
-                          {!notification.isRead && (
                             <button
-                              onClick={() => markAsRead(notification._id)}
-                              className="p-1.5 hover:bg-white rounded-lg transition-colors"
-                              title="Mark as read"
+                              onClick={() => deleteNotification(notification._id)}
+                              className="p-2 hover:bg-white rounded-xl transition-all border border-transparent hover:border-slate-200 text-slate-500 hover:text-rose-500 shadow-sm"
+                              title="Delete notification"
                             >
-                              <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                              </svg>
+                              <Trash2 className="w-4 h-4" />
                             </button>
-                          )}
-                          <button
-                            onClick={() => deleteNotification(notification._id)}
-                            className="p-1.5 hover:bg-white rounded-lg transition-colors"
-                            title="Delete"
-                          >
-                            <svg className="w-4 h-4 text-gray-500 hover:text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                          </button>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </Card>
-              )
-            })
-          )}
+                  </Card>
+                )
+              })
+            )}
+          </div>
         </div>
       </div>
     </DashboardLayout>

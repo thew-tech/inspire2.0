@@ -4,7 +4,9 @@ import { useState } from "react"
 import { useRouter, useParams } from "next/navigation"
 import DashboardLayout from "@/components/DashboardLayout"
 import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
 import { toast } from "react-toastify"
+import { ChevronLeft, ChevronRight, Save, CheckCircle, Camera, AlertCircle } from "lucide-react"
 
 type ItemStatus = "Pass" | "Fail" | "N/A"
 
@@ -101,100 +103,107 @@ export default function InspectionPage() {
 
   return (
     <DashboardLayout>
-      <div className="min-h-screen bg-[#E8F4F8] p-3 sm:p-4 md:p-6">
-        <div className="max-w-7xl mx-auto">
+      <div className="min-h-screen bg-slate-50 p-4 sm:p-6 lg:p-8 text-slate-900 font-lexend space-y-6">
+        <div className="max-w-4xl mx-auto space-y-6">
           {/* Property Header */}
-          <div className="bg-white rounded-lg p-4 sm:p-5 md:p-6 mb-4 sm:mb-6 shadow-sm">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
-              <div>
-                <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 mb-1">Unit {unitId} Inspection</h1>
-                <p className="text-sm sm:text-base text-gray-600">Sunset Apartments, New York</p>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-                <Button onClick={handleSaveDraft} variant="outline" className="w-full sm:w-auto px-4 sm:px-6 py-2 text-sm sm:text-base">
-                  Save Draft
-                </Button>
-                <Button 
-                  onClick={handleSubmit}
-                  className="w-full sm:w-auto px-4 sm:px-6 py-2 bg-[#006795] hover:bg-[#00567a] text-white font-semibold text-sm sm:text-base"
-                >
-                  Submit Inspection
-                </Button>
-              </div>
+          <div className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+                Unit {unitId} Inspection
+              </h1>
+              <p className="text-slate-500 text-xs sm:text-sm font-medium mt-0.5">Sunset Apartments, New York</p>
+            </div>
+            <div className="flex gap-2 w-full sm:w-auto">
+              <Button
+                onClick={handleSaveDraft}
+                variant="outline"
+                className="flex-1 sm:flex-initial bg-white border border-slate-200 hover:border-slate-350 hover:bg-slate-50 text-slate-750 font-bold px-4 py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-sm"
+              >
+                <Save className="w-4 h-4 text-slate-500" />
+                Save Draft
+              </Button>
+              <Button 
+                onClick={handleSubmit}
+                className="flex-1 sm:flex-initial bg-teal-600 hover:bg-teal-700 text-white font-bold px-5 py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 border-0 shadow-sm shadow-teal-600/10"
+              >
+                <CheckCircle className="w-4 h-4" />
+                Submit Inspection
+              </Button>
             </div>
           </div>
 
           {/* Progress Bar */}
-          <div className="bg-white rounded-lg p-4 sm:p-5 md:p-6 mb-4 sm:mb-6 shadow-sm">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
-              <p className="text-xs sm:text-sm font-medium text-gray-700">
+          <Card className="bg-white border border-slate-200/80 rounded-2xl shadow-sm p-6 space-y-3">
+            <div className="flex items-center justify-between">
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                 Progress: {completedItems} of {totalItems} items checked
               </p>
-              <span className="text-base sm:text-lg font-bold text-[#006795]">{progressPercentage}%</span>
+              <span className="text-base font-extrabold text-teal-600">{progressPercentage}%</span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-2 sm:h-3">
+            <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
               <div 
-                className="bg-[#006795] h-2 sm:h-3 rounded-full transition-all duration-300"
+                className="bg-gradient-to-r from-teal-500 to-emerald-500 h-full rounded-full transition-all duration-300"
                 style={{ width: `${progressPercentage}%` }}
-              ></div>
+              />
             </div>
-          </div>
+          </Card>
 
           {/* Section Navigation */}
-          <div className="bg-white rounded-lg p-3 sm:p-4 mb-4 sm:mb-6 shadow-sm">
-            <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-              {sections.map((section, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentSection(index)}
-                  className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-lg font-medium whitespace-nowrap transition-colors text-sm sm:text-base ${
-                    currentSection === index 
-                      ? 'bg-[#006795] text-white' 
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  {section.name}
-                </button>
-              ))}
-            </div>
+          <div className="bg-white border border-slate-200/80 rounded-2xl shadow-sm p-1.5 flex gap-1.5 overflow-x-auto scrollbar-none">
+            {sections.map((section, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentSection(index)}
+                className={`px-5 py-2.5 rounded-xl font-bold whitespace-nowrap transition-all text-xs sm:text-sm flex-1 text-center ${
+                  currentSection === index 
+                    ? 'bg-teal-600 text-white shadow-sm shadow-teal-600/10' 
+                    : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                }`}
+              >
+                {section.name}
+              </button>
+            ))}
           </div>
 
           {/* Inspection Items */}
-          <div className="bg-white rounded-lg p-4 sm:p-5 md:p-6 mb-4 sm:mb-6 shadow-sm">
-            <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-4 sm:mb-6">{currentSectionData.name}</h2>
+          <Card className="bg-white border border-slate-200/80 rounded-2xl shadow-sm p-6 space-y-6">
+            <div className="border-b border-slate-100 pb-3 flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-teal-500" />
+              <h2 className="text-base font-extrabold text-slate-900 tracking-tight">{currentSectionData.name} Items</h2>
+            </div>
             
-            <div className="space-y-4 sm:space-y-6">
+            <div className="divide-y divide-slate-100">
               {currentSectionData.items.map((item) => (
-                <div key={item.id} className="border-b pb-4 sm:pb-6 last:border-b-0">
-                  <div className="flex flex-col gap-3 mb-4">
-                    <p className="font-medium text-sm sm:text-base text-gray-800">{item.name}</p>
-                    <div className="flex flex-wrap gap-2">
+                <div key={item.id} className="py-5 first:pt-0 last:pb-0 space-y-4">
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                    <p className="font-extrabold text-sm sm:text-base text-slate-800 leading-snug">{item.name}</p>
+                    <div className="flex gap-2">
                       <button
                         onClick={() => updateItemStatus(currentSection, item.id, "Pass")}
-                        className={`flex-1 min-w-[80px] px-4 sm:px-6 py-2 rounded-lg font-medium transition-colors text-sm sm:text-base ${
+                        className={`flex-1 min-w-[75px] sm:min-w-[85px] py-2 px-3 rounded-xl font-extrabold transition-all text-xs sm:text-sm border ${
                           item.status === "Pass"
-                            ? 'bg-green-500 text-white'
-                            : 'bg-gray-100 text-gray-700 hover:bg-green-100'
+                            ? 'bg-emerald-500 text-white border-transparent shadow-sm'
+                            : 'bg-slate-50/50 text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 border-slate-200'
                         }`}
                       >
                         Pass
                       </button>
                       <button
                         onClick={() => updateItemStatus(currentSection, item.id, "Fail")}
-                        className={`flex-1 min-w-[80px] px-4 sm:px-6 py-2 rounded-lg font-medium transition-colors text-sm sm:text-base ${
+                        className={`flex-1 min-w-[75px] sm:min-w-[85px] py-2 px-3 rounded-xl font-extrabold transition-all text-xs sm:text-sm border ${
                           item.status === "Fail"
-                            ? 'bg-red-500 text-white'
-                            : 'bg-gray-100 text-gray-700 hover:bg-red-100'
+                            ? 'bg-rose-500 text-white border-transparent shadow-sm'
+                            : 'bg-slate-50/50 text-slate-600 hover:bg-rose-50 hover:text-rose-700 border-slate-200'
                         }`}
                       >
                         Fail
                       </button>
                       <button
                         onClick={() => updateItemStatus(currentSection, item.id, "N/A")}
-                        className={`flex-1 min-w-[80px] px-4 sm:px-6 py-2 rounded-lg font-medium transition-colors text-sm sm:text-base ${
+                        className={`flex-1 min-w-[75px] sm:min-w-[85px] py-2 px-3 rounded-xl font-extrabold transition-all text-xs sm:text-sm border ${
                           item.status === "N/A"
-                            ? 'bg-gray-500 text-white'
-                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                            ? 'bg-slate-500 text-white border-transparent shadow-sm'
+                            : 'bg-slate-50/50 text-slate-600 hover:bg-slate-100 hover:text-slate-700 border-slate-200'
                         }`}
                       >
                         N/A
@@ -202,51 +211,53 @@ export default function InspectionPage() {
                     </div>
                   </div>
 
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <div className="flex-1">
-                      <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
-                        Add Remarks
+                  <div className="flex gap-3 items-start">
+                    <div className="flex-1 space-y-1">
+                      <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                        Add Remarks / Observations
                       </label>
                       <textarea
                         value={item.remarks}
                         onChange={(e) => updateItemRemarks(currentSection, item.id, e.target.value)}
                         placeholder="Enter any additional notes or observations..."
-                        className="w-full p-2 sm:p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] resize-none text-sm sm:text-base"
+                        className="w-full px-3.5 py-2.5 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all placeholder-slate-400 outline-none resize-none"
                         rows={2}
                       />
                     </div>
-                    <button className="self-start sm:mt-7 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
-                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
+                    <button className="self-end mb-1 p-3 bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-xl text-slate-500 hover:text-teal-600 transition-all shadow-sm flex items-center justify-center">
+                      <Camera className="w-5 h-5" />
                     </button>
                   </div>
 
                   {item.photos > 0 && (
-                    <p className="text-xs sm:text-sm text-gray-500 mt-2">{item.photos} photo(s) attached</p>
+                    <p className="text-xs text-slate-400 font-bold flex items-center gap-1 bg-slate-50 border border-slate-150 rounded-lg px-2.5 py-1 w-max">
+                      <AlertCircle className="w-3.5 h-3.5 text-teal-600" />
+                      {item.photos} photo(s) attached
+                    </p>
                   )}
                 </div>
               ))}
             </div>
-          </div>
+          </Card>
 
           {/* Navigation Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 sm:justify-between">
+          <div className="flex gap-3 justify-between">
             <Button
               onClick={goToPrevSection}
               disabled={currentSection === 0}
               variant="outline"
-              className="w-full sm:w-auto px-6 sm:px-8 py-2 text-sm sm:text-base"
+              className="flex-1 sm:flex-initial border-slate-200 hover:bg-slate-50 text-slate-700 font-bold px-6 py-2.5 rounded-xl text-xs sm:text-sm shadow-sm transition-all"
             >
-              ← Previous Section
+              <ChevronLeft className="w-4 h-4 inline mr-1" />
+              Previous Section
             </Button>
             <Button
               onClick={goToNextSection}
               disabled={currentSection === sections.length - 1}
-              className="w-full sm:w-auto px-6 sm:px-8 py-2 bg-[#006795] hover:bg-[#0a5670] text-white text-sm sm:text-base"
+              className="flex-1 sm:flex-initial bg-teal-600 hover:bg-teal-700 text-white font-bold px-6 py-2.5 rounded-xl border-0 shadow-sm shadow-teal-600/10 text-xs sm:text-sm"
             >
-              Next Section →
+              Next Section
+              <ChevronRight className="w-4 h-4 inline ml-1" />
             </Button>
           </div>
         </div>

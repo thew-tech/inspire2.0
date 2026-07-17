@@ -70,127 +70,127 @@ export function RequestInspectionModal({ isOpen, onClose }: RequestInspectionMod
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-3 sm:p-4">
-      <div className="bg-white rounded-lg p-4 sm:p-6 md:p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto relative modal-content">
+    <div className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center z-50 p-3 sm:p-4 font-lexend animate-in fade-in duration-200">
+      <div className="bg-white rounded-2xl p-4 sm:p-6 md:p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto relative modal-content border border-slate-200/80 shadow-xl animate-in zoom-in-95 duration-200">
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 sm:top-4 sm:right-4 text-gray-400 hover:text-gray-600 z-10"
+          className="absolute top-3 right-3 sm:top-4 sm:right-4 p-1.5 rounded-lg hover:bg-slate-50 text-slate-400 hover:text-slate-600 border border-transparent hover:border-slate-200 transition-all z-10"
         >
           <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
 
-        <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 pr-8">Request Inspection by a certified Inspector.</h2>
+        <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 mb-4 sm:mb-6 pr-8 tracking-tight">Request Inspection by a certified Inspector.</h2>
 
-        <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">Purpose of Inspection</label>
+            <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Purpose of Inspection</label>
             <input
               type="text"
               value={formData.purpose}
               onChange={(e) => setFormData({ ...formData, purpose: e.target.value })}
               placeholder="Enter purpose of inspection"
-              className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-[#E8F4F8] border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] text-sm"
+              className="w-full px-3.5 py-2.5 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all"
             />
           </div>
 
           <div>
-            <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">HUD Pre-Negative Inspection</label>
+            <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">HUD Pre-Negative Inspection</label>
             <input
               type="text"
               value={formData.hudFre}
               onChange={(e) => setFormData({ ...formData, hudFre: e.target.value })}
               placeholder="Select option"
-              className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-[#E8F4F8] border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] text-sm"
+              className="w-full px-3.5 py-2.5 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all"
             />
           </div>
 
           <div>
-            <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">Management Co./Assessment</label>
+            <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Management Co./Assessment</label>
             <input
               type="text"
               value={formData.management}
               onChange={(e) => setFormData({ ...formData, management: e.target.value })}
               placeholder="Enter management company or assessment"
-              className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-[#E8F4F8] border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] text-sm"
+              className="w-full px-3.5 py-2.5 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all"
             />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div>
-              <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">Insurance Co / Risk Management</label>
+              <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Insurance Co / Risk Management</label>
               <input
                 type="text"
                 value={formData.insurance}
                 onChange={(e) => setFormData({ ...formData, insurance: e.target.value })}
                 placeholder="Insurance company"
-                className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-[#E8F4F8] border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] text-sm"
+                className="w-full px-3.5 py-2.5 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all"
               />
             </div>
             <div>
-              <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">Banker / Sale</label>
+              <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Banker / Sale</label>
               <input
                 type="text"
                 value={formData.banker}
                 onChange={(e) => setFormData({ ...formData, banker: e.target.value })}
                 placeholder="Banker or sale"
-                className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-[#E8F4F8] border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] text-sm"
+                className="w-full px-3.5 py-2.5 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div>
-              <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">Number of buildings</label>
+              <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Number of buildings</label>
               <input
                 type="text"
                 value={formData.buildings}
                 onChange={(e) => setFormData({ ...formData, buildings: e.target.value })}
                 placeholder="e.g. 4"
-                className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-[#E8F4F8] border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] text-sm"
+                className="w-full px-3.5 py-2.5 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all"
               />
             </div>
             <div>
-              <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">Number of units</label>
+              <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Number of units</label>
               <input
                 type="text"
                 value={formData.units}
                 onChange={(e) => setFormData({ ...formData, units: e.target.value })}
                 placeholder="e.g. 43"
-                className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-[#E8F4F8] border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] text-sm"
+                className="w-full px-3.5 py-2.5 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div>
-              <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">State / City</label>
+              <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">State / City</label>
               <input
                 type="text"
                 value={formData.state}
                 onChange={(e) => setFormData({ ...formData, state: e.target.value })}
                 placeholder="Enter state / city"
-                className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-[#E8F4F8] border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] text-sm"
+                className="w-full px-3.5 py-2.5 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all"
               />
             </div>
             <div>
-              <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">Zip / Postal Code</label>
+              <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Zip / Postal Code</label>
               <input
                 type="text"
                 value={formData.zipCode}
                 onChange={(e) => setFormData({ ...formData, zipCode: e.target.value })}
                 placeholder="Enter zip / postal code"
-                className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-[#E8F4F8] border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] text-sm"
+                className="w-full px-3.5 py-2.5 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all"
               />
             </div>
           </div>
 
-          <div className="flex justify-center pt-2 sm:pt-4">
+          <div className="flex justify-center pt-4 border-t border-slate-100">
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full sm:w-auto px-8 sm:px-12 py-3 bg-[#006795] hover:bg-[#0a5670] text-white font-semibold rounded-lg text-sm disabled:opacity-50"
+              className="w-full sm:w-auto px-10 py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl text-sm disabled:opacity-50 border-0 shadow-md shadow-teal-600/10 transition-colors"
             >
               {isLoading ? "Submitting..." : "Submit"}
             </Button>
@@ -546,33 +546,33 @@ export function AddPropertyModal({ isOpen, onClose, onNext }: AddPropertyModalPr
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-3 sm:p-4">
-      <div className="bg-white rounded-lg p-4 sm:p-6 md:p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto relative modal-content">
+    <div className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center z-50 p-3 sm:p-4 font-lexend animate-in fade-in duration-200">
+      <div className="bg-white rounded-2xl p-4 sm:p-6 md:p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto relative modal-content border border-slate-200/80 shadow-xl animate-in zoom-in-95 duration-200">
         <button
           onClick={handleClose}
-          className="absolute top-3 right-3 sm:top-4 sm:right-4 text-gray-400 hover:text-gray-600 z-10"
+          className="absolute top-3 right-3 sm:top-4 sm:right-4 p-1.5 rounded-lg hover:bg-slate-50 text-slate-400 hover:text-slate-600 border border-transparent hover:border-slate-200 transition-all z-10"
         >
           <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
 
-        <div className="flex items-center justify-between mb-4 sm:mb-6 pr-8">
-          <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-[#F84B5F]">Add New Property</h2>
-          <span className="bg-[#006795] text-white text-sm font-medium px-3 py-1 rounded-full">
+        <div className="flex items-center justify-between mb-4 sm:mb-6 pr-8 border-b border-slate-100 pb-3">
+          <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold text-teal-600 tracking-tight">Add New Property</h2>
+          <span className="bg-teal-50 text-teal-700 text-xs font-bold px-3.5 py-1.5 rounded-xl border border-teal-100/60 shadow-sm">
             {properties.length} {properties.length === 1 ? 'Property' : 'Properties'}
           </span>
         </div>
 
         <div className="space-y-6">
           {properties.map((formData, index) => (
-            <div key={index} className="border border-gray-200 rounded-lg p-4 sm:p-5 relative">
+            <div key={index} className="border border-slate-200/80 bg-slate-50/20 rounded-2xl p-4 sm:p-5 relative shadow-sm">
               {properties.length > 1 && (
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-sm font-semibold text-[#006795]">Property {index + 1}</span>
+                  <span className="text-sm font-bold text-teal-600">Property {index + 1}</span>
                   <button
                     onClick={() => removeProperty(index)}
-                    className="text-red-500 hover:text-red-700 text-sm font-medium flex items-center gap-1"
+                    className="text-rose-500 hover:text-rose-700 text-xs font-bold flex items-center gap-1.5 p-1.5 hover:bg-rose-50 rounded-lg transition-colors border border-transparent hover:border-rose-100"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -584,46 +584,46 @@ export function AddPropertyModal({ isOpen, onClose, onNext }: AddPropertyModalPr
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4">
                 <div>
-                  <label className="block text-xs sm:text-sm font-semibold text-[#006795] mb-2">Property ID (Optional)</label>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Property ID (Optional)</label>
                   <input
                     type="text"
                     value={formData.propertyId}
                     onChange={(e) => updateProperty(index, 'propertyId', e.target.value)}
                     placeholder="Property ID"
-                    className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-[#E8F4F8] border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] text-sm text-center placeholder:text-center"
+                    className="w-full px-3.5 py-2.5 border border-slate-200 bg-white hover:bg-slate-50/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all text-center"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs sm:text-sm font-semibold text-[#006795] mb-2">Address *</label>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Address *</label>
                   <input
                     type="text"
                     value={formData.address}
                     onChange={(e) => updateProperty(index, 'address', e.target.value)}
                     placeholder="Enter your Address"
-                    className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-[#E8F4F8] border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] text-sm text-center placeholder:text-center"
+                    className="w-full px-3.5 py-2.5 border border-slate-200 bg-white hover:bg-slate-50/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all text-center"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4">
                 <div>
-                  <label className="block text-xs sm:text-sm font-semibold text-[#006795] mb-2">Property Name *</label>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Property Name *</label>
                   <input
                     type="text"
                     value={formData.propertyName}
                     onChange={(e) => updateProperty(index, 'propertyName', e.target.value)}
                     placeholder="Enter your Property Name"
-                    className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-[#E8F4F8] border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] text-sm text-center placeholder:text-center"
+                    className="w-full px-3.5 py-2.5 border border-slate-200 bg-white hover:bg-slate-50/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all text-center"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs sm:text-sm font-semibold text-[#006795] mb-2">City *</label>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">City *</label>
                   <input
                     type="text"
                     value={formData.city}
                     onChange={(e) => updateProperty(index, 'city', e.target.value)}
                     placeholder="Enter City"
-                    className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-[#E8F4F8] border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] text-sm text-center placeholder:text-center"
+                    className="w-full px-3.5 py-2.5 border border-slate-200 bg-white hover:bg-slate-50/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all text-center"
                     required
                   />
                 </div>
@@ -631,23 +631,23 @@ export function AddPropertyModal({ isOpen, onClose, onNext }: AddPropertyModalPr
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4">
                 <div>
-                  <label className="block text-xs sm:text-sm font-semibold text-[#006795] mb-2">Number Of Buildings *</label>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Number Of Buildings *</label>
                   <input
                     type="text"
                     value={formData.buildings}
                     onChange={(e) => updateProperty(index, 'buildings', e.target.value)}
                     placeholder="Number of Buildings"
-                    className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-[#E8F4F8] border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] text-sm text-center placeholder:text-center"
+                    className="w-full px-3.5 py-2.5 border border-slate-200 bg-white hover:bg-slate-50/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all text-center"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs sm:text-sm font-semibold text-[#006795] mb-2">State *</label>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">State *</label>
                   <input
                     type="text"
                     value={formData.state}
                     onChange={(e) => updateProperty(index, 'state', e.target.value)}
                     placeholder="Enter State"
-                    className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-[#E8F4F8] border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] text-sm text-center placeholder:text-center"
+                    className="w-full px-3.5 py-2.5 border border-slate-200 bg-white hover:bg-slate-50/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all text-center"
                     required
                   />
                 </div>
@@ -655,23 +655,23 @@ export function AddPropertyModal({ isOpen, onClose, onNext }: AddPropertyModalPr
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4">
                 <div>
-                  <label className="block text-xs sm:text-sm font-semibold text-[#006795] mb-2">Number Of Units *</label>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Number Of Units *</label>
                   <input
                     type="text"
                     value={formData.units}
                     onChange={(e) => updateProperty(index, 'units', e.target.value)}
                     placeholder="Number of Units"
-                    className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-[#E8F4F8] border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] text-sm text-center placeholder:text-center"
+                    className="w-full px-3.5 py-2.5 border border-slate-200 bg-white hover:bg-slate-50/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all text-center"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs sm:text-sm font-semibold text-[#006795] mb-2">Zip *</label>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Zip *</label>
                   <input
                     type="text"
                     value={formData.zipCode}
                     onChange={(e) => updateProperty(index, 'zipCode', e.target.value)}
                     placeholder="Postal Code"
-                    className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-[#E8F4F8] border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] text-sm text-center placeholder:text-center"
+                    className="w-full px-3.5 py-2.5 border border-slate-200 bg-white hover:bg-slate-50/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all text-center"
                     required
                   />
                 </div>
@@ -680,13 +680,13 @@ export function AddPropertyModal({ isOpen, onClose, onNext }: AddPropertyModalPr
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div className="sm:col-span-2 flex justify-center">
                   <div className="w-full sm:w-1/2">
-                    <label className="block text-xs sm:text-sm font-semibold text-[#006795] mb-2 text-center">Country *</label>
+                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5 text-center">Country *</label>
                     <input
                       type="text"
                       value={formData.country}
                       onChange={(e) => updateProperty(index, 'country', e.target.value)}
                       placeholder="Enter Country"
-                      className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-[#E8F4F8] border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] text-sm text-center placeholder:text-center"
+                      className="w-full px-3.5 py-2.5 border border-slate-200 bg-white hover:bg-slate-50/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all text-center"
                       required
                     />
                   </div>
@@ -699,7 +699,7 @@ export function AddPropertyModal({ isOpen, onClose, onNext }: AddPropertyModalPr
           <div className="flex justify-center">
             <button
               onClick={addNewProperty}
-              className="flex items-center gap-2 px-6 py-2.5 bg-[#F84B5F] hover:bg-[#EE3646] text-white font-semibold rounded-lg text-sm transition-colors"
+              className="flex items-center gap-2 px-6 py-2.5 bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-xl text-sm transition-colors shadow-sm shadow-rose-500/10"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -710,61 +710,61 @@ export function AddPropertyModal({ isOpen, onClose, onNext }: AddPropertyModalPr
 
           {/* Divider */}
           <div className="flex items-center gap-4 my-4">
-            <div className="flex-1 h-px bg-gray-300"></div>
-            <span className="text-gray-500 text-sm font-medium">OR</span>
-            <div className="flex-1 h-px bg-gray-300"></div>
+            <div className="flex-1 h-px bg-slate-200"></div>
+            <span className="text-slate-400 text-xs font-bold uppercase tracking-wider">OR</span>
+            <div className="flex-1 h-px bg-slate-200"></div>
           </div>
 
           {/* Drag and Drop File Upload Section */}
-          <div className="border border-gray-200 rounded-lg p-4 sm:p-5 bg-gray-50">
-            <h3 className="text-sm font-semibold text-[#DC2626] mb-3 text-center">Import Properties From File</h3>
+          <div className="border border-slate-200 rounded-2xl p-5 bg-slate-50/30 shadow-sm">
+            <h3 className="text-xs font-extrabold text-slate-500 uppercase tracking-wider mb-3 text-center">Import Properties From File</h3>
 
             <div
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
-              className={`border-2 border-dashed rounded-lg p-6 sm:p-8 text-center transition-all cursor-pointer ${isDragging
-                ? 'border-[#006795] bg-[#E8F4F8]'
-                : 'border-gray-300 hover:border-[#006795] hover:bg-[#E8F4F8]/50'
+              className={`border-2 border-dashed rounded-2xl p-6 sm:p-8 text-center transition-all cursor-pointer ${isDragging
+                ? 'border-teal-500 bg-teal-50/30'
+                : 'border-slate-200 hover:border-teal-500 hover:bg-teal-50/10 bg-white shadow-sm'
                 }`}
             >
               {isProcessing ? (
                 <div className="flex flex-col items-center gap-3">
-                  <div className="w-10 h-10 border-4 border-[#006795] border-t-transparent rounded-full animate-spin"></div>
-                  <p className="text-sm text-gray-600">Processing file...</p>
+                  <div className="w-10 h-10 border-4 border-teal-600 border-t-transparent rounded-full animate-spin"></div>
+                  <p className="text-sm text-slate-500 font-medium">Processing file...</p>
                 </div>
               ) : uploadedFile ? (
-                <div className="flex flex-col items-center gap-3">
-                  <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                    <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="flex flex-col items-center gap-3 animate-in fade-in zoom-in-95 duration-150">
+                  <div className="w-12 h-12 bg-emerald-50 border border-emerald-100 rounded-full flex items-center justify-center shadow-sm">
+                    <svg className="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-900">{uploadedFile.name}</p>
-                    <p className="text-xs text-gray-500">{(uploadedFile.size / 1024).toFixed(1)} KB</p>
+                    <p className="text-sm font-bold text-slate-900">{uploadedFile.name}</p>
+                    <p className="text-xs text-slate-500 font-bold">{(uploadedFile.size / 1024).toFixed(1)} KB</p>
                   </div>
                   <button
                     onClick={(e) => {
                       e.stopPropagation()
                       clearUploadedFile()
                     }}
-                    className="text-xs text-red-500 hover:text-red-700 font-medium"
+                    className="text-xs text-rose-500 hover:text-rose-700 font-bold"
                   >
                     Remove file
                   </button>
                 </div>
               ) : (
                 <>
-                  <div className="w-12 h-12 mx-auto mb-3 bg-[#E8F4F8] rounded-full flex items-center justify-center">
-                    <svg className="w-6 h-6 text-[#006795]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-12 h-12 mx-auto mb-3 bg-teal-50 border border-teal-100/60 rounded-full flex items-center justify-center shadow-sm">
+                    <svg className="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                     </svg>
                   </div>
-                  <p className="text-sm text-gray-700 mb-1">
-                    <span className="font-semibold text-[#006795]">Drag & drop</span> your file here
+                  <p className="text-sm text-slate-700 mb-1">
+                    <span className="font-extrabold text-teal-600">Drag & drop</span> your file here
                   </p>
-                  <p className="text-xs text-gray-500 mb-3">or click to browse</p>
+                  <p className="text-xs text-slate-400 font-medium mb-3">or click to browse</p>
                   <input
                     type="file"
                     accept=".txt,.csv,.xls,.xlsx,.pdf"
@@ -774,23 +774,23 @@ export function AddPropertyModal({ isOpen, onClose, onNext }: AddPropertyModalPr
                   />
                   <label
                     htmlFor="property-file-upload"
-                    className="inline-block px-4 py-2 bg-[#006795] hover:bg-[#0a5670] text-white text-sm font-medium rounded-lg cursor-pointer transition-colors"
+                    className="inline-block px-5 py-2 bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold rounded-xl cursor-pointer transition-colors shadow-sm shadow-teal-600/10"
                   >
                     Browse Files
                   </label>
-                  <p className="text-xs text-gray-400 mt-3">
-                    Supported formats: TXT, CSV, XLS, XLSX, PDF
+                  <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-3">
+                    Supported: TXT, CSV, XLS, XLSX, PDF
                   </p>
                 </>
               )}
             </div>
 
             {/* File Format Guide */}
-            <div className="mt-4 p-3 bg-white rounded-lg border border-gray-200">
-              <p className="text-xs font-semibold text-gray-700 mb-2">Expected Column Headers:</p>
+            <div className="mt-4 p-3.5 bg-white rounded-xl border border-slate-200 shadow-sm">
+              <p className="text-xs font-extrabold text-slate-500 uppercase tracking-wider mb-2">Expected Column Headers:</p>
               <div className="flex flex-wrap gap-1.5">
                 {['Property ID', 'Address', 'Property Name', 'Country', 'State', 'City', 'Postal Code', 'Buildings', 'Units'].map((col) => (
-                  <span key={col} className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
+                  <span key={col} className="text-[10px] bg-slate-50 border border-slate-100 text-slate-600 px-2 py-1 rounded-lg font-bold">
                     {col}
                   </span>
                 ))}
@@ -798,10 +798,10 @@ export function AddPropertyModal({ isOpen, onClose, onNext }: AddPropertyModalPr
             </div>
           </div>
 
-          <div className="flex justify-center pt-4 sm:pt-6">
+          <div className="flex justify-center pt-4 sm:pt-6 border-t border-slate-100">
             <Button
               onClick={handleNext}
-              className="w-full sm:w-auto px-8 sm:px-16 py-3 bg-[#006795] hover:bg-[#0a5670] text-white font-semibold rounded-lg text-sm"
+              className="w-full sm:w-auto px-12 py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl text-sm border-0 shadow-md shadow-teal-600/10 transition-colors"
             >
               Next
             </Button>
@@ -892,58 +892,60 @@ export function BuildingDivisionModal({ isOpen, onClose, onUpdate, propertyData 
   const propertyName = propertyData.propertyName || propertyData.name || 'N/A'
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-3 sm:p-4">
-      <div className="bg-white rounded-lg p-4 sm:p-6 md:p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto relative modal-content">
+    <div className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center z-50 p-3 sm:p-4 font-lexend animate-in fade-in duration-200">
+      <div className="bg-white rounded-2xl p-4 sm:p-6 md:p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto relative modal-content border border-slate-200/80 shadow-xl animate-in zoom-in-95 duration-200">
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 sm:top-4 sm:right-4 text-gray-400 hover:text-gray-600 z-10"
+          className="absolute top-3 right-3 sm:top-4 sm:right-4 p-1.5 rounded-lg hover:bg-slate-50 text-slate-400 hover:text-slate-600 border border-transparent hover:border-slate-200 transition-all z-10"
         >
           <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
 
-        <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Property Details</h2>
+        <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 mb-4 sm:mb-6 tracking-tight">Property Details</h2>
 
         {/* Property Info Header */}
-        <div className="bg-gray-100 rounded-lg p-3 sm:p-4 mb-6 border border-gray-200">
-          <p className="text-sm sm:text-base font-semibold text-gray-900">
-            Property ID: <span className="font-bold">{propertyId}</span>
-            <span className="ml-4">Property Name: <span className="font-bold">{propertyName}</span></span>
+        <div className="bg-slate-50 rounded-2xl p-4 mb-6 border border-slate-200/80 shadow-sm flex flex-col sm:flex-row gap-3 sm:gap-6">
+          <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+            Property ID: <span className="font-extrabold text-slate-800 normal-case ml-1">{propertyId}</span>
+          </p>
+          <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+            Property Name: <span className="font-extrabold text-slate-800 normal-case ml-1">{propertyName}</span>
           </p>
         </div>
 
         {/* Buildings Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6">
           {buildings.map((building, index) => (
-            <div key={index} className="border border-gray-200 rounded-lg p-4 bg-white shadow-sm">
+            <div key={index} className="border border-slate-200/80 rounded-2xl p-4 bg-slate-50/20 shadow-sm hover:border-slate-300 transition-all">
               <div className="flex items-end gap-3">
                 <div className="flex-1">
-                  <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5">Building Name</label>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Building Name</label>
                   <input
                     type="text"
                     value={building.name}
                     onChange={(e) => updateBuildingName(index, e.target.value)}
-                    className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] text-sm"
+                    className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all"
                   />
                 </div>
                 <div className="flex-1">
-                  <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5">No. of Unit</label>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">No. of Units</label>
                   <input
                     type="number"
                     value={building.units}
                     onChange={(e) => updateBuildingUnits(index, parseInt(e.target.value) || 0)}
                     min={0}
-                    className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] text-sm"
+                    className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all"
                   />
                 </div>
                 <button
                   onClick={() => {
                     toast.success(`Building ${building.name} updated`, { position: "top-right" })
                   }}
-                  className="px-3 py-2 bg-[#006795] hover:bg-[#0a5670] text-white text-xs font-semibold rounded-lg transition-colors whitespace-nowrap"
+                  className="px-4 py-2.5 bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold rounded-xl transition-colors shadow-sm shadow-teal-600/10 border-0 whitespace-nowrap h-[42px] flex items-center justify-center"
                 >
-                  Update<br />Unit
+                  Update
                 </button>
               </div>
             </div>
@@ -954,7 +956,7 @@ export function BuildingDivisionModal({ isOpen, onClose, onUpdate, propertyData 
         <Button
           onClick={handleUpdate}
           disabled={isLoading}
-          className="w-full py-3 bg-[#2196F3] hover:bg-[#1976D2] text-white font-semibold rounded-lg text-sm sm:text-base transition-colors"
+          className="w-full py-3.5 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl text-sm transition-colors border-0 shadow-md shadow-teal-600/10"
         >
           {isLoading ? (
             <div className="flex items-center justify-center gap-2">
@@ -962,7 +964,7 @@ export function BuildingDivisionModal({ isOpen, onClose, onUpdate, propertyData 
               Saving...
             </div>
           ) : (
-            'Update'
+            'Save Changes'
           )}
         </Button>
       </div>
@@ -1000,37 +1002,37 @@ export function ActionModal({ isOpen, onClose, onEdit, onStartInspection, onHold
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-6 sm:p-8 backdrop-blur-sm">
-      <div className="bg-white rounded-3xl p-8 sm:p-10 max-w-sm w-full relative shadow-2xl border border-gray-100">
+    <div className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center z-50 p-6 sm:p-8 font-lexend animate-in fade-in duration-200">
+      <div className="bg-white rounded-2xl p-6 sm:p-8 max-w-sm w-full relative shadow-xl border border-slate-200/80 animate-in zoom-in-95 duration-200">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+          className="absolute top-4 right-4 p-1.5 rounded-lg hover:bg-slate-50 text-slate-400 hover:text-slate-600 border border-transparent hover:border-slate-200 transition-all z-10"
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
 
-        <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Action</h2>
+        <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 mb-6 text-center tracking-tight">Action</h2>
 
-        <div className="space-y-4">
+        <div className="space-y-3.5">
           <button
             onClick={onEdit}
-            className="w-full px-6 py-4 bg-white border-2 border-black text-black font-bold rounded-xl text-base transition-all hover:bg-gray-50 active:scale-95"
+            className="w-full px-6 py-3.5 bg-white border border-slate-200 hover:border-slate-300 text-slate-700 font-bold rounded-xl text-sm transition-all hover:bg-slate-50"
           >
             Edit Property
           </button>
           
           <button
             onClick={handleStartInspection}
-            className="w-full px-6 py-4 bg-[#00718F] text-white font-bold rounded-xl text-base transition-all hover:bg-[#005a72] shadow-lg active:scale-95"
+            className="w-full px-6 py-3.5 bg-teal-600 text-white font-bold rounded-xl text-sm transition-all hover:bg-teal-700 shadow-md shadow-teal-600/10 border-0"
           >
             Ready For Inspection
           </button>
 
           <button
             onClick={handleRemove}
-            className="w-full px-6 py-4 bg-[#FF0000] text-white font-bold rounded-xl text-base transition-all hover:bg-[#cc0000] shadow-lg active:scale-95"
+            className="w-full px-6 py-3.5 bg-rose-500 text-white font-bold rounded-xl text-sm transition-all hover:bg-rose-600 shadow-md shadow-rose-500/10 border-0"
           >
             Remove Property
           </button>
@@ -1111,59 +1113,59 @@ export function CoverageSelectionModal({ isOpen, onClose, onStartInspection, pro
   const propertyName = propertyData.propertyName || propertyData.name || 'N/A'
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-3 sm:p-4">
-      <div className="bg-white rounded-xl p-6 sm:p-8 max-w-lg w-full max-h-[90vh] overflow-y-auto relative shadow-2xl">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg sm:text-xl font-black text-gray-900">Ready for Inspection</h2>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center z-50 p-3 sm:p-4 font-lexend animate-in fade-in duration-200">
+      <div className="bg-white rounded-2xl p-6 sm:p-8 max-w-lg w-full max-h-[90vh] overflow-y-auto relative shadow-xl border border-slate-200/80 animate-in zoom-in-95 duration-200">
+        <div className="flex items-center justify-between mb-6 border-b border-slate-100 pb-3">
+          <h2 className="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight">Ready for Inspection</h2>
+          <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-slate-50 text-slate-400 hover:text-slate-600 border border-transparent hover:border-slate-200 transition-all">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
 
-        <p className="text-base font-bold text-gray-900 mb-1">{propertyName}</p>
-        <p className="text-sm text-gray-600 mb-6">
-          Total Units: <span className="font-bold text-gray-900">{totalUnits}</span>
+        <p className="text-base font-extrabold text-slate-800 tracking-tight mb-1">{propertyName}</p>
+        <p className="text-sm text-slate-500 font-medium mb-6">
+          Total Units: <span className="font-extrabold text-slate-800">{totalUnits}</span>
         </p>
 
-        <p className="text-sm font-bold text-gray-700 mb-3">Select Inspection Coverage</p>
+        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-3">Select Inspection Coverage</p>
 
         <div className="space-y-3 mb-6">
           {COVERAGE_OPTIONS.map((option) => (
             <button
               key={option.value}
               onClick={() => handleCoverageChange(option.value)}
-              className={`w-full flex items-start gap-3 p-4 rounded-xl border-2 transition-all text-left ${selectedCoverage === option.value
-                ? 'border-[#006795] bg-[#E8F4F8]'
-                : 'border-gray-200 hover:border-gray-300 bg-white'
+              className={`w-full flex items-start gap-3.5 p-4 rounded-xl border transition-all text-left ${selectedCoverage === option.value
+                ? 'border-teal-500 bg-teal-50/20 shadow-sm'
+                : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50/30 bg-white'
                 }`}
             >
-              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center mt-0.5 flex-shrink-0 ${selectedCoverage === option.value ? 'border-[#006795]' : 'border-gray-300'
+              <div className={`w-5 h-5 rounded-full border flex items-center justify-center mt-0.5 flex-shrink-0 ${selectedCoverage === option.value ? 'border-teal-600' : 'border-slate-300'
                 }`}>
                 {selectedCoverage === option.value && (
-                  <div className="w-2.5 h-2.5 rounded-full bg-[#006795]" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-teal-600" />
                 )}
               </div>
               <div>
-                <p className={`text-sm font-bold ${selectedCoverage === option.value ? 'text-[#006795]' : 'text-gray-900'
+                <p className={`text-sm font-bold ${selectedCoverage === option.value ? 'text-teal-600' : 'text-slate-900'
                   }`}>
                   {option.label}
                 </p>
-                <p className="text-xs text-gray-500 mt-0.5">{option.description}</p>
+                <p className="text-xs text-slate-500 mt-1 font-medium">{option.description}</p>
               </div>
             </button>
           ))}
         </div>
 
-        <div className="bg-[#F1F7FE] rounded-xl p-4 mb-6 flex items-center justify-between">
-          <span className="text-sm font-bold text-gray-700">Units to Inspect:</span>
-          <span className="text-lg font-black text-[#006795]">{calculatedUnits}</span>
+        <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-4 mb-6 flex items-center justify-between shadow-sm">
+          <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Units to Inspect:</span>
+          <span className="text-xl font-extrabold text-teal-600">{calculatedUnits}</span>
         </div>
 
         <button
           onClick={handleStart}
-          className="w-full py-3.5 bg-[#006795] hover:bg-[#00567a] text-white font-bold rounded-xl text-sm sm:text-base transition-colors shadow-md flex items-center justify-center gap-2"
+          className="w-full py-3.5 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl text-sm transition-colors shadow-md shadow-teal-600/10 border-0 flex items-center justify-center gap-2"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -1344,126 +1346,126 @@ export function EditPropertyModal({ isOpen, onClose, onSuccess, propertyData }: 
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-3 sm:p-4">
-      <div className="bg-white rounded-lg p-4 sm:p-6 md:p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto relative">
+    <div className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center z-50 p-3 sm:p-4 font-lexend animate-in fade-in duration-200">
+      <div className="bg-white rounded-2xl p-4 sm:p-6 md:p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto relative border border-slate-200/80 shadow-xl animate-in zoom-in-95 duration-200">
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 sm:top-4 sm:right-4 text-gray-400 hover:text-gray-600 z-10"
+          className="absolute top-3 right-3 sm:top-4 sm:right-4 p-1.5 rounded-lg hover:bg-slate-50 text-slate-400 hover:text-slate-600 border border-transparent hover:border-slate-200 transition-all z-10"
         >
           <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
 
-        <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 text-center pr-8">Edit or Delete Property</h2>
+        <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 mb-4 sm:mb-6 text-center pr-8 tracking-tight">Edit or Delete Property</h2>
 
-        <div className="space-y-3 sm:space-y-4">
+        <div className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             <div>
-              <label className="block text-xs sm:text-sm font-semibold text-[#006795] mb-2">Property ID</label>
+              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Property ID</label>
               <input
                 type="text"
                 value={formData.propertyId}
                 onChange={(e) => setFormData({ ...formData, propertyId: e.target.value })}
-                className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-[#E8F4F8] border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] text-sm"
+                className="w-full px-3.5 py-2.5 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all"
               />
             </div>
             <div>
-              <label className="block text-xs sm:text-sm font-semibold text-[#006795] mb-2">Address</label>
+              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Address</label>
               <input
                 type="text"
                 value={formData.address}
                 onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-[#E8F4F8] border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] text-sm"
+                className="w-full px-3.5 py-2.5 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all"
               />
             </div>
             <div>
-              <label className="block text-xs sm:text-sm font-semibold text-[#006795] mb-2">Property Name</label>
+              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Property Name</label>
               <input
                 type="text"
                 value={formData.propertyName}
                 onChange={(e) => setFormData({ ...formData, propertyName: e.target.value })}
-                className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-[#E8F4F8] border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] text-sm"
+                className="w-full px-3.5 py-2.5 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             <div>
-              <label className="block text-xs sm:text-sm font-semibold text-[#006795] mb-2">Country</label>
+              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Country</label>
               <input
                 type="text"
                 value={formData.country}
                 onChange={(e) => setFormData({ ...formData, country: e.target.value })}
                 placeholder="Enter Country"
-                className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-[#E8F4F8] border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] text-sm"
+                className="w-full px-3.5 py-2.5 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all"
               />
             </div>
             <div>
-              <label className="block text-xs sm:text-sm font-semibold text-[#006795] mb-2">State (Province)</label>
+              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">State (Province)</label>
               <input
                 type="text"
                 value={formData.state}
                 onChange={(e) => setFormData({ ...formData, state: e.target.value })}
                 placeholder="Enter State"
-                className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-[#E8F4F8] border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] text-sm"
+                className="w-full px-3.5 py-2.5 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all"
               />
             </div>
             <div>
-              <label className="block text-xs sm:text-sm font-semibold text-[#006795] mb-2">City (Area)</label>
+              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">City (Area)</label>
               <input
                 type="text"
                 value={formData.city}
                 onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                 placeholder="Enter City"
-                className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-[#E8F4F8] border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] text-sm"
+                className="w-full px-3.5 py-2.5 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all"
               />
             </div>
             <div>
-              <label className="block text-xs sm:text-sm font-semibold text-[#006795] mb-2">Postal Code</label>
+              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Postal Code</label>
               <input
                 type="text"
                 value={formData.zipCode}
                 onChange={(e) => setFormData({ ...formData, zipCode: e.target.value })}
-                className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-[#E8F4F8] border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] text-sm"
+                className="w-full px-3.5 py-2.5 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div>
-              <label className="block text-xs sm:text-sm font-semibold text-[#006795] mb-2">Number Of Building</label>
+              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Number Of Buildings</label>
               <input
                 type="text"
                 value={formData.buildings}
                 onChange={(e) => setFormData({ ...formData, buildings: e.target.value })}
                 placeholder="Number of Buildings"
-                className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-[#E8F4F8] border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] text-sm"
+                className="w-full px-3.5 py-2.5 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all"
               />
             </div>
             <div>
-              <label className="block text-xs sm:text-sm font-semibold text-[#006795] mb-2">Number Of Unit</label>
+              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Number Of Units</label>
               <input
                 type="text"
                 value={formData.units}
                 onChange={(e) => setFormData({ ...formData, units: e.target.value })}
-                className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-[#E8F4F8] border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#006795] text-sm"
+                className="w-full px-3.5 py-2.5 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all"
               />
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 pt-4 sm:pt-6">
+          <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 pt-4 sm:pt-6 border-t border-slate-100">
             <Button
               onClick={handleUpdate}
               disabled={isLoading}
-              className="w-full sm:w-auto px-8 sm:px-12 py-3 bg-[#006795] hover:bg-[#0a5670] text-white font-semibold rounded-lg text-sm disabled:opacity-50"
+              className="w-full sm:w-auto px-10 py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl text-sm disabled:opacity-50 border-0 shadow-md shadow-teal-600/10 transition-colors"
             >
               {isLoading ? "Updating..." : "Update"}
             </Button>
             <Button
               onClick={handleDelete}
               disabled={isLoading}
-              className="w-full sm:w-auto px-8 sm:px-12 py-3 bg-[#F84B5F] hover:bg-[#EE3646] text-white font-semibold rounded-lg text-sm disabled:opacity-50"
+              className="w-full sm:w-auto px-10 py-3 bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-xl text-sm disabled:opacity-50 border-0 shadow-md shadow-rose-500/10 transition-colors"
             >
               {isLoading ? "Deleting..." : "Delete"}
             </Button>

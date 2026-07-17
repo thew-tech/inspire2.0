@@ -147,39 +147,39 @@ export default function OtherLogin() {
   }
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
-      <div className="w-full bg-[#E8F4F8] px-6 text-center flex flex-col items-center justify-center rounded-b-[70px]" style={{ height: '280px' }}>
-        <div className="flex justify-center mb-8">
-          <Image src="/logo.png" alt="INSPIRE Logo" width={480} height={560} className="w-auto h-24 md:h-32 lg:h-36 cursor-pointer" onClick={() => router.push('/')} />
+    <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
+      <div className="w-full bg-gradient-to-b from-[#1E1B4B] to-[#312E81] text-white px-6 text-center flex flex-col items-center justify-center rounded-b-[50px] shadow-lg border-b border-indigo-950/20" style={{ height: '280px' }}>
+        <div className="flex justify-center mb-5 bg-white/10 backdrop-blur-md rounded-2xl p-4 shadow-inner border border-white/15">
+          <Image src="/logo.png" alt="INSPIRE Logo" width={480} height={560} className="w-auto h-16 md:h-20 lg:h-22 cursor-pointer filter brightness-0 invert" onClick={() => router.push('/')} />
         </div>
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">Welcome to INSPIRE</h1>
-        <p className="text-sm md:text-base text-gray-600">Other Portal</p>
+        <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight text-white mb-1">Welcome to INSPIRE</h1>
+        <p className="text-xs md:text-sm font-semibold tracking-wider uppercase text-amber-400">Other Portal</p>
       </div>
 
       <div className="flex-1 flex items-center justify-center px-4 py-8">
-        <div className="w-full max-w-[600px] px-6 md:px-12 py-8">
-          <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-8 text-center">Log In to Your Account</h2>
+        <div className="w-full max-w-[540px] px-6 md:px-10 py-8 bg-white rounded-2xl border border-slate-200/80 shadow-xl">
+          <h2 className="text-xl md:text-2xl font-bold text-slate-900 mb-8 text-center tracking-tight">Log In to Your Account</h2>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="email" className="block text-sm font-semibold text-gray-900 mb-2">Email Address</label>
-              <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="example@example.com" className="w-full px-4 py-3 rounded-lg bg-[#E8F4F8] border-0 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#006795]" />
+              <label htmlFor="email" className="block text-sm font-semibold text-slate-700 mb-2">Email Address</label>
+              <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="example@example.com" className="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all" />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-semibold text-gray-900 mb-2">Password</label>
-              <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your Password" className="w-full px-4 py-3 rounded-lg bg-[#E8F4F8] border-0 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#006795]" />
+              <label htmlFor="password" className="block text-sm font-semibold text-slate-700 mb-2">Password</label>
+              <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your Password" className="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all" />
             </div>
 
             <div className="flex items-center justify-between">
               <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} className="w-4 h-4 rounded border-gray-300 text-[#006795] focus:ring-[#006795]" />
-                <span className="text-sm text-gray-700">Remember Me</span>
+                <input type="checkbox" checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} className="w-4 h-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" />
+                <span className="text-sm text-slate-600 font-medium">Remember Me</span>
               </label>
-              <button type="button" onClick={() => router.push('/forgot-password')} className="text-sm text-[#006795] hover:underline font-medium bg-transparent border-0 cursor-pointer">Forgot Password?</button>
+              <button type="button" onClick={() => router.push('/forgot-password')} className="text-sm text-indigo-600 hover:text-indigo-800 hover:underline font-semibold bg-transparent border-0 cursor-pointer">Forgot Password?</button>
             </div>
 
-            <Button type="submit" disabled={isLoading} className="w-full bg-[#006795] hover:bg-[#006795]/90 text-white rounded-lg py-6 font-semibold text-base disabled:opacity-50">
+            <Button type="submit" disabled={isLoading} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg py-6 font-bold text-base disabled:opacity-50 shadow-md transition-all duration-205">
               {isLoading ? "Logging in..." : "Log In"}
             </Button>
           </form>
@@ -194,17 +194,17 @@ export default function OtherLogin() {
             />
           </div>
 
-          <p className="text-center text-sm text-gray-600 mt-6">
+          <p className="text-center text-sm text-slate-500 mt-6">
             Don't have an account?{" "}
-            <button onClick={() => router.push('/other/signup')} className="text-[#006795] hover:underline font-semibold bg-transparent border-0 cursor-pointer">Sign Up</button>
+            <button onClick={() => router.push('/other/signup')} className="text-indigo-600 hover:text-indigo-800 hover:underline font-bold bg-transparent border-0 cursor-pointer">Sign Up</button>
           </p>
 
-          <p className="text-center text-sm text-gray-600 mt-4">
-            <button onClick={() => router.push('/profile-selection')} className="text-[#006795] hover:underline font-semibold bg-transparent border-0 cursor-pointer">Back to Portal Selection</button>
+          <p className="text-center text-sm text-slate-500 mt-3">
+            <button onClick={() => router.push('/profile-selection')} className="text-slate-500 hover:text-slate-800 hover:underline font-semibold bg-transparent border-0 cursor-pointer">Back to Portal Selection</button>
           </p>
 
-          <p className="text-center text-xs text-gray-500 mt-6">
-            By signing up, you agree to our <a href="/terms" className="text-gray-700 hover:underline font-medium">Terms of Service</a> and <a href="/privacy" className="text-gray-700 hover:underline font-medium">Privacy Policy</a>.
+          <p className="text-center text-xs text-slate-400 mt-6 leading-relaxed">
+            By signing up, you agree to our <a href="/terms" className="text-slate-500 hover:text-slate-700 hover:underline font-medium">Terms of Service</a> and <a href="/privacy" className="text-slate-500 hover:text-slate-700 hover:underline font-medium">Privacy Policy</a>.
           </p>
         </div>
       </div>

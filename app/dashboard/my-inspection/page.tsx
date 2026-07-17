@@ -11,6 +11,8 @@ import { UnitSelectionModal } from "@/components/UnitSelectionModal"
 import { ActionModal, EditPropertyModal } from "@/components/PropertyModals"
 import { Country, State, City } from 'country-state-city'
 
+import { Info, Search, MoreVertical, Globe, MapPin, Building, CreditCard } from "lucide-react"
+
 export default function MyInspection() {
   const router = useRouter()
   const [propertyName, setPropertyName] = useState("")
@@ -153,141 +155,165 @@ export default function MyInspection() {
 
   return (
     <DashboardLayout>
-      <div className="min-h-screen bg-[#E8F4F8] p-3 sm:p-4 md:p-6 text-black">
-        <div className="max-w-7xl mx-auto mb-6">
-          <div className="bg-white rounded-lg shadow-sm p-4 flex items-start gap-3 border-l-4 border-[#0D7FA8]">
-            <svg className="w-6 h-6 text-[#0D7FA8] flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-            </svg>
+      <div className="min-h-screen bg-slate-50 p-4 sm:p-6 lg:p-8 text-slate-900 font-lexend space-y-6">
+        {/* Info Banner */}
+        <div className="max-w-7xl mx-auto">
+          <div className="bg-gradient-to-r from-teal-50/50 to-slate-50/30 border border-slate-200/80 border-l-4 border-l-teal-600 rounded-2xl shadow-sm p-5 flex items-start gap-3">
+            <Info className="w-5 h-5 text-teal-600 flex-shrink-0 mt-0.5" />
             <div className="flex-1">
-              <p className="text-sm text-gray-700">
-                <span className="font-semibold">You can manage properties, buildings, and units here. To perform inspections, please use the INSPIRE app in the tablet.</span>
+              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
+                You can manage properties, buildings, and units here. To perform inspections, please use the <span className="font-extrabold text-teal-600">INSPIRE app</span> on your tablet device.
               </p>
             </div>
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto">
-          <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Search by Name, City or State</h2>
-
-            <div className="bg-blue-50 border-l-4 border-blue-400 p-3 mb-4 rounded">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <svg className="w-5 h-5 text-blue-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                  </svg>
-                  <p className="text-sm text-blue-700">
-                    Inspector Portal supports: United States, Canada, United Kingdom & Australia
-                  </p>
-                </div>
-              </div>
+        <div className="max-w-7xl mx-auto space-y-6">
+          {/* Header & Action bar */}
+          <div className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">Your Properties</h1>
+              <p className="text-slate-500 text-xs sm:text-sm font-medium mt-0.5">Search and view current inspection properties</p>
             </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-4">
-              <input
-                type="text"
-                placeholder="Property Name"
-                value={propertyName}
-                onChange={(e) => setPropertyName(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0D7FA8] text-sm text-black"
-              />
-
-              <input
-                type="text"
-                placeholder="Enter Country"
-                value={selectedCountry}
-                onChange={(e) => setSelectedCountry(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0D7FA8] text-sm bg-white text-black"
-              />
-
-              <input
-                type="text"
-                placeholder="Enter State"
-                value={selectedState}
-                onChange={(e) => setSelectedState(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0D7FA8] text-sm bg-white text-black"
-              />
-
-              <input
-                type="text"
-                placeholder="Enter City"
-                value={selectedCity}
-                onChange={(e) => setSelectedCity(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0D7FA8] text-sm bg-white text-black"
-              />
-
-              <button
-                onClick={handleSearch}
-                className="px-6 py-2 bg-[#0D7FA8] hover:bg-[#0A5F7F] text-white font-semibold rounded-lg transition-colors text-sm">
-                Search
-              </button>
-            </div>
-
-            <div className="flex justify-end">
-              <button
+            <div className="flex items-center gap-3">
+              <Button
                 onClick={() => setUnitSelectionOpen(true)}
-                className="px-6 py-2 bg-[#22C55E] hover:bg-[#16A34A] text-white font-semibold rounded-lg transition-colors text-sm"
+                className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-6 rounded-xl transition-all border-0 shadow-sm shadow-emerald-600/10 text-xs sm:text-sm"
               >
                 Select Units for Inspection
-              </button>
+              </Button>
             </div>
           </div>
 
-          <Card className="bg-white rounded-lg shadow-sm overflow-hidden">
-            <div className="p-4 border-b border-gray-100 flex justify-between items-center bg-[#F8FAFC]">
-              <h3 className="text-lg font-bold text-gray-900">Your Properties</h3>
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-black text-gray-400 uppercase tracking-widest">{properties.length} properties</span>
+          {/* Search section */}
+          <div className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm space-y-5">
+            <div className="flex items-center gap-2 pb-3 border-b border-slate-100">
+              <Search className="w-4 h-4 text-teal-600" />
+              <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider">Search Filters</h2>
+            </div>
+
+            <div className="bg-teal-50/40 border border-teal-100/70 p-4 rounded-xl flex items-start gap-2.5">
+              <Globe className="w-4 h-4 text-teal-600 flex-shrink-0 mt-0.5" />
+              <p className="text-xs text-teal-800 font-bold leading-normal">
+                Inspector Portal supports addresses within the United States, Canada, United Kingdom, and Australia.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Property Name</label>
+                <input
+                  type="text"
+                  placeholder="e.g. Oakridge Apts"
+                  value={propertyName}
+                  onChange={(e) => setPropertyName(e.target.value)}
+                  className="w-full px-3.5 py-2 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Country</label>
+                <input
+                  type="text"
+                  placeholder="e.g. US"
+                  value={selectedCountry}
+                  onChange={(e) => setSelectedCountry(e.target.value)}
+                  className="w-full px-3.5 py-2 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">State</label>
+                <input
+                  type="text"
+                  placeholder="e.g. California"
+                  value={selectedState}
+                  onChange={(e) => setSelectedState(e.target.value)}
+                  className="w-full px-3.5 py-2 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">City</label>
+                <input
+                  type="text"
+                  placeholder="e.g. Los Angeles"
+                  value={selectedCity}
+                  onChange={(e) => setSelectedCity(e.target.value)}
+                  className="w-full px-3.5 py-2 border border-slate-200 bg-slate-50/50 hover:bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 text-sm font-medium text-slate-800 transition-all"
+                />
+              </div>
+
+              <div className="flex items-end">
+                <Button
+                  onClick={handleSearch}
+                  className="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-2.5 rounded-xl transition-all border-0 shadow-sm shadow-teal-600/10 text-xs sm:text-sm"
+                >
+                  <Search className="w-4 h-4 mr-1.5 inline" /> Search
+                </Button>
               </div>
             </div>
+          </div>
+
+          {/* Properties Table Card */}
+          <Card className="bg-white border border-slate-200/80 rounded-2xl overflow-hidden shadow-sm">
+            <div className="p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/80">
+              <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider">Property Directory</h3>
+              <span className="text-xs font-bold text-teal-600 bg-teal-50 border border-teal-100/60 px-3 py-1 rounded-lg">
+                {properties.length} Active {properties.length === 1 ? 'Property' : 'Properties'}
+              </span>
+            </div>
+            
             <div className="overflow-x-auto">
               {loading ? (
-                <div className="p-8 text-center text-gray-500">Loading properties...</div>
+                <div className="p-12 text-center text-slate-400 font-bold text-sm">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600 mx-auto mb-3"></div>
+                  Loading properties...
+                </div>
               ) : properties.length === 0 ? (
-                <div className="p-8 text-center text-gray-500">No properties found.</div>
+                <div className="p-12 text-center text-slate-400 font-bold text-sm">
+                  No properties found matching the criteria.
+                </div>
               ) : (
                 <table className="w-full">
-                  <thead className="bg-[#F8FAFC] border-b">
+                  <thead className="bg-slate-50/50 border-b border-slate-100">
                     <tr>
-                      <th className="text-center py-4 px-6 text-[10px] font-black text-gray-400 uppercase tracking-widest">Property ID</th>
-                      <th className="text-center py-4 px-6 text-[10px] font-black text-gray-400 uppercase tracking-widest">Property Name</th>
-                      <th className="text-center py-4 px-6 text-[10px] font-black text-gray-400 uppercase tracking-widest">Buildings</th>
-                      <th className="text-center py-4 px-6 text-[10px] font-black text-gray-400 uppercase tracking-widest">Units</th>
-                      <th className="text-center py-4 px-6 text-[10px] font-black text-gray-400 uppercase tracking-widest">Address</th>
-                      <th className="text-center py-4 px-6 text-[10px] font-black text-gray-400 uppercase tracking-widest">City</th>
-                      <th className="text-center py-4 px-6 text-[10px] font-black text-gray-400 uppercase tracking-widest">State</th>
-                      <th className="text-center py-4 px-6 text-[10px] font-black text-gray-400 uppercase tracking-widest">Zip Code</th>
-                      <th className="text-center py-4 px-6 text-[10px] font-black text-gray-400 uppercase tracking-widest">Action</th>
+                      <th className="py-4 px-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest text-center">Property ID</th>
+                      <th className="py-4 px-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest text-center">Name</th>
+                      <th className="py-4 px-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest text-center">Buildings</th>
+                      <th className="py-4 px-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest text-center">Units</th>
+                      <th className="py-4 px-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest text-center">Address</th>
+                      <th className="py-4 px-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest text-center">City</th>
+                      <th className="py-4 px-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest text-center">State</th>
+                      <th className="py-4 px-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest text-center">Zip Code</th>
+                      <th className="py-4 px-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest text-center">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-50">
+                  <tbody className="divide-y divide-slate-100">
                     {properties.map((property) => (
-                      <tr key={property._id} className="hover:bg-gray-50/50 transition-colors">
-                        <td className="py-5 px-6 text-center">
-                          <span className="bg-cyan-50 text-[#006795] font-black px-3 py-1.5 rounded-lg text-xs shadow-sm border border-cyan-100/50 inline-block">
-                            {property.propertyId}
+                      <tr key={property._id} className="hover:bg-slate-50/30 transition-colors">
+                        <td className="py-4 px-6 text-center">
+                          <span className="bg-teal-50 text-teal-700 font-extrabold px-3 py-1.5 rounded-xl text-xs border border-teal-100/50 inline-block shadow-sm">
+                            {property.propertyId || property._id?.slice(-8)?.toUpperCase()}
                           </span>
                         </td>
-                        <td className="py-5 px-6 font-bold text-sm text-gray-900 text-center">{property.name}</td>
-                        <td className="py-5 px-6 text-center font-black text-gray-900 text-sm">{property.buildings || 1}</td>
-                        <td className="py-5 px-6 text-center font-black text-gray-900 text-sm">{property.units || 1}</td>
-                        <td className="py-5 px-6 font-bold text-xs text-gray-500 max-w-[150px] truncate text-center">{property.address}</td>
-                        <td className="py-5 px-6 font-bold text-xs text-gray-900 text-center">{property.city}</td>
-                        <td className="py-5 px-6 text-center">
-                          <span className="bg-green-50 text-green-700 px-2 py-1 rounded-md text-[10px] font-black uppercase tracking-tight">
+                        <td className="py-4 px-6 font-extrabold text-sm text-slate-900 text-center">{property.name}</td>
+                        <td className="py-4 px-6 text-center font-bold text-slate-700 text-sm">{property.buildings || 1}</td>
+                        <td className="py-4 px-6 text-center font-bold text-slate-700 text-sm">{property.units || 1}</td>
+                        <td className="py-4 px-6 font-bold text-xs text-slate-500 max-w-[150px] truncate text-center" title={property.address}>{property.address}</td>
+                        <td className="py-4 px-6 font-bold text-xs text-slate-700 text-center">{property.city}</td>
+                        <td className="py-4 px-6 text-center">
+                          <span className="bg-emerald-50 text-emerald-700 border border-emerald-100 px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider">
                             {property.state}
                           </span>
                         </td>
-                        <td className="py-5 px-6 font-bold text-xs text-gray-500 text-center">{property.zipCode}</td>
-                        <td className="py-5 px-6 text-center">
+                        <td className="py-4 px-6 font-bold text-xs text-slate-500 text-center">{property.zipCode}</td>
+                        <td className="py-4 px-6 text-center">
                           <button
                             onClick={() => handleActionClick(property)}
-                            className="p-2 hover:bg-gray-100 rounded-xl transition-colors text-gray-400 hover:text-gray-600"
+                            className="p-2 hover:bg-slate-50 rounded-xl transition-all text-slate-400 hover:text-slate-700 border border-transparent hover:border-slate-200"
                           >
-                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                              <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                            </svg>
+                            <MoreVertical className="w-4 h-4" />
                           </button>
                         </td>
                       </tr>

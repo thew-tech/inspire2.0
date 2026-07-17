@@ -85,11 +85,11 @@ export function UnitSelectionModal({ isOpen, onClose, onContinue, totalUnits = 2
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 bg-black flex items-center justify-center z-50 p-3 sm:p-4">
-      <div className="bg-white rounded-2xl p-4 sm:p-6 md:p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto relative">
+    <div className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center z-50 p-3 sm:p-4 font-lexend animate-in fade-in duration-200">
+      <div className="bg-white rounded-2xl p-4 sm:p-6 md:p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto relative border border-slate-200/80 shadow-xl animate-in zoom-in-95 duration-200">
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 sm:top-4 sm:right-4 text-gray-400 hover:text-gray-600 z-10"
+          className="absolute top-3 right-3 sm:top-4 sm:right-4 p-1.5 rounded-lg hover:bg-slate-50 text-slate-400 hover:text-slate-600 border border-transparent hover:border-slate-200 transition-all z-10"
         >
           <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -97,10 +97,10 @@ export function UnitSelectionModal({ isOpen, onClose, onContinue, totalUnits = 2
         </button>
 
         <div className="text-center mb-6">
-          <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-2 pr-8">
+          <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 mb-2 pr-8 tracking-tight">
             Select Units for Inspection
           </h2>
-          <p className="text-gray-500 text-sm">
+          <p className="text-slate-500 text-xs sm:text-sm font-medium">
             Choose the units you want to include in your inspection. You can select individual units or use random selection.
           </p>
         </div>
@@ -109,13 +109,13 @@ export function UnitSelectionModal({ isOpen, onClose, onContinue, totalUnits = 2
         <div className="flex justify-center gap-3 mb-6">
           <Button
             onClick={handleSelectAll}
-            className="bg-[#006795] hover:bg-[#0a5670] text-white px-6 py-2 text-sm rounded-xl font-bold"
+            className="bg-teal-600 hover:bg-teal-700 text-white px-6 py-2.5 text-xs sm:text-sm rounded-xl font-bold border-0 shadow-sm shadow-teal-600/10 transition-colors"
           >
             {allSelected ? "Deselect All" : "Select All"}
           </Button>
           <Button
             onClick={handleRandomSelection}
-            className="bg-[#E05252] hover:bg-[#c04444] text-white px-6 py-2 text-sm rounded-xl font-bold"
+            className="bg-rose-500 hover:bg-rose-600 text-white px-6 py-2.5 text-xs sm:text-sm rounded-xl font-bold border-0 shadow-sm shadow-rose-500/10 transition-colors"
           >
             Random Selection
           </Button>
@@ -123,8 +123,8 @@ export function UnitSelectionModal({ isOpen, onClose, onContinue, totalUnits = 2
 
         {/* Selected Count */}
         <div className="text-center mb-4">
-          <span className="text-sm font-medium text-gray-700">
-            Selected: {selectedUnits.length} of {allUnits.length} units
+          <span className="text-xs sm:text-sm font-bold text-slate-500 uppercase tracking-wider bg-slate-50 border border-slate-100 px-3.5 py-1.5 rounded-lg inline-block">
+            Selected: <span className="text-teal-600 font-extrabold">{selectedUnits.length}</span> of {allUnits.length} units
           </span>
         </div>
 
@@ -135,17 +135,17 @@ export function UnitSelectionModal({ isOpen, onClose, onContinue, totalUnits = 2
               key={unit}
               onClick={() => handleUnitToggle(unit)}
               className={`
-                p-3 rounded-xl border-2 cursor-pointer transition-all text-center text-sm font-semibold select-none
+                p-4 rounded-2xl border cursor-pointer transition-all text-center text-xs sm:text-sm font-bold select-none
                 ${selectedUnits.includes(unit)
-                  ? 'border-[#006795] bg-[#E8F4F8] text-[#006795]'
-                  : 'border-gray-200 bg-white text-gray-600 hover:border-[#006795] hover:bg-[#E8F4F8]'
+                  ? 'border-teal-500 bg-teal-50/40 text-teal-700'
+                  : 'border-slate-100 bg-white text-slate-600 hover:border-teal-500/30 hover:bg-teal-50/10 shadow-sm'
                 }
               `}
             >
               {unit}
               {selectedUnits.includes(unit) && (
-                <div className="mt-1">
-                  <svg className="w-4 h-4 mx-auto text-[#006795]" fill="currentColor" viewBox="0 0 20 20">
+                <div className="mt-1.5 flex justify-center">
+                  <svg className="w-4 h-4 text-teal-600" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                 </div>
@@ -155,11 +155,11 @@ export function UnitSelectionModal({ isOpen, onClose, onContinue, totalUnits = 2
         </div>
 
         {/* Continue Button */}
-        <div className="flex justify-center pt-4">
+        <div className="flex justify-center pt-4 border-t border-slate-100">
           <Button
             onClick={handleContinue}
             disabled={selectedUnits.length === 0}
-            className="w-full sm:w-auto px-8 sm:px-16 py-3 bg-[#006795] hover:bg-[#0a5670] text-white font-semibold rounded-xl text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full sm:w-auto px-10 sm:px-16 py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl text-sm disabled:opacity-50 disabled:cursor-not-allowed border-0 shadow-md shadow-teal-600/10 transition-all"
           >
             Continue with {selectedUnits.length} Unit{selectedUnits.length !== 1 ? 's' : ''}
           </Button>

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Lexend:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @custom-variant dark (&:is(.dark *));
@@ -75,7 +77,10 @@
 }
 
 @theme inline {
-  --font-sans: "Geist", "Geist Fallback";
+  --font-inter: "Inter", sans-serif;
+  --font-outfit: "Outfit", sans-serif;
+  --font-lexend: "Lexend", sans-serif;
+  --font-sans: "Inter", "Geist", "Geist Fallback";
   --font-mono: "Geist Mono", "Geist Mono Fallback";
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -158,3 +163,189 @@
     z-index: 2147483647; /* very high - helps native pickers in some Safari edge-cases */
   }
 }
+
+        :root {
+            --primary: #006795;
+            --primary-dark: #004d70;
+            --accent: #F84B5F;
+            --bg-color: #E8F4F8;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1E293B;
+            overflow-x: hidden;
+            background-color: var(--bg-color);
+        }
+        h1, h2, h3, .serif {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* Premium Nav */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+        }
+        .nav-item-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 0.75rem;
+            position: relative;
+            cursor: pointer;
+        }
+        .nav-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #334155;
+            transition: color 0.3s ease;
+            letter-spacing: 0.05em;
+        }
+        .nav-subtitle {
+            font-size: 0.65rem;
+            font-style: italic;
+            color: #94A3B8;
+            letter-spacing: 0.05em;
+            transition: color 0.3s ease;
+        }
+        .nav-item-container:hover .nav-title {
+            color: var(--primary);
+        }
+        .nav-item-container:hover .nav-subtitle {
+            color: var(--accent);
+        }
+
+        /* Premium Dropdown */
+        .dropdown-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(15px) translateX(-50%);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 1.25rem;
+            box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            min-width: 260px;
+            padding: 0.75rem 0;
+        }
+        .nav-item-container.has-dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(5px) translateX(-50%);
+        }
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #475569;
+            transition: all 0.3s ease;
+        }
+        .dropdown-item:hover {
+            background-color: rgba(243, 244, 246, 0.8);
+            color: var(--primary);
+            padding-left: 1.75rem;
+        }
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 12px;
+            box-shadow: 0 0 8px currentColor;
+            opacity: 0.8;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 103, 149, 0.3);
+        }
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 103, 149, 0.4);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+        .btn-outline:hover {
+            background-color: rgba(0, 103, 149, 0.05);
+            transform: translateY(-2px);
+        }
+
+        /* Floating Image */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* 3D Flip Card */
+        .flip-card {
+            perspective: 1000px;
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 700px; /* Increased height */
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* Moving Background */
+        @keyframes kenBurns {
+            0% { opacity: 0; transform: scale(1.1); }
+            10% { opacity: 1; transform: scale(1.05); }
+            25% { opacity: 1; transform: scale(1.025); }
+            33% { opacity: 0; transform: scale(1); }
+            100% { opacity: 0; transform: scale(1.1); }
+        }
+        .bg-slide {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            animation: kenBurns 18s infinite;
+        }
+        .bg-slide:nth-child(1) { background-image: url('/family_housing_complex.png'); animation-delay: 0s; }
+        .bg-slide:nth-child(2) { background-image: url('/multi_unit_housing.png'); animation-delay: 6s; }
+        .bg-slide:nth-child(3) { background-image: url('/plaza_shops.png'); animation-delay: 12s; }
+    
