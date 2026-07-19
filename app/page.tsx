@@ -6,13 +6,23 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { UnitSelectionModal } from "@/components/UnitSelectionModal";
 
+
+
 export default function Home() {
   const router = useRouter();
   const [unitSelectionOpen, setUnitSelectionOpen] = useState(false);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
 
   useEffect(() => {
     document.body.style.overflowX = 'hidden';
-  }, []);
+    if (mobileNavOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => { document.body.style.overflow = 'unset'; };
+  }, [mobileNavOpen]);
 
   const handleGetStarted = () => {
     setUnitSelectionOpen(true);
@@ -49,80 +59,102 @@ export default function Home() {
             <div className="flex justify-between items-center py-2 lg:py-3">
                 {/* Logo */}
                 <div className="flex-shrink-0 flex items-center relative z-20">
-                    <img src="logo.jpeg" alt="Nspire App Logo" className="h-16 md:h-20 w-auto rounded object-contain mix-blend-multiply" />
+                    <img src="logo.jpeg" alt="Nspire App Logo" className="h-14 sm:h-16 md:h-20 w-auto rounded object-contain mix-blend-multiply" />
                 </div>
-                
+
                 {/* Desktop Menu */}
                 <div className="hidden lg:flex items-center space-x-8">
                     <a href="#" className="nav-item-container">
                         <span className="nav-title">HOME</span>
                         <span className="nav-subtitle">Welcome</span>
                     </a>
-                    
                     <div className="nav-item-container has-dropdown">
                         <span className="nav-title flex items-center">
-                            SERVICES 
-                            <svg className="w-3.5 h-3.5 ml-1.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                            SERVICES
+                            <svg className="w-3.5 h-3.5 ml-1.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" /></svg>
                         </span>
                         <span className="nav-subtitle">Professional Solutions</span>
-                        
-                        {/* Dropdown Menu */}
                         <div className="dropdown-menu">
-                            <a href="#services" className="dropdown-item">
-                                <span className="dot text-primary"></span> All Services
-                            </a>
-                            <a href="#services" className="dropdown-item">
-                                <span className="dot text-cyan-600"></span> Buyers Inspections
-                            </a>
-                            <a href="#services" className="dropdown-item">
-                                <span className="dot text-rose-500"></span> Owners Inspections
-                            </a>
-                            <a href="#services" className="dropdown-item">
-                                <span className="dot text-orange-500"></span> Sellers Inspections
-                            </a>
-                            <a href="#services" className="dropdown-item">
-                                <span className="dot text-emerald-500"></span> Rental Inspections
-                            </a>
-                            <a href="#services" className="dropdown-item">
-                                <span className="dot text-green-500"></span> Specialized Services
-                            </a>
-                            <a href="#services" className="dropdown-item">
-                                <span className="dot text-amber-500"></span> Commercial Inspections
-                            </a>
-                            <a href="#services" className="dropdown-item">
-                                <span className="dot text-purple-500"></span> Public Housing
-                            </a>
-                            <a href="#services" className="dropdown-item">
-                                <span className="dot text-red-600"></span> Insurance Risk
-                            </a>
+                            <a href="#services" className="dropdown-item"><span className="dot text-primary"></span> All Services</a>
+                            <a href="#services" className="dropdown-item"><span className="dot text-cyan-600"></span> Buyers Inspections</a>
+                            <a href="#services" className="dropdown-item"><span className="dot text-rose-500"></span> Owners Inspections</a>
+                            <a href="#services" className="dropdown-item"><span className="dot text-orange-500"></span> Sellers Inspections</a>
+                            <a href="#services" className="dropdown-item"><span className="dot text-emerald-500"></span> Rental Inspections</a>
+                            <a href="#services" className="dropdown-item"><span className="dot text-green-500"></span> Specialized Services</a>
+                            <a href="#services" className="dropdown-item"><span className="dot text-amber-500"></span> Commercial Inspections</a>
+                            <a href="#services" className="dropdown-item"><span className="dot text-purple-500"></span> Public Housing</a>
+                            <a href="#services" className="dropdown-item"><span className="dot text-red-600"></span> Insurance Risk</a>
                         </div>
                     </div>
-                    
-                    <a href="#about" className="nav-item-container">
-                        <span className="nav-title">ABOUT</span>
-                        <span className="nav-subtitle">Our Story</span>
-                    </a>
-                    
-                    <a href="#contact" className="nav-item-container">
-                        <span className="nav-title">CONTACT</span>
-                        <span className="nav-subtitle">Get in Touch</span>
-                    </a>
-                    
-                    <a href="#education" className="nav-item-container">
-                        <span className="nav-title">EDUCATION & TRAINING</span>
-                        <span className="nav-subtitle">NSPIRE Videos</span>
-                    </a>
-                    
-                    <a href="#blogs" className="nav-item-container">
-                        <span className="nav-title">BLOGS</span>
-                        <span className="nav-subtitle">AI-Driven Inspection</span>
-                    </a>
+                    <a href="#about" className="nav-item-container"><span className="nav-title">ABOUT</span><span className="nav-subtitle">Our Story</span></a>
+                    <a href="#contact" className="nav-item-container"><span className="nav-title">CONTACT</span><span className="nav-subtitle">Get in Touch</span></a>
+                    <a href="#education" className="nav-item-container"><span className="nav-title">EDUCATION & TRAINING</span><span className="nav-subtitle">NSPIRE Videos</span></a>
+                    <a href="#blogs" className="nav-item-container"><span className="nav-title">BLOGS</span><span className="nav-subtitle">AI-Driven Inspection</span></a>
                 </div>
-                
-                {/* Action Button */}
-                <div className="hidden md:flex items-center relative z-20">
-                    <button onClick={() => router.push('/profile-selection')} className="btn-primary px-7 py-3 rounded-full text-sm font-bold tracking-wide flex items-center">
-                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+
+                {/* Right side: Login btn (desktop) + Hamburger (mobile) */}
+                <div className="flex items-center gap-3">
+                    <button onClick={() => router.push('/profile-selection')} className="hidden md:flex btn-primary px-5 lg:px-7 py-2.5 lg:py-3 rounded-full text-sm font-bold tracking-wide items-center gap-2">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                        Login / Register
+                    </button>
+                    {/* Hamburger - mobile/tablet only */}
+                    <button
+                        onClick={() => setMobileNavOpen(!mobileNavOpen)}
+                        className="lg:hidden flex flex-col gap-1.5 p-2 z-50 relative"
+                        aria-label="Toggle menu"
+                    >
+                        <span className={`w-6 h-0.5 bg-gray-800 transition-all duration-300 ${mobileNavOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
+                        <span className={`w-6 h-0.5 bg-gray-800 transition-all duration-300 ${mobileNavOpen ? 'opacity-0' : ''}`}></span>
+                        <span className={`w-6 h-0.5 bg-gray-800 transition-all duration-300 ${mobileNavOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        {/* Mobile Overlay */}
+        {mobileNavOpen && (
+            <div className="lg:hidden fixed inset-0 bg-black/50 z-30" onClick={() => setMobileNavOpen(false)} />
+        )}
+
+        {/* Mobile Drawer */}
+        <div className={`lg:hidden fixed top-0 left-0 h-full w-72 bg-white z-40 transform transition-transform duration-300 ease-in-out shadow-2xl ${ mobileNavOpen ? 'translate-x-0' : '-translate-x-full' }`}>
+            <div className="flex flex-col h-full overflow-y-auto">
+                <div className="p-5 border-b border-gray-100 flex items-center justify-between">
+                    <img src="logo.jpeg" alt="Nspire" className="h-12 w-auto rounded object-contain mix-blend-multiply" />
+                    <button onClick={() => setMobileNavOpen(false)} className="p-2 rounded-lg hover:bg-gray-100">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                </div>
+                <div className="flex flex-col gap-1 p-4">
+                    <a href="#" onClick={() => setMobileNavOpen(false)} className="flex flex-col px-4 py-3 rounded-xl hover:bg-[#E8F4F8] transition-colors">
+                        <span className="font-bold text-gray-800 text-sm">HOME</span>
+                        <span className="text-[11px] text-gray-400 italic">Welcome</span>
+                    </a>
+                    <div>
+                        <button onClick={() => setMobileServicesOpen(!mobileServicesOpen)} className="w-full flex items-center justify-between px-4 py-3 rounded-xl hover:bg-[#E8F4F8] transition-colors">
+                            <div className="flex flex-col text-left">
+                                <span className="font-bold text-gray-800 text-sm">SERVICES</span>
+                                <span className="text-[11px] text-gray-400 italic">Professional Solutions</span>
+                            </div>
+                            <svg className={`w-4 h-4 text-gray-500 transition-transform ${mobileServicesOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                        </button>
+                        {mobileServicesOpen && (
+                            <div className="pl-6 pb-2 space-y-1">
+                                {['All Services','Buyers Inspections','Owners Inspections','Sellers Inspections','Rental Inspections','Specialized Services','Commercial Inspections','Public Housing','Insurance Risk'].map(s => (
+                                    <a key={s} href="#services" onClick={() => setMobileNavOpen(false)} className="block px-3 py-2 text-sm text-gray-600 hover:text-[#006795] rounded-lg hover:bg-[#E8F4F8]">{s}</a>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                    <a href="#about" onClick={() => setMobileNavOpen(false)} className="flex flex-col px-4 py-3 rounded-xl hover:bg-[#E8F4F8] transition-colors"><span className="font-bold text-gray-800 text-sm">ABOUT</span><span className="text-[11px] text-gray-400 italic">Our Story</span></a>
+                    <a href="#contact" onClick={() => setMobileNavOpen(false)} className="flex flex-col px-4 py-3 rounded-xl hover:bg-[#E8F4F8] transition-colors"><span className="font-bold text-gray-800 text-sm">CONTACT</span><span className="text-[11px] text-gray-400 italic">Get in Touch</span></a>
+                    <a href="#education" onClick={() => setMobileNavOpen(false)} className="flex flex-col px-4 py-3 rounded-xl hover:bg-[#E8F4F8] transition-colors"><span className="font-bold text-gray-800 text-sm">EDUCATION & TRAINING</span><span className="text-[11px] text-gray-400 italic">NSPIRE Videos</span></a>
+                    <a href="#blogs" onClick={() => setMobileNavOpen(false)} className="flex flex-col px-4 py-3 rounded-xl hover:bg-[#E8F4F8] transition-colors"><span className="font-bold text-gray-800 text-sm">BLOGS</span><span className="text-[11px] text-gray-400 italic">AI-Driven Inspection</span></a>
+                </div>
+                <div className="p-4 mt-auto border-t border-gray-100">
+                    <button onClick={() => { setMobileNavOpen(false); router.push('/profile-selection'); }} className="w-full btn-primary rounded-xl py-4 text-sm font-bold flex items-center justify-center gap-2">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                         Login / Register
                     </button>
                 </div>
@@ -131,78 +163,64 @@ export default function Home() {
     </nav>
 
     {/* Hero Section */}
-    <section className="relative pt-40 pb-20 lg:pt-52 lg:pb-32 z-10 min-h-screen flex items-center">
+    <section className="relative pt-28 sm:pt-36 lg:pt-52 pb-16 lg:pb-32 z-10 min-h-screen flex items-center">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative w-full">
-            <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8">
-                
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-8">
+
                 {/* Hero Content */}
                 <div className="flex-1 w-full lg:max-w-[650px] text-left relative z-20">
-                    
-                    <h1 className="text-[2.75rem] sm:text-5xl md:text-6xl lg:text-[4.5rem] font-bold text-gray-900 mb-4 leading-[1.1] serif tracking-tight">
-                        Trusted and Certified <br />
-                        Multi-Unit <br />
-                        Inspections <br />
-                        <span className="text-[#F84B5F] italic font-bold">Across the NATION</span>
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[4rem] xl:text-[4.5rem] font-bold text-gray-900 mb-4 leading-[1.15] serif tracking-tight">
+                        Trusted and Certified
+                        <span className="block">Multi-Unit Inspections</span>
+                        <span className="text-[#F84B5F] italic font-bold block">Across the NATION</span>
                     </h1>
-                    
-                    <p className="text-gray-700 mb-8 leading-relaxed text-sm md:text-base max-w-xl font-medium mt-6">
-                        NSPIREinspection.AI stands at the forefront of the multi-unit inspection industry, offering multi-unit property inspections and advanced risk-mitigation solutions. Whether you are a first-time investor or a seasoned property manager, NSPIREinspection.AI provides professional and comprehensive PDF reports and Excel worksheets.
+                    <p className="text-gray-700 mb-6 leading-relaxed text-sm md:text-base max-w-xl font-medium">
+                        NSPIREinspection.AI stands at the forefront of the multi-unit inspection industry, offering multi-unit property inspections and advanced risk-mitigation solutions.
                     </p>
-                    
-                    <div className="flex flex-col sm:flex-row justify-start gap-4 mb-12">
-                        <button  className="btn-primary px-8 py-3.5 rounded-full text-sm md:text-base font-semibold min-w-[160px]">
+                    <div className="flex flex-col sm:flex-row justify-start gap-3 mb-8">
+                        <button onClick={handleGetStarted} className="btn-primary px-7 py-3.5 rounded-full text-sm md:text-base font-semibold">
                             Get Started
                         </button>
-                        <button  className="btn-outline px-8 py-3.5 rounded-full text-sm md:text-base font-semibold min-w-[160px]">
+                        <button onClick={() => router.push('/find-inspectors')} className="btn-outline px-7 py-3.5 rounded-full text-sm md:text-base font-semibold">
                             View Inspectors
                         </button>
                     </div>
-
-                    {/* App Download & QRs */}
-                    <div className="pt-6 border-t border-gray-300/50 inline-block">
-                        <h3 className="text-xl font-bold text-gray-900 mb-6">Download your app</h3>
-                        <div className="flex flex-wrap gap-8 items-start">
-                            {/* App Store */}
-                            <div className="flex flex-col items-center gap-3">
-                                <a href="#"  className="hover:opacity-80 transition-opacity">
-                                    <img src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg" alt="Download on the App Store" className="h-10" />
-                                </a>
-                                <div className="bg-white p-2 rounded-lg shadow-sm border border-gray-200">
-                                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://apps.apple.com/app/nspire" alt="iOS QR Code" className="w-24 h-24" />
+                    {/* App Download */}
+                    <div className="pt-5 border-t border-gray-300/50">
+                        <h3 className="text-base font-bold text-gray-900 mb-4">Download your app</h3>
+                        <div className="flex flex-wrap gap-5 items-start">
+                            <div className="flex flex-col items-center gap-2">
+                                <a href="#" className="hover:opacity-80 transition-opacity"><img src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg" alt="App Store" className="h-9" /></a>
+                                <div className="bg-white p-1.5 rounded-lg shadow-sm border border-gray-200">
+                                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=https://apps.apple.com/app/nspire" alt="iOS QR" className="w-16 h-16 sm:w-20 sm:h-20" />
                                 </div>
-                                <span className="text-xs text-gray-600 font-medium">Scan to Download (iOS)</span>
+                                <span className="text-[10px] text-gray-500 font-medium">Scan (iOS)</span>
                             </div>
-                            
-                            {/* Google Play */}
-                            <div className="flex flex-col items-center gap-3">
-                                <a href="#"  className="hover:opacity-80 transition-opacity">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" className="h-10" />
-                                </a>
-                                <div className="bg-white p-2 rounded-lg shadow-sm border border-gray-200">
-                                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://play.google.com/store/apps/details?id=nspire" alt="Android QR Code" className="w-24 h-24" />
+                            <div className="flex flex-col items-center gap-2">
+                                <a href="#" className="hover:opacity-80 transition-opacity"><img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play" className="h-9" /></a>
+                                <div className="bg-white p-1.5 rounded-lg shadow-sm border border-gray-200">
+                                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=https://play.google.com/store/apps/details?id=nspire" alt="Android QR" className="w-16 h-16 sm:w-20 sm:h-20" />
                                 </div>
-                                <span className="text-xs text-gray-600 font-medium">Scan to Download (Android)</span>
+                                <span className="text-[10px] text-gray-500 font-medium">Scan (Android)</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                {/* Hero Image (Flip Card) */}
-                <div className="flex-1 w-full flex justify-center lg:justify-end relative z-20 self-center lg:-mt-12 -mt-6">
+
+                {/* Hero Flip Card — hidden on small phones, visible sm+ */}
+                <div className="hidden sm:flex flex-1 w-full justify-center lg:justify-end relative z-20 self-center">
                     <div className="flip-card animate-float">
                         <div className="flip-card-inner">
-                            {/* Front: Shield/National Standard */}
                             <div className="flip-card-front">
                                 <img src="nationalstandard.png" alt="Trust Shield" className="w-full h-auto object-contain drop-shadow-[0_25px_35px_rgba(0,0,0,0.25)]" />
                             </div>
-                            {/* Back: Mobile App */}
                             <div className="flip-card-back">
                                 <img src="hero.png" alt="Mobile App" className="w-full h-auto object-contain drop-shadow-[0_25px_35px_rgba(0,0,0,0.25)]" />
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </section>

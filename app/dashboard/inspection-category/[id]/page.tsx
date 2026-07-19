@@ -208,6 +208,8 @@ export default function InspectionCategoryPage() {
     const generalGalleryInputRef = useRef<HTMLInputElement>(null);
     const [modalStep, setModalStep] = useState(1); // 1: Add New, 2: Form, 3: Selection (Selected/Detail/Criteria)
     const [isHowToInspectOpen, setIsHowToInspectOpen] = useState(false);
+    const [isStandardModalOpen, setIsStandardModalOpen] = useState(false);
+    const [isInspectionProtocolModalOpen, setIsInspectionProtocolModalOpen] = useState(false);
     const [currentModalItem, setCurrentModalItem] = useState<string | null>(null);
     const [selectionType, setSelectionType] = useState<'selected' | 'detail' | 'criteria'>('selected');
     const [selectedDeficiency, setSelectedDeficiency] = useState<DeficiencyDetail | null>(null);
@@ -1644,11 +1646,27 @@ export default function InspectionCategoryPage() {
                 {/* Sections */}
                 {['outside', 'inside', 'unit'].map((sec) => (
                     <div key={sec} className="mb-6 border border-blue-100/50 rounded-lg overflow-hidden shadow-sm">
-                        <div className="w-full bg-[#EBF5FF] p-4 flex items-center justify-between transition-colors text-left font-black">
+                        <button
+                            className="w-full bg-[#EBF5FF] p-4 flex items-center justify-between transition-colors text-left font-black hover:bg-[#dceeff] active:bg-[#cce3f8] cursor-pointer"
+                            onClick={() => {
+                                if (sec === 'unit' && !activeInspectionUnit) {
+                                    setUnitSelectionPopupOpen(true)
+                                } else {
+                                    setExpandedSection(expandedSection === sec ? null : sec)
+                                }
+                            }}
+                        >
                             <div className="flex-1">
-                                <p className="text-sm text-[#006795] mb-1 uppercase tracking-tight">
-                                    {sec === 'outside' ? 'Outside (Areas affected by Rain, Snow, Wind)' : sec === 'inside' ? 'Inside (Interior Common area, Utility closet, Mechanical rooms)' : 'Units (Individual unit inspections)'}
-                                </p>
+                                <div className="flex items-center gap-2 mb-1">
+                                    <p className="text-sm text-[#006795] uppercase tracking-tight">
+                                        {sec === 'outside' ? 'Outside (Areas affected by Rain, Snow, Wind)' : sec === 'inside' ? 'Inside (Interior Common area, Utility closet, Mechanical rooms)' : 'Units (Individual unit inspections)'}
+                                    </p>
+                                    {/* Folder link indicator */}
+                                    <span className="flex-shrink-0 inline-flex items-center gap-1 text-[10px] font-bold text-white bg-[#006795] px-2 py-0.5 rounded-full shadow-sm">
+                                        <ChevronRight className="w-3 h-3" />
+                                        {sec === 'unit' && !activeInspectionUnit ? 'Select' : expandedSection === sec ? 'Open' : 'Open'}
+                                    </span>
+                                </div>
                                 <div className="flex items-center gap-4 mb-2 text-[#006795]">
                                     <p className="text-[11px]">({sec === 'outside' ? outsideProgress.completed : sec === 'inside' ? insideProgress.completed : unitProgress.completed}/{sec === 'outside' ? outsideItemsList.length : sec === 'inside' ? insideItemsList.length : unitProgress.total})</p>
                                     <p className="text-[11px]">{sec === 'outside' ? outsideProgress.percentage : sec === 'inside' ? insideProgress.percentage : unitProgress.percentage}% Completed</p>
@@ -1657,20 +1675,10 @@ export default function InspectionCategoryPage() {
                                     <div className="h-full bg-[#006795] transition-all duration-500" style={{ width: `${sec === 'outside' ? outsideProgress.percentage : sec === 'inside' ? insideProgress.percentage : unitProgress.percentage}%` }}></div>
                                 </div>
                             </div>
-                            <button
-                                onClick={() => {
-                                    if (sec === 'unit' && !activeInspectionUnit) {
-                                        // If no unit selected yet, open the unit selection popup
-                                        setUnitSelectionPopupOpen(true)
-                                    } else {
-                                        setExpandedSection(expandedSection === sec ? null : sec)
-                                    }
-                                }}
-                                className="p-2 rounded-full hover:bg-blue-100/50"
-                            >
+                            <div className="ml-3 flex-shrink-0">
                                 {expandedSection === sec ? <ChevronUp className="w-6 h-6 text-[#006795]" /> : <ChevronDown className="w-6 h-6 text-[#006795]" />}
-                            </button>
-                        </div>
+                            </div>
+                        </button>
                         {expandedSection === sec && (
                             <div className="bg-white">
                                 {sec === 'unit' && (
@@ -2191,6 +2199,30 @@ export default function InspectionCategoryPage() {
                                             )}
                                         </div>
                                     </div>
+
+                                    {/* STANDARD & INSPECTION PROTOCOL - visible when scrolled to bottom */}
+                                    <div className="space-y-3 pt-2 pb-2">
+                                        <div>
+                                            <label className="block text-[10px] font-black text-gray-400 uppercase mb-2 tracking-widest">Standard ✅</label>
+                                            <button
+                                                type="button"
+                                                onClick={() => setIsStandardModalOpen(true)}
+                                                className="w-full bg-[#006795] hover:bg-[#005580] text-white font-black py-4 rounded-2xl uppercase text-xs tracking-widest transition-colors shadow-md"
+                                            >
+                                                Standard
+                                            </button>
+                                        </div>
+                                        <div>
+                                            <label className="block text-[10px] font-black text-gray-400 uppercase mb-2 tracking-widest">Inspection Protocol (International)</label>
+                                            <button
+                                                type="button"
+                                                onClick={() => setIsInspectionProtocolModalOpen(true)}
+                                                className="w-full bg-green-600 hover:bg-green-700 text-white font-black py-4 rounded-2xl uppercase text-xs tracking-widest transition-colors shadow-md"
+                                            >
+                                                Inspection Protocol (International)
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             )}
 
@@ -2310,6 +2342,87 @@ export default function InspectionCategoryPage() {
             )}
 
             {/* How to Inspect Popup */}
+            {/* ====== Standard Modal ====== */}
+            {isStandardModalOpen && (
+                <div className="fixed inset-0 bg-black/70 z-[1200] flex items-center justify-center p-4">
+                    <div className="absolute inset-0" onClick={() => setIsStandardModalOpen(false)} />
+                    <Card className="relative w-full max-w-2xl bg-white rounded-3xl overflow-hidden shadow-[0_32px_64px_-16px_rgba(0,0,0,0.4)] flex flex-col max-h-[80vh]">
+                        <div className="p-5 border-b flex items-center justify-between bg-white sticky top-0 z-10">
+                            <h3 className="text-base font-black text-gray-900 uppercase tracking-tight flex items-center gap-2">
+                                STANDARD <span>✅</span>
+                            </h3>
+                            <button onClick={() => setIsStandardModalOpen(false)} className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-500">
+                                <X className="w-5 h-5" />
+                            </button>
+                        </div>
+                        <div className="p-6 md:p-8 overflow-y-auto space-y-4 custom-scrollbar flex-1">
+                            {selectedDeficiency?.criteria ? (
+                                <div className="bg-gray-50 border border-gray-100 rounded-2xl p-5">
+                                    {selectedDeficiency.criteria.split('\n').map((line: string, i: number) => {
+                                        const trimmed = line.trim()
+                                        if (!trimmed) return <div key={i} className="h-2" />
+                                        return <p key={i} className="text-sm text-gray-700 font-medium leading-relaxed">{trimmed}</p>
+                                    })}
+                                </div>
+                            ) : (
+                                <p className="text-sm text-gray-400 italic text-center py-12">No standard criteria available. Select a deficiency first.</p>
+                            )}
+                        </div>
+                        <div className="p-4 border-t bg-gray-50">
+                            <Button variant="outline" onClick={() => setIsStandardModalOpen(false)} className="w-full font-black h-12 rounded-xl border-2 bg-white hover:bg-gray-50 text-gray-600 uppercase text-[10px] tracking-widest">
+                                Close
+                            </Button>
+                        </div>
+                    </Card>
+                </div>
+            )}
+
+            {/* ====== Inspection Protocol (International) Modal ====== */}
+            {isInspectionProtocolModalOpen && (
+                <div className="fixed inset-0 bg-black/70 z-[1200] flex items-center justify-center p-4">
+                    <div className="absolute inset-0" onClick={() => setIsInspectionProtocolModalOpen(false)} />
+                    <Card className="relative w-full max-w-2xl bg-white rounded-3xl overflow-hidden shadow-[0_32px_64px_-16px_rgba(0,0,0,0.4)] flex flex-col max-h-[80vh]">
+                        <div className="p-5 border-b flex items-center justify-between bg-white sticky top-0 z-10">
+                            <h3 className="text-base font-black text-gray-900 uppercase tracking-tight flex items-center gap-2">
+                                INSPECTION PROTOCOL <span>✅</span>
+                            </h3>
+                            <button onClick={() => setIsInspectionProtocolModalOpen(false)} className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-500">
+                                <X className="w-5 h-5" />
+                            </button>
+                        </div>
+                        <div className="p-6 md:p-8 overflow-y-auto space-y-3 custom-scrollbar flex-1">
+                            {selectedDeficiency ? (() => {
+                                const protocolText = lookupCodeReference(currentSection, currentModalItem || '', selectedDeficiency.selected)
+                                    || selectedDeficiency.codeAndCompliance
+                                    || 'No inspection protocol available.'
+                                return (
+                                    <>
+                                        <p className="font-black text-green-700 text-sm flex items-center gap-2">✅ INSPECTION PROTOCOL</p>
+                                        <div className="bg-gray-50 border border-gray-100 rounded-2xl p-5 space-y-2">
+                                            {protocolText.split('\n').map((line: string, i: number) => {
+                                                const trimmed = line.trim()
+                                                if (!trimmed) return <div key={i} className="h-1" />
+                                                const isHeader = /^[\u{1F300}-\u{1F9FF}\u{2600}-\u{27BF}]/u.test(trimmed) || /^\d+\.\s/.test(trimmed)
+                                                if (isHeader) return <p key={i} className="font-black text-gray-900 mt-3 first:mt-0 text-sm">{trimmed}</p>
+                                                if (trimmed.startsWith('•') || trimmed.startsWith('-')) return <p key={i} className="text-gray-700 ml-3 font-medium text-sm">{trimmed}</p>
+                                                return <p key={i} className="text-gray-600 font-normal text-sm leading-relaxed">{trimmed}</p>
+                                            })}
+                                        </div>
+                                    </>
+                                )
+                            })() : (
+                                <p className="text-sm text-gray-400 italic text-center py-12">No protocol available. Select a deficiency first.</p>
+                            )}
+                        </div>
+                        <div className="p-4 border-t bg-gray-50">
+                            <Button variant="outline" onClick={() => setIsInspectionProtocolModalOpen(false)} className="w-full font-black h-12 rounded-xl border-2 bg-white hover:bg-gray-50 text-gray-600 uppercase text-[10px] tracking-widest">
+                                Close
+                            </Button>
+                        </div>
+                    </Card>
+                </div>
+            )}
+
             {isHowToInspectOpen && (
                 <div className="fixed inset-0 bg-black/70 z-[1100] flex items-center justify-center p-4">
                     <div className="absolute inset-0" onClick={() => setIsHowToInspectOpen(false)} />
@@ -2357,13 +2470,19 @@ export default function InspectionCategoryPage() {
                                 })
                             })()}
                         </div>
-                        <div className="p-4 border-t bg-gray-50">
+                        <div className="p-4 border-t bg-gray-50 flex gap-3">
                             <Button
                                 variant="outline"
                                 onClick={() => setIsHowToInspectOpen(false)}
-                                className="w-full font-black h-12 rounded-xl border-2 bg-white hover:bg-gray-50 text-gray-600 uppercase text-[10px] tracking-widest"
+                                className="flex-1 font-black h-12 rounded-xl border-2 bg-white hover:bg-gray-50 text-gray-600 uppercase text-[10px] tracking-widest"
                             >
-                                Close
+                                Cancel
+                            </Button>
+                            <Button
+                                onClick={() => setIsHowToInspectOpen(false)}
+                                className="flex-1 font-black h-12 rounded-xl bg-[#6B8ED6] hover:bg-[#5a7dc4] text-white uppercase text-[10px] tracking-widest shadow-md border-0"
+                            >
+                                Proceed
                             </Button>
                         </div>
                     </Card>

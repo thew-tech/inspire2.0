@@ -680,11 +680,11 @@ function NSPIREInspectionSummaryContent() {
   const handleExportPDF = async () => {
     if (!report) return
 
-    // If not unlocked, we allow a "Preview" export with only 2 items
-    const isPreview = !isReportUnlocked;
-    
-    if (isPreview) {
-      toast.info('Exporting 2-item preview PDF...', { position: 'top-right' })
+    // If not unlocked, redirect to payment — no preview download allowed
+    if (!isReportUnlocked) {
+      toast.info('This report is locked. Redirecting to unlock checkout...', { position: 'top-right' })
+      await handleUnlockWithStripe()
+      return
     }
 
     setExporting(true)
@@ -714,9 +714,7 @@ function NSPIREInspectionSummaryContent() {
         
         // PHOTO FIX: Prefer `findings` (raw data with imageUri strings) over
         // `deficiencies` (transformed objects where imageUri is nested inside photos[].url)
-        const rawItems = isPreview
-          ? (mergedInspectionPayload.findings || mergedInspectionPayload.deficiencies || []).slice(0, 2)
-          : (mergedInspectionPayload.findings || mergedInspectionPayload.deficiencies || []);
+        const rawItems = mergedInspectionPayload.findings || mergedInspectionPayload.deficiencies || [];
 
         // Deep-scan helper: extract the first valid image URL from any field
         const extractImageUrl = (d: any): string => {
@@ -774,21 +772,13 @@ function NSPIREInspectionSummaryContent() {
           rawData.property = JSON.parse(storedProperty);
         }
         
-        // Limit deficiencies for preview export if locked
-        if (isPreview && Array.isArray(rawData.findings)) {
-          rawData.findings = rawData.findings.slice(0, 2);
-        }
-        if (isPreview && Array.isArray(rawData.deficiencies)) {
-          rawData.deficiencies = rawData.deficiencies.slice(0, 2);
-        }
-        
         payloadData = rawData;
       } else if (!payloadData) {
         // Fallback: Reconstruct compatible object from current report state
         // The backend expects flat properties for metadata (e.g. propertyName)
         // or a nested property object.
         // Limit deficiencies for preview export if locked
-        const exportDeficiencies = isPreview ? report.deficiencies.slice(0, 2) : report.deficiencies;
+        const exportDeficiencies = report.deficiencies;
 
         payloadData = {
           ...report.metadata, // Spread metadata (inspectionNo, propertyName, etc.) to root
@@ -1134,16 +1124,26 @@ function NSPIREInspectionSummaryContent() {
               <Button
                 onClick={handleExportPDF}
                 disabled={exporting || checkingUnlock || purchasingUnlock}
-                className="bg-teal-600 hover:bg-teal-700 text-white font-bold px-5 py-2.5 rounded-xl border-0 shadow-sm shadow-teal-600/10 text-xs flex items-center justify-center gap-1.5"
+                className={`font-bold px-5 py-2.5 rounded-xl border-0 shadow-sm text-xs flex items-center justify-center gap-1.5 ${
+                  isReportUnlocked
+                    ? 'bg-teal-600 hover:bg-teal-700 text-white shadow-teal-600/10'
+                    : 'bg-gray-200 hover:bg-amber-500 hover:text-white text-gray-500 cursor-not-allowed'
+                }`}
               >
-                {isReportUnlocked ? <Download /> : <Lock className="w-4 h-4" />} {exporting ? 'Generating...' : isReportUnlocked ? 'Export PDF' : 'Unlock to Export'}
+                <Lock className="w-4 h-4" />
+                {exporting ? 'Generating...' : isReportUnlocked ? 'Export PDF' : 'Unlock to Export'}
               </Button>
               <Button
                 onClick={handleExportExcel}
                 disabled={exportingExcel || checkingUnlock || purchasingUnlock}
-                className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-5 py-2.5 rounded-xl border-0 shadow-sm shadow-emerald-600/10 text-xs flex items-center justify-center gap-1.5"
+                className={`font-bold px-5 py-2.5 rounded-xl border-0 shadow-sm text-xs flex items-center justify-center gap-1.5 ${
+                  isReportUnlocked
+                    ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-600/10'
+                    : 'bg-gray-200 hover:bg-amber-500 hover:text-white text-gray-500 cursor-not-allowed'
+                }`}
               >
-                {isReportUnlocked ? <Excel /> : <Lock className="w-4 h-4" />} {exportingExcel ? 'Generating...' : isReportUnlocked ? 'Export Excel' : 'Unlock to Export Excel'}
+                <Lock className="w-4 h-4" />
+                {exportingExcel ? 'Generating...' : isReportUnlocked ? 'Export Excel' : 'Unlock to Export Excel'}
               </Button>
               <Button
                 onClick={handleBackToInspection}
