@@ -233,7 +233,7 @@ export default function Header() {
           {/* Login/Register Button - Right Aligned (Desktop) */}
           <div className="hidden md:flex flex-shrink-0">
             <Button
-              onClick={() => router.push("/login")}
+              onClick={() => router.push("/profile-selection")}
               className="bg-primary hover:bg-[#0A5670] text-primary-foreground rounded-full px-4 md:px-5 py-2 text-xs md:text-sm font-semibold flex items-center gap-2 shadow-sm transition-all cursor-pointer"
             >
               <svg
@@ -427,7 +427,7 @@ export default function Header() {
               <Button
                 onClick={() => {
                   setMobileMenuOpen(false);
-                  router.push("/login");
+                  router.push("/profile-selection");
                 }}
                 className="w-full bg-primary hover:bg-[#0A5670] text-primary-foreground rounded-xl py-4 text-base font-bold flex items-center justify-center gap-3 shadow-md transition-all cursor-pointer"
               >

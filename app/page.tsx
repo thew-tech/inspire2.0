@@ -24,7 +24,7 @@ export default function Home() {
   }, [mobileNavOpen]);
 
   const handleGetStarted = () => {
-    router.push('/login');
+    router.push('/profile-selection');
   };
 
   const handleContactSubmit = (e: React.FormEvent) => {
