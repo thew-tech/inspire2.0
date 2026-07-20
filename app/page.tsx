@@ -52,7 +52,7 @@ export default function Home() {
             <div className="flex justify-between items-center py-2 lg:py-3">
                 {/* Logo */}
                 <div className="flex-shrink-0 flex items-center relative z-20">
-                    <img src="logo.jpeg" alt="Nspire App Logo" className="h-14 sm:h-16 md:h-20 w-auto rounded object-contain mix-blend-multiply" />
+                    <img src="logo.png" alt="Nspire App Logo" className="h-14 sm:h-16 md:h-20 w-auto rounded object-contain mix-blend-multiply" />
                 </div>
 
                 {/* Desktop Menu */}
@@ -114,7 +114,7 @@ export default function Home() {
         <div className={`lg:hidden fixed top-0 left-0 h-full w-72 bg-white z-40 transform transition-transform duration-300 ease-in-out shadow-2xl ${ mobileNavOpen ? 'translate-x-0' : '-translate-x-full' }`}>
             <div className="flex flex-col h-full overflow-y-auto">
                 <div className="p-5 border-b border-gray-100 flex items-center justify-between">
-                    <img src="logo.jpeg" alt="Nspire" className="h-12 w-auto rounded object-contain mix-blend-multiply" />
+                    <img src="logo.png" alt="Nspire" className="h-12 w-auto rounded object-contain mix-blend-multiply" />
                     <button onClick={() => setMobileNavOpen(false)} className="p-2 rounded-lg hover:bg-gray-100">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                     </button>
@@ -683,7 +683,7 @@ export default function Home() {
             {/* Bottom Bar */}
             <div className="border-t border-gray-700 pt-8 flex flex-col md:flex-row items-center justify-between gap-6">
                 <a href="#">
-                    <img src="logo.jpeg" alt="Nspire App Logo" className="object-contain h-16 md:h-20 w-auto rounded mix-blend-lighten filter brightness-110" />
+                    <img src="logo.png" alt="Nspire App Logo" className="object-contain h-16 md:h-20 w-auto rounded mix-blend-lighten filter brightness-110" />
                 </a>
 
                 <div className="flex gap-6 text-gray-400 font-medium">
