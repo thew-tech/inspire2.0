@@ -131,11 +131,12 @@ export default function ProfileSelection() {
           display: flex;
           flex-direction: column;
           align-items: center;
-          justify-content: center;
-          padding: 2.5rem 1rem;
+          justify-content: flex-start;
+          padding: 2.5rem 1rem 3rem;
           background: linear-gradient(160deg, #dff2fb 0%, #eaf6ff 35%, #f0f9ff 60%, #e0f3fa 100%);
           position: relative;
-          overflow: hidden;
+          overflow-x: hidden;
+          overflow-y: auto;
         }
 
         /* ─── Background blobs ─── */
@@ -188,6 +189,7 @@ export default function ProfileSelection() {
           width: 100%;
           max-width: 960px;
           align-items: start;
+          overflow: visible;
         }
         @media (max-width: 700px) {
           .ps-cards { grid-template-columns: 1fr; max-width: 400px; }
@@ -206,25 +208,25 @@ export default function ProfileSelection() {
           gap: 0.9rem;
           padding: 2rem 1.5rem 1.75rem;
           border-radius: 2rem;
-          background: rgba(255, 255, 255, 0.55);
-          backdrop-filter: blur(24px);
-          -webkit-backdrop-filter: blur(24px);
-          border: 1.5px solid rgba(255, 255, 255, 0.85);
+          background: rgba(255, 255, 255, 0.28);
+          backdrop-filter: blur(28px);
+          -webkit-backdrop-filter: blur(28px);
+          border: 1.5px solid rgba(255, 255, 255, 0.75);
           box-shadow:
-            0 8px 32px rgba(0,103,149,0.10),
-            0 1.5px 0px rgba(255,255,255,0.95) inset,
-            0 -1px 0px rgba(0,103,149,0.06) inset;
+            0 8px 32px rgba(0,103,149,0.08),
+            0 1.5px 0px rgba(255,255,255,0.9) inset,
+            0 -1px 0px rgba(0,103,149,0.04) inset;
           cursor: pointer;
           transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
-          overflow: hidden;
+          overflow: visible;
         }
         .ps-bubble:hover, .ps-bubble-active {
           transform: translateY(-8px) scale(1.02);
-          background: rgba(255,255,255,0.75);
+          background: rgba(255,255,255,0.42);
           box-shadow:
-            0 20px 60px rgba(0,103,149,0.18),
+            0 20px 60px rgba(0,103,149,0.16),
             0 1.5px 0px rgba(255,255,255,1) inset,
-            0 -1px 0px rgba(0,103,149,0.08) inset;
+            0 -1px 0px rgba(0,103,149,0.06) inset;
         }
 
         /* ─── Bubble shine overlay ─── */
@@ -277,28 +279,28 @@ export default function ProfileSelection() {
 
         /* ─── Inspector type dropdown ─── */
         .ps-dropdown {
-          position: absolute;
-          top: calc(100% + 10px);
-          left: 0; right: 0;
+          width: 100%;
           z-index: 50;
-          background: rgba(255,255,255,0.90);
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
-          border: 1.5px solid rgba(255,255,255,0.95);
+          background: rgba(240, 249, 255, 0.88);
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
+          border: 1.5px solid rgba(255,255,255,0.90);
           border-radius: 1.5rem;
-          box-shadow: 0 16px 50px rgba(0,103,149,0.18);
+          box-shadow: 0 12px 40px rgba(0,103,149,0.14);
           overflow: hidden;
           transform-origin: top center;
           transform: scaleY(0);
           opacity: 0;
           max-height: 0;
-          transition: transform 0.28s ease, opacity 0.28s ease, max-height 0.35s ease;
+          margin-top: 0;
+          transition: transform 0.28s ease, opacity 0.28s ease, max-height 0.35s ease, margin-top 0.2s ease;
           padding: 0;
         }
         .ps-dropdown-open {
           transform: scaleY(1);
           opacity: 1;
-          max-height: 360px;
+          max-height: 400px;
+          margin-top: 0.75rem;
           padding: 0.5rem 0;
         }
         .ps-dropdown-label {
