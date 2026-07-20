@@ -92,27 +92,7 @@ export default function ProfileSelection() {
               </Button>
             </Card>
 
-            {/* Other Card */}
-            <Card className="flex-1 min-w-0 rounded-2xl border border-gray-200 p-5 sm:p-6 flex flex-col items-center text-center shadow-sm hover:shadow-lg transition-shadow">
-              <div className="w-14 h-14 sm:w-16 sm:h-16 mb-4 sm:mb-5 flex items-center justify-center">
-                <svg width="40" height="40" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="sm:w-12 sm:h-12">
-                  <rect x="12" y="12" width="40" height="40" rx="2" stroke="#F84B5F" strokeWidth="2" fill="none" />
-                  <line x1="12" y1="24" x2="52" y2="24" stroke="#F84B5F" strokeWidth="2" />
-                  <line x1="20" y1="32" x2="44" y2="32" stroke="#F84B5F" strokeWidth="2" strokeLinecap="round" />
-                  <line x1="20" y1="40" x2="36" y2="40" stroke="#F84B5F" strokeWidth="2" strokeLinecap="round" />
-                </svg>
-              </div>
-              <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">Other</h2>
-              <p className="text-xs sm:text-sm text-gray-500 leading-relaxed mb-4 sm:mb-6">
-                For other users and stakeholders.
-              </p>
-              <Button
-                className="w-full bg-[#006795] hover:bg-[#006795]/90 text-white rounded-lg py-2.5 font-medium text-sm mt-auto"
-                onClick={() => handleRoleSelection('other')}
-              >
-                Continue
-              </Button>
-            </Card>
+
           </div>
         </div>
       </div>
