@@ -132,7 +132,7 @@ export default function SewerScopeBlogPost() {
 
           {/* Login/Register Button */}
           <Button
-            onClick={() => router.push("/profile-selection")}
+            onClick={() => router.push("/login")}
             className="bg-[#006795] hover:bg-[#00567a] text-white rounded-full px-4 md:px-6 lg:px-8 py-2 md:py-2.5 text-xs md:text-sm font-medium flex items-center gap-2 shadow-md transition-all cursor-pointer"
           >
             <svg

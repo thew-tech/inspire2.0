@@ -58,7 +58,7 @@ function VerifyEmailContent() {
                     role === 'management' ? '/management/login' :
                     role === 'other'       ? '/other/login' :
                     role === 'inspector'   ? '/login?role=inspector' :
-                    '/profile-selection'
+                    '/login'
 
                 toast.success("Email verified successfully! Redirecting to login...", {
                     position: "top-right",

@@ -4,13 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { UnitSelectionModal } from "@/components/UnitSelectionModal";
+
 
 
 
 export default function Home() {
   const router = useRouter();
-  const [unitSelectionOpen, setUnitSelectionOpen] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
 
@@ -25,13 +24,7 @@ export default function Home() {
   }, [mobileNavOpen]);
 
   const handleGetStarted = () => {
-    setUnitSelectionOpen(true);
-  };
-
-  const handleUnitSelectionContinue = (selectedUnits: string[]) => {
-    setUnitSelectionOpen(false);
-    localStorage.setItem("selectedUnits", JSON.stringify(selectedUnits));
-    router.push("/profile-selection");
+    router.push('/login');
   };
 
   const handleContactSubmit = (e: React.FormEvent) => {
@@ -94,7 +87,7 @@ export default function Home() {
 
                 {/* Right side: Login btn (desktop) + Hamburger (mobile) */}
                 <div className="flex items-center gap-3">
-                    <button onClick={() => router.push('/profile-selection')} className="hidden md:flex btn-primary px-5 lg:px-7 py-2.5 lg:py-3 rounded-full text-sm font-bold tracking-wide items-center gap-2">
+                    <button onClick={() => router.push('/login')} className="hidden md:flex btn-primary px-5 lg:px-7 py-2.5 lg:py-3 rounded-full text-sm font-bold tracking-wide items-center gap-2">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                         Login / Register
                     </button>
@@ -153,7 +146,7 @@ export default function Home() {
                     <a href="#blogs" onClick={() => setMobileNavOpen(false)} className="flex flex-col px-4 py-3 rounded-xl hover:bg-[#E8F4F8] transition-colors"><span className="font-bold text-gray-800 text-sm">BLOGS</span><span className="text-[11px] text-gray-400 italic">AI-Driven Inspection</span></a>
                 </div>
                 <div className="p-4 mt-auto border-t border-gray-100">
-                    <button onClick={() => { setMobileNavOpen(false); router.push('/profile-selection'); }} className="w-full btn-primary rounded-xl py-4 text-sm font-bold flex items-center justify-center gap-2">
+                    <button onClick={() => { setMobileNavOpen(false); router.push('/login'); }} className="w-full btn-primary rounded-xl py-4 text-sm font-bold flex items-center justify-center gap-2">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                         Login / Register
                     </button>
@@ -715,11 +708,7 @@ export default function Home() {
     </footer>
 
 
-      <UnitSelectionModal
-        isOpen={unitSelectionOpen}
-        onClose={() => setUnitSelectionOpen(false)}
-        onContinue={handleUnitSelectionContinue}
-      />
+
     </div>
   );
 }

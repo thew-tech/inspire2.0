@@ -83,7 +83,7 @@ export default function ResourcesClient() {
             <Link href="/contact" className="flex flex-col group items-center"><span className="text-sm font-medium text-gray-800 group-hover:text-[#006795] transition-colors">CONTACT</span><span className="text-[10px] text-gray-500 italic tracking-wider">Get in Touch</span></Link>
             <Link href="/resources" className="flex flex-col group items-center"><span className="text-sm font-bold text-[#006795]">RESOURCES</span><span className="text-[10px] text-gray-500 italic tracking-wider">Learn More</span></Link>
           </div>
-          <Button onClick={() => router.push("/profile-selection")} className="bg-[#006795] hover:bg-[#00567a] text-white rounded-full px-4 md:px-6 lg:px-8 py-2 md:py-2.5 text-xs md:text-sm font-medium flex items-center gap-2 shadow-md transition-all cursor-pointer">
+          <Button onClick={() => router.push("/login")} className="bg-[#006795] hover:bg-[#00567a] text-white rounded-full px-4 md:px-6 lg:px-8 py-2 md:py-2.5 text-xs md:text-sm font-medium flex items-center gap-2 shadow-md transition-all cursor-pointer">
             <svg className="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
             <span className="hidden sm:inline">Login/Register</span><span className="sm:hidden">Login</span>
           </Button>

@@ -116,7 +116,7 @@ export default function WhatIsSewerScopeInspection() {
             </Link>
           </div>
 
-          <Button onClick={() => router.push("/profile-selection")} variant="default" className="px-4 md:px-6 lg:px-8 py-2 md:py-2.5 flex items-center gap-2 transition-all cursor-pointer">
+          <Button onClick={() => router.push("/login")} variant="default" className="px-4 md:px-6 lg:px-8 py-2 md:py-2.5 flex items-center gap-2 transition-all cursor-pointer">
             <svg className="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
