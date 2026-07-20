@@ -82,19 +82,7 @@ export default function ManagementLogin() {
       }
     } catch (error: any) {
       console.error('Login error:', error)
-      
-      // Handle unverified email
-      if (error.data?.requiresVerification) {
-        toast.info("Email verification required. Redirecting to verification page...", {
-          position: "top-right",
-          autoClose: 3000,
-        })
-        setTimeout(() => {
-          router.push(`/verify-email?email=${encodeURIComponent(email)}&role=management`)
-        }, 2000)
-        return
-      }
-
+      // ── EMAIL VERIFICATION REDIRECT BYPASSED FOR TESTING ──
       toast.error(error.message || "Error connecting to server. Please check if backend is running.", {
         position: "top-right",
         autoClose: 3000,

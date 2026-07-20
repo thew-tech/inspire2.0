@@ -92,22 +92,8 @@ export default function Login() {
       console.log('Login response data:', data)
 
       if (!response.ok) {
-        // Handle unverified email
-        if (data.requiresVerification) {
-          toast.info("Email verification required. Redirecting to verification page...", {
-            position: "top-right",
-            autoClose: 3000,
-          })
-          
-          // Clear any previous partial data
-          localStorage.removeItem('token')
-          localStorage.removeItem('user')
-          
-          setTimeout(() => {
-            router.push(`/verify-email?email=${encodeURIComponent(email)}&role=${role || 'inspector'}`)
-          }, 2000)
-          return
-        }
+        // ── EMAIL VERIFICATION REDIRECT BYPASSED FOR TESTING ──
+        // if (data.requiresVerification) { router.push('/verify-email...') }
 
         toast.error(data.message || "Login failed. Please try again.", {
           position: "top-right",
