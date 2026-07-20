@@ -1,0 +1,9 @@
+node_modules/
+.env
+.env.*
+!.env.example
+*.log
+dist/
+clean-silo-470908-b3-52c9721c9486.json
+node_modules/
+*.json.key
