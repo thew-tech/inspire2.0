@@ -133,19 +133,15 @@ export default function Signup() {
       )
 
       if (response.success) {
-        toast.success("Account created! Please select your portal to continue.", {
+        toast.success("Account created! You can now log in.", {
           position: "top-right",
           autoClose: 2000,
         })
 
-        // Store email and role in localStorage for later verification
-        localStorage.setItem('pendingVerificationEmail', email.trim().toLowerCase())
-        localStorage.setItem('pendingVerificationRole', role)
-
-        // Redirect to email verification page
+        // Redirect directly to login
         setTimeout(() => {
-          router.push(`/verify-email?email=${encodeURIComponent(email.trim().toLowerCase())}&role=${encodeURIComponent(role)}`)
-        }, 2000)
+          router.push(`/login?email=${encodeURIComponent(email.trim().toLowerCase())}&role=${encodeURIComponent(role)}`)
+        }, 1500)
       } else {
         toast.error(response.message || "Signup failed. Please try again.", {
           position: "top-right",
