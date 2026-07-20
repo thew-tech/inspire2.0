@@ -2,10 +2,10 @@ import { Clerk } from '@clerk/clerk-js'
 
 const CLERK_PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || 'pk_test_bGlnaHQtbXV0dC03Mi5jbGVyay5hY2NvdW50cy5kZXYk'
 
-// Always use current origin so callbacks work on both localhost and production
+// Use env var if set (allows per-environment config), fallback to dynamic origin
 const getRedirectUri = () => {
     if (typeof window === 'undefined') return ''
-    return `${window.location.origin}/oauth-callback`
+    return process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URL || `${window.location.origin}/oauth-callback`
 }
 
 let clerkInstance: Clerk | null = null
