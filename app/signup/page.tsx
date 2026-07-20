@@ -122,23 +122,29 @@ export default function Signup() {
     setIsLoading(true)
 
     try {
-      const response = await authAPI.signupWithCaptcha(
-        fullName.trim(),
-        email.trim().toLowerCase(),
-        password,
-        loginType === "inspector" ? "inspector" : "management",
-        captchaId,
-        captchaCode.toUpperCase(),
-        inspectorType || undefined
-      )
+      // Call local Next.js API route — no email verification
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fullName: fullName.trim(),
+          email: email.trim().toLowerCase(),
+          password,
+          role: loginType === 'inspector' ? 'inspector' : 'management',
+        }),
+      })
+      const response = await res.json()
 
       if (response.success) {
-        toast.success("Account created! You can now log in.", {
+        // Store token immediately so user is logged in
+        if (response.token) {
+          localStorage.setItem('token', response.token)
+          localStorage.setItem('user', JSON.stringify(response.user))
+        }
+        toast.success("Account created! Redirecting to login...", {
           position: "top-right",
-          autoClose: 2000,
+          autoClose: 1500,
         })
-
-        // Redirect directly to login
         setTimeout(() => {
           router.push(`/login?email=${encodeURIComponent(email.trim().toLowerCase())}&role=${encodeURIComponent(role)}`)
         }, 1500)
@@ -147,15 +153,13 @@ export default function Signup() {
           position: "top-right",
           autoClose: 3000,
         })
-        // Reload captcha on failure
         loadCaptcha()
       }
     } catch (error: any) {
-      toast.error(error.message || "Error connecting to server. Please try again.", {
+      toast.error(error.message || "Error creating account. Please try again.", {
         position: "top-right",
         autoClose: 3000,
       })
-      // Reload captcha on error
       loadCaptcha()
     } finally {
       setIsLoading(false)
