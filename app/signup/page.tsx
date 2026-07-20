@@ -14,6 +14,8 @@ export default function Signup() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [role, setRole] = useState("inspector")
+  const [loginType, setLoginType] = useState("inspector") // inspector | management
+  const [inspectorType, setInspectorType] = useState("") // sub-type when inspector
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
@@ -97,7 +99,12 @@ export default function Signup() {
     }
 
     if (!role) {
-      toast.error("Please select your role", { position: "top-right", autoClose: 3000 })
+      toast.error("Please select your login type", { position: "top-right", autoClose: 3000 })
+      return
+    }
+
+    if (loginType === "inspector" && !inspectorType) {
+      toast.error("Please select your inspector type", { position: "top-right", autoClose: 3000 })
       return
     }
 
@@ -119,9 +126,10 @@ export default function Signup() {
         fullName.trim(),
         email.trim().toLowerCase(),
         password,
-        role,
+        loginType === "inspector" ? "inspector" : "management",
         captchaId,
-        captchaCode.toUpperCase()
+        captchaCode.toUpperCase(),
+        inspectorType || undefined
       )
 
       if (response.success) {
@@ -305,20 +313,57 @@ export default function Signup() {
                 <p className="text-xs text-gray-500 mt-1">8-128 chars, uppercase, lowercase, number, special (@$!%*?&)</p>
               </div>
 
-              {/* Role Field */}
+              {/* Login Type Dropdown */}
               <div>
-                <label htmlFor="role" className="block text-sm font-semibold text-[#006795] mb-2">
-                  Role
+                <label htmlFor="loginType" className="block text-sm font-semibold text-[#006795] mb-2">
+                  Login Type
                 </label>
-                <input
-                  type="text"
-                  id="role"
-                  value="Inspector"
-                  readOnly
-                  className="w-full px-4 py-3 rounded-lg bg-[#E8F4F8] border-0 text-gray-900 font-semibold cursor-default"
-                />
+                <div className="relative">
+                  <select
+                    id="loginType"
+                    value={loginType}
+                    onChange={(e) => {
+                      setLoginType(e.target.value)
+                      setRole(e.target.value === "inspector" ? "inspector" : "management")
+                      setInspectorType("")
+                    }}
+                    className="w-full px-4 py-3 rounded-lg bg-[#E8F4F8] border-0 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#006795] appearance-none cursor-pointer"
+                  >
+                    <option value="inspector">Inspector Login</option>
+                    <option value="management">Management Login</option>
+                  </select>
+                  <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
               </div>
             </div>
+
+            {/* Inspector Type — shown only when Inspector Login is selected */}
+            {loginType === "inspector" && (
+              <div>
+                <label htmlFor="inspectorType" className="block text-sm font-semibold text-[#006795] mb-2">
+                  Inspector Type
+                </label>
+                <div className="relative">
+                  <select
+                    id="inspectorType"
+                    value={inspectorType}
+                    onChange={(e) => setInspectorType(e.target.value)}
+                    className="w-full px-4 py-3 rounded-lg bg-[#E8F4F8] border-0 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#006795] appearance-none cursor-pointer"
+                  >
+                    <option value="" disabled>Select Inspector Type</option>
+                    <option value="hud-certified-nspire">I&apos;m a HUD certified NSPIRE inspector</option>
+                    <option value="nspire-certified">I&apos;m a Nspire certified inspector</option>
+                    <option value="home-inspector">I&apos;m a Home Inspector</option>
+                    <option value="multi-unit-inspector">I&apos;m a Multi Unit Inspector</option>
+                  </select>
+                  <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
+            )}
 
             {/* CAPTCHA */}
             <div>
