@@ -1,7 +1,12 @@
 import { Clerk } from '@clerk/clerk-js'
 
-const OAUTH_REDIRECT_URI = process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URL || 'https://whale-app-wi6lz.ondigitalocean.app/oauth-callback'
-const CLERK_PUBLISHABLE_KEY = 'pk_test_bGlnaHQtbXV0dC03Mi5jbGVyay5hY2NvdW50cy5kZXYk'
+const CLERK_PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || 'pk_test_bGlnaHQtbXV0dC03Mi5jbGVyay5hY2NvdW50cy5kZXYk'
+
+// Always use current origin so callbacks work on both localhost and production
+const getRedirectUri = () => {
+    if (typeof window === 'undefined') return ''
+    return `${window.location.origin}/oauth-callback`
+}
 
 let clerkInstance: Clerk | null = null
 
@@ -24,19 +29,18 @@ export interface OAuthResult {
  */
 export const initGoogleLogin = (portal: string): Promise<OAuthResult> => {
     return new Promise((resolve, reject) => {
-        const clientId = '164266308190-dp79tjoggk3qch05qjjcooc5d9rn2s5s.apps.googleusercontent.com'
-
-        if (!clientId) {
-            reject(new Error('Google OAuth is not configured. Please set NEXT_PUBLIC_GOOGLE_CLIENT_ID in your environment variables.'))
-            return
-        }
+        const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '164266308190-dp79tjoggk3qch05qjjcooc5d9rn2s5s.apps.googleusercontent.com'
+        const redirectUri = getRedirectUri()
+        // Encode opener origin in state so callback knows where to postMessage
+        const openerOrigin = window.location.origin
+        const state = encodeURIComponent(`google_${portal}_${openerOrigin}`)
 
         const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?` +
             `client_id=${clientId}&` +
-            `redirect_uri=${encodeURIComponent(OAUTH_REDIRECT_URI)}&` +
+            `redirect_uri=${encodeURIComponent(redirectUri)}&` +
             `response_type=token&` +
             `scope=openid email profile&` +
-            `state=google_${portal}`
+            `state=${state}`
 
         const width = 500
         const height = 600
@@ -54,17 +58,11 @@ export const initGoogleLogin = (portal: string): Promise<OAuthResult> => {
             return
         }
 
-        // Listen for OAuth callback
         const handleMessage = (event: MessageEvent) => {
             if (event.origin !== window.location.origin) return
-
             if (event.data.type === 'oauth-success' && event.data.provider === 'google') {
                 window.removeEventListener('message', handleMessage)
-                resolve({
-                    email: event.data.email,
-                    fullName: event.data.fullName,
-                    provider: 'google'
-                })
+                resolve({ email: event.data.email, fullName: event.data.fullName, provider: 'google' })
             } else if (event.data.type === 'oauth-error') {
                 window.removeEventListener('message', handleMessage)
                 reject(new Error(event.data.error || 'OAuth authentication failed'))
@@ -73,7 +71,6 @@ export const initGoogleLogin = (portal: string): Promise<OAuthResult> => {
 
         window.addEventListener('message', handleMessage)
 
-        // Check if popup was closed (try/catch: COOP policy can block window.closed)
         const checkClosed = setInterval(() => {
             try {
                 if (popup.closed) {
@@ -81,7 +78,7 @@ export const initGoogleLogin = (portal: string): Promise<OAuthResult> => {
                     window.removeEventListener('message', handleMessage)
                     reject(new Error('Authentication cancelled'))
                 }
-            } catch (e) { /* COOP policy blocked access – rely on message listener */ }
+            } catch (e) { /* COOP policy */ }
         }, 1000)
     })
 }
@@ -96,9 +93,7 @@ export const initFacebookLogin = (portal: string): Promise<OAuthResult> => {
             const clerk = await getClerk()
             if (!clerk.client) throw new Error('Clerk client failed to load')
 
-            // If user is already signed in to Clerk, resolve immediately
             if (clerk.user) {
-                console.log('User already signed in to Clerk, using existing session')
                 resolve({
                     email: clerk.user.primaryEmailAddress?.emailAddress || '',
                     fullName: clerk.user.fullName || clerk.user.firstName || '',
@@ -107,47 +102,33 @@ export const initFacebookLogin = (portal: string): Promise<OAuthResult> => {
                 return
             }
 
-            // Create a sign-in attempt to get the correct OAuth redirection URL
+            const redirectUri = getRedirectUri()
+            const openerOrigin = window.location.origin
             const signIn = await clerk.client.signIn.create({
                 strategy: 'oauth_facebook',
-                redirectUrl: OAUTH_REDIRECT_URI + '?state=facebook_' + portal,
+                redirectUrl: `${redirectUri}?state=${encodeURIComponent(`facebook_${portal}_${openerOrigin}`)}`,
             })
 
             const authUrl = signIn.firstFactorVerification.externalVerificationRedirectURL
             if (!authUrl) throw new Error('Failed to get OAuth redirection URL')
 
-            const width = 500
-            const height = 600
+            const width = 500, height = 600
             const left = window.screenX + (window.outerWidth - width) / 2
             const top = window.screenY + (window.outerHeight - height) / 2
 
-            const popup = window.open(
-                authUrl,
-                'Facebook Sign In',
-                `width=${width},height=${height},left=${left},top=${top}`
-            )
-
-            if (!popup) {
-                reject(new Error('Popup blocked. Please allow popups for this site.'))
-                return
-            }
+            const popup = window.open(authUrl, 'Facebook Sign In', `width=${width},height=${height},left=${left},top=${top}`)
+            if (!popup) { reject(new Error('Popup blocked. Please allow popups for this site.')); return }
 
             const handleMessage = (event: MessageEvent) => {
                 if (event.origin !== window.location.origin) return
-
                 if (event.data.type === 'oauth-success' && event.data.provider === 'facebook') {
                     window.removeEventListener('message', handleMessage)
-                    resolve({
-                        email: event.data.email,
-                        fullName: event.data.fullName,
-                        provider: 'facebook'
-                    })
+                    resolve({ email: event.data.email, fullName: event.data.fullName, provider: 'facebook' })
                 } else if (event.data.type === 'oauth-error') {
                     window.removeEventListener('message', handleMessage)
                     reject(new Error(event.data.error || 'OAuth authentication failed'))
                 }
             }
-
             window.addEventListener('message', handleMessage)
 
             const checkClosed = setInterval(() => {
@@ -157,17 +138,13 @@ export const initFacebookLogin = (portal: string): Promise<OAuthResult> => {
                         window.removeEventListener('message', handleMessage)
                         reject(new Error('Authentication cancelled'))
                     }
-                } catch (e) { /* COOP policy blocked access – rely on message listener */ }
+                } catch (e) { /* COOP policy */ }
             }, 1000)
         } catch (error: any) {
             if (error.message?.toLowerCase().includes('already signed in')) {
                 const clerk = await getClerk()
                 if (clerk.user) {
-                    resolve({
-                        email: clerk.user.primaryEmailAddress?.emailAddress || '',
-                        fullName: clerk.user.fullName || clerk.user.firstName || '',
-                        provider: 'facebook'
-                    })
+                    resolve({ email: clerk.user.primaryEmailAddress?.emailAddress || '', fullName: clerk.user.fullName || clerk.user.firstName || '', provider: 'facebook' })
                     return
                 }
             }
@@ -185,54 +162,41 @@ export const initAppleLogin = (portal: string): Promise<OAuthResult> => {
         const clientId = process.env.NEXT_PUBLIC_APPLE_CLIENT_ID
 
         if (!clientId) {
-            reject(new Error('Apple OAuth is not configured. Please set NEXT_PUBLIC_APPLE_CLIENT_ID in your environment variables.'))
+            reject(new Error('Apple Sign In is not available yet. Please use email/password or Google login.'))
             return
         }
+
+        const redirectUri = getRedirectUri()
+        const openerOrigin = window.location.origin
+        const state = encodeURIComponent(`apple_${portal}_${openerOrigin}`)
 
         const authUrl = `https://appleid.apple.com/auth/authorize?` +
             `client_id=${clientId}&` +
-            `redirect_uri=${encodeURIComponent(OAUTH_REDIRECT_URI)}&` +
+            `redirect_uri=${encodeURIComponent(redirectUri)}&` +
             `response_type=code id_token&` +
             `scope=name email&` +
             `response_mode=form_post&` +
-            `state=apple_${portal}`
+            `state=${state}`
 
-        const width = 500
-        const height = 600
+        const width = 500, height = 600
         const left = window.screenX + (window.outerWidth - width) / 2
         const top = window.screenY + (window.outerHeight - height) / 2
 
-        const popup = window.open(
-            authUrl,
-            'Apple Sign In',
-            `width=${width},height=${height},left=${left},top=${top}`
-        )
+        const popup = window.open(authUrl, 'Apple Sign In', `width=${width},height=${height},left=${left},top=${top}`)
+        if (!popup) { reject(new Error('Popup blocked. Please allow popups for this site.')); return }
 
-        if (!popup) {
-            reject(new Error('Popup blocked. Please allow popups for this site.'))
-            return
-        }
-
-        // Listen for OAuth callback
         const handleMessage = (event: MessageEvent) => {
             if (event.origin !== window.location.origin) return
-
             if (event.data.type === 'oauth-success' && event.data.provider === 'apple') {
                 window.removeEventListener('message', handleMessage)
-                resolve({
-                    email: event.data.email,
-                    fullName: event.data.fullName,
-                    provider: 'apple'
-                })
+                resolve({ email: event.data.email, fullName: event.data.fullName, provider: 'apple' })
             } else if (event.data.type === 'oauth-error') {
                 window.removeEventListener('message', handleMessage)
                 reject(new Error(event.data.error || 'OAuth authentication failed'))
             }
         }
-
         window.addEventListener('message', handleMessage)
 
-        // Check if popup was closed (try/catch: COOP policy can block window.closed)
         const checkClosed = setInterval(() => {
             try {
                 if (popup.closed) {
@@ -240,7 +204,7 @@ export const initAppleLogin = (portal: string): Promise<OAuthResult> => {
                     window.removeEventListener('message', handleMessage)
                     reject(new Error('Authentication cancelled'))
                 }
-            } catch (e) { /* COOP policy blocked access – rely on message listener */ }
+            } catch (e) { /* COOP policy */ }
         }, 1000)
     })
 }
@@ -255,17 +219,25 @@ export const handleOAuthCallback = async () => {
     const params = new URLSearchParams(window.location.hash.substring(1))
     const searchParams = new URLSearchParams(window.location.search)
 
-    const state = searchParams.get('state') || params.get('state') || ''
+    const stateRaw = searchParams.get('state') || params.get('state') || ''
+    const state = decodeURIComponent(stateRaw)
     const accessToken = params.get('access_token')
     const code = searchParams.get('code')
 
     if (!state) {
-        window.opener?.postMessage({ type: 'oauth-error', error: 'Invalid state parameter' }, window.location.origin)
+        window.opener?.postMessage({ type: 'oauth-error', error: 'Invalid state parameter' }, '*')
         window.close()
         return
     }
 
-    const [provider, portal] = state.split('_')
+    // state format: "provider_portal_openerOrigin" (e.g. "google_Inspector_http://localhost:3004")
+    const firstUnderscore = state.indexOf('_')
+    const secondUnderscore = state.indexOf('_', firstUnderscore + 1)
+    const provider = state.substring(0, firstUnderscore)
+    const portal = state.substring(firstUnderscore + 1, secondUnderscore)
+    // openerOrigin is everything after the second underscore (handles URLs with underscores)
+    const openerOrigin = secondUnderscore !== -1 ? state.substring(secondUnderscore + 1) : window.location.origin
+    const targetOrigin = openerOrigin || window.location.origin
 
     try {
         let email = ''
@@ -366,14 +338,14 @@ export const handleOAuthCallback = async () => {
             email,
             fullName: fullName || (email.includes('@') ? email.split('@')[0] : email),
             portal
-        }, window.location.origin)
+        }, targetOrigin)
 
         window.close()
     } catch (error: any) {
         window.opener?.postMessage({
             type: 'oauth-error',
             error: error.message || 'Failed to complete authentication'
-        }, window.location.origin)
+        }, targetOrigin)
         window.close()
     }
 }
